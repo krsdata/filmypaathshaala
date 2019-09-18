@@ -1,0 +1,266 @@
+/*
+Theme Name:     News Portal Lite
+Theme URI:      https://mysterythemes.com/wp-themes/news-portal-lite
+Author:         Mystery Themes
+Author URI:     https://mysterythemes.com
+Description:    News Portal Lite is child theme of News Portal ultimate magazine theme. News Portal Lite theme is best choice to create a beautiful & powerful news/magazine/blog websites with ease.
+Version:        1.0.0
+License:        GNU General Public License v3 or later
+License URI:    http://www.gnu.org/licenses/gpl-3.0.html
+Template:       news-portal
+Text Domain:    news-portal-lite
+Tags:           news, grid-layout, custom-colors, one-column, two-columns, three-columns, left-sidebar, right-sidebar, footer-widgets, full-width-template, theme-options, rtl-language-support
+*/
+body,
+button,
+input,
+select,
+textarea,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+blockquote,
+.single .byline,
+.group-blog .byline,
+.posted-on,
+.blog-author,
+.blog-cat{
+    font-family: 'Montserrat', sans-serif;
+}
+
+.np-post-title.small-size a {
+	font-weight: 400;
+}
+
+.np-home-top-section {
+	margin-top: 30px;
+}
+
+#masthead .np-header-menu-block-wrap::before, #masthead .np-header-menu-block-wrap::after {
+	display: none;
+}
+
+#masthead .np-header-menu-wrapper  {
+	background: #F2F2F2;
+}
+
+#masthead .np-header-menu-wrapper::before, #masthead .np-header-menu-wrapper::after{
+    display: none;
+}
+
+.np-home-icon a {
+	color: #333 !important;
+}
+
+#masthead #site-navigation ul li a,
+.np-header-search-wrapper .search-main{
+    color: #333;
+}
+
+.home #masthead .np-home-icon a, 
+#masthead .np-home-icon a:hover,
+#masthead #site-navigation ul li:hover > a, 
+#masthead #site-navigation ul li.current-menu-item > a, 
+#masthead #site-navigation ul li.current_page_item > a, 
+#masthead #site-navigation ul li.current-menu-ancestor > a {
+	color: #ffffff !important;
+    background: #1E73BE;
+}
+
+#masthead #site-navigation ul.sub-menu, 
+#masthead #site-navigation ul.children{
+    background: #F2F2F2;
+}
+
+#masthead .np-header-menu-wrapper .mt-container::before {
+	display: none;
+}
+
+/*--------------------------------------------------------------
+Slider CSS
+--------------------------------------------------------------*/
+.news_portal_slider .lSAction>a {
+    background: none;
+}
+
+.news_portal_lite_featured_slider {
+  margin: 0 0 25px;
+}
+
+.news_portal_lite_featured_slider .slider-posts {
+    float: left;
+    width: 50%;
+    margin: 0;
+    padding: 0;
+}
+
+.news_portal_lite_featured_slider {
+	float: none;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	width: 100%;
+}
+
+.np-single-slide-wrap {
+    position: relative;
+}
+
+.np-slide-content-wrap, {
+    bottom: 0;
+    left: 0;
+    padding: 20px;
+    position: absolute;
+    width: 100%;
+    background: rgba(0, 0, 0, 0) linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8)) repeat scroll 0 0;
+}
+
+.np-slide-content-wrap .post-title {
+    line-height: 26px;
+    margin: 5px 0;
+}
+
+.np-slide-content-wrap .post-title a{
+    color: #fff;
+    font-size: 20px;
+    text-transform: capitalize;
+}
+
+.np-slide-content-wrap .post-title a:hover {
+    color: #1D73BE;
+}
+
+.np-slide-content-wrap .np-post-meta span,
+.np-slide-content-wrap .np-post-meta span a{
+    color: #cccccc;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.np-slide-content-wrap .np-post-meta span {
+    margin-right: 15px;
+}
+
+.news_portal_lite_featured_slider .slider-posts .lSAction {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.news_portal_lite_featured_slider .slider-posts .lSAction > a {
+    background: rgba(0, 0, 0, 0.7) none repeat scroll 0 0;
+    color: #fff;
+    display: inline-block;
+    font-size: 20px;
+    line-height: 30px;
+    margin: 0 2px;
+    opacity: 1;
+    position: static;
+    text-align: center;
+}
+
+.news_portal_lite_featured_slider .slider-posts .lSAction > a:hover {
+    background: #1D73BE;
+    color: #fff;
+}
+
+.news_portal_lite_featured_slider .featured-posts {
+    float: right;
+    width: 50%;
+    padding: 0;
+}
+
+.news_portal_lite_featured_slider .featured-posts .featured-top-section .np-single-post-wrap{
+    width: 100%;
+}
+
+.news_portal_lite_featured_slider .featured-posts .np-single-post-wrap {
+    float: left;
+    margin-bottom: 5px;
+    padding-left: 5px;
+    position: relative;
+    width: 50%;
+}
+
+.news_portal_lite_featured_slider .featured-posts .np-single-post {
+    position: relative;
+}
+
+.news_portal_lite_featured_slider .featured-posts .np-single-post .np-post-content {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0) linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8)) repeat scroll 0 0;
+}
+
+.news_portal_lite_featured_slider .featured-posts .np-single-post .np-post-content .np-post-title {
+    line-height: 20px;
+}
+
+.news_portal_lite_featured_slider .featured-posts .np-single-post .np-post-content .np-post-title a {
+    font-size: 15px;
+    color: #fff;
+}
+
+.news_portal_lite_featured_slider .featured-posts .np-single-post .np-post-content .np-post-title a:hover{
+    color: #1D73BE;
+}
+
+.news_portal_lite_featured_slider .featured-posts .np-single-post .np-post-meta span,
+.news_portal_lite_featured_slider .featured-posts .np-single-post .np-post-meta span a {
+    font-size: 12px;
+}
+
+.np-home-top-section .news_portal_featured_posts .np-block-wrapper {
+	background: none;
+	padding: 0;
+}
+
+
+#colophon .textwidget {
+	color: #ccc;
+}
+
+
+@media (max-width: 768px) {
+    .news_portal_lite_featured_slider .slider-posts {
+    	width: 100%;
+    	float: none;
+    }
+    .news_portal_lite_featured_slider .featured-posts {
+    	float: none;
+    	width: 100%;
+    	margin-top: 5px;
+    }
+    .news_portal_lite_featured_slider .featured-posts .np-single-post-wrap {
+    	padding-left: 0;
+    }
+    .news_portal_lite_featured_slider img {
+    	width: 100%;
+    }
+    .menu-toggle {
+    	color: #333 !important;
+    }
+    #site-navigation, .main-small-navigation li.current-menu-item > .sub-toggle i {
+    	background: #f2f2f2 !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .news_portal_featured_posts .np-single-post-wrap .np-post-thumb {
+    	width: 30%;
+    }
+    .news_portal_featured_posts .np-single-post-wrap .np-post-content {
+    	width: 65%;
+    }
+}
+@media (max-width: 480px) {
+    .news_portal_lite_featured_slider .featured-posts .np-single-post-wrap {
+    	width: 100%;
+    }
+}

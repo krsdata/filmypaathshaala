@@ -1,0 +1,1 @@
+<?php global $video_grid_shc_count; ?></div>

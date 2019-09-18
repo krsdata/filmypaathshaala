@@ -1,0 +1,40 @@
+
+---Downloaded files---
+The import files for: CoverNews Sport were successfully downloaded!
+Initial max execution time = 300
+Files info:
+Site URL = http://filmypaathshaala.com
+Data file = /var/www/filmypaathshaala.com/wp-content/themes/covernews/demo-content/sport/covernews.xml
+Widget file = /var/www/filmypaathshaala.com/wp-content/themes/covernews/demo-content/sport/covernews.wie
+Customizer file = /var/www/filmypaathshaala.com/wp-content/themes/covernews/demo-content/sport/covernews.dat
+Redux files:
+not defined!
+
+---Importing widgets---
+Main Sidebar : 
+
+Search - No Title - Widget already exists
+CoverNews Tabbed Posts - No Title - Widget already exists
+Recent Posts - No Title - Widget already exists
+Meta - No Title - Widget already exists
+
+Front-page Content Section : 
+
+CoverNews Posts Grid - No Title - Widget already exists
+CoverNews Posts Slider - No Title - Widget already exists
+CoverNews Double Categories Posts - No Title - Widget already exists
+CoverNews Posts Carousel - No Title - Widget already exists
+
+Front-page Sidebar Section : 
+
+CoverNews Tabbed Posts - No Title - Widget already exists
+CoverNews Social Contacts - No Title - Widget already exists
+CoverNews Posts Slider - No Title - Widget already exists
+
+
+
+---Importing customizer settings---
+Customizer settings import finished!
+
+---pt-ocdi/after_import---
+

@@ -1,0 +1,62 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: News Portal Lite\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-04 07:14+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/"
+
+#. If there are characters in your language that are not supported
+#. by Montserrat, translate this to 'off'. Do not translate into your own language.
+#: functions.php:48
+msgctxt "Montserrat font: on or off"
+msgid "on"
+msgstr ""
+
+#: inc/widgets/npl-featured-slider.php:20
+msgid ""
+"Displays posts from selected categories in slider with featured section."
+msgstr ""
+
+#: inc/widgets/npl-featured-slider.php:22
+msgid "NP: Featured Slider"
+msgstr ""
+
+#: inc/widgets/npl-featured-slider.php:36
+msgid "Slider Categories"
+msgstr ""
+
+#: inc/widgets/npl-featured-slider.php:43
+msgid "Featured Post Categories"
+msgstr ""
+
+#. Name of the theme
+msgid "News Portal Lite"
+msgstr ""
+
+#. Description of the theme
+msgid ""
+"News Portal Lite is child theme of News Portal ultimate magazine theme. News "
+"Portal Lite theme is best choice to create a beautiful &amp; powerful "
+"news/magazine/blog websites with ease."
+msgstr ""
+
+#. URI of the theme
+msgid "https://mysterythemes.com/wp-themes/news-portal-lite"
+msgstr ""
+
+#. Author of the theme
+msgid "Mystery Themes"
+msgstr ""
+
+#. Author URI of the theme
+msgid "https://mysterythemes.com"
+msgstr ""
