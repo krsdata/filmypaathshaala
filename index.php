@@ -4,8 +4,7 @@
  * wp-blog-header.php which does and tells WordPress to load the theme.
  * test 
  * @package WordPress
- */
-  
+ */  
 /**
  * Tells WordPress to load the WordPress theme and output it.
  *

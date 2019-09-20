@@ -49,28 +49,10 @@ if(!function_exists('efbl_time_ago')){
 if(!function_exists('jws_fetchUrl')){
 //Get JSON object of feed data
 	function jws_fetchUrl($url){
-		//Can we use cURL?
-		if(is_callable('curl_init')){
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_TIMEOUT, 20);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-			$feedData = curl_exec($ch);
-			curl_close($ch);
-		//If not then use file_get_contents
-		} elseif ( ini_get('allow_url_fopen') == 1 || ini_get('allow_url_fopen') === TRUE ) {
-			$feedData = @file_get_contents($url);
-		//Or else use the WP HTTP API
-		} else {
-			if( !class_exists( 'WP_Http' ) ) include_once( ABSPATH . WPINC. '/class-http.php' );
-			$request = new WP_Http;
-			$result = $request->request($url);
-			$feedData = $result['body'];
-		}
-	/*    echo $feedData;
-		exit;*/
-		return $feedData;
+		
+		$feedData = wp_remote_get($url);
+		
+		return $feedData['body'];
 		
 	}
 }

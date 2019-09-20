@@ -1,9 +1,9 @@
 <?php 
 /**
- * Plugin Name:       Easy Facebook Likebox
+ * Plugin Name:       Easy Social Post Feed
  * Plugin URI:        httt://wordpress.org/plugins/easy-facebook-likebox
- * Description:       Easy Facebook like box WordPress plugin allows you to easly display facebook like box fan page on your website using either widget or shortcode to increase facbook fan page likes. You can use the shortcode generated after saving the facebook like box widget. Additionally it also now allows you to dipslay the cusetomized facebook feed on your website using the same color scheme of your website. Its completely customizable with lots of optional settings. Its also responsive facebook like box at the same time.
- * Version:           4.4.1
+ * Description:       Easy Social Post Feed WordPress plugin allows you to easily display facebook like box fan page on your website using either widget or shortcode to increase facbook fan page likes. You can use the shortcode generated after saving the facebook like box widget. Additionally it also now allows you to dipslay the cusetomized facebook feed on your website using the same color scheme of your website. Its completely customizable with lots of optional settings. Its also responsive facebook like box at the same time.
+ * Version:           4.4.2
  * Author:            Danish Ali Malik 
  * Author URI:        https://maltathemes.com/danish-ali-malik
  * Text Domain:       easy-facebook-likebox
@@ -126,7 +126,7 @@ add_action( 'wp_ajax_nopriv_efbl_del_trans',  'efbl_del_trans_cb') ;
 	
 	$replaced_value = str_replace('_transient_', '', $value);
 
-	$efbl_deleted_trans = delete_transient($replaced_value);
+	if(current_user_can('editor') || current_user_can('administrator')): $efbl_deleted_trans = delete_transient($replaced_value); endif;
 
 	if(isset($efbl_deleted_trans)) echo wp_send_json_success($value); die();
 
@@ -141,7 +141,7 @@ add_action( 'wp_ajax_efbl_save_access_token',  'efbl_save_access_token') ;
 
 	// echo $value; die();
 	
-	 $efbl_save_access_token = update_option('efbl_access_token', $value);
+	 if(current_user_can('editor') || current_user_can('administrator')): $efbl_save_access_token = update_option('efbl_access_token', $value); endif;
 
 	if(isset($efbl_save_access_token)) echo wp_send_json_success($value); die();
 

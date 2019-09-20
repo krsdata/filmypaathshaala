@@ -97,7 +97,9 @@ $jws_api_url = 'https://graph.facebook.com/v3.2/' .$page_id. '/?fields=id,name,p
 
 	
 	//set json data
-	$posts_json = jws_fetchUrl($jws_api_url);
+	 $posts_json = jws_fetchUrl($jws_api_url);
+
+	// echo "<pre>"; print_r($posts_json);exit();
 
 	$json_decoded = json_decode($posts_json);
  

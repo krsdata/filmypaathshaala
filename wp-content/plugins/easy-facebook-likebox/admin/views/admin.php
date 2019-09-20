@@ -50,7 +50,9 @@ $data = '';
  <?php if( $active_tab == 'general' ) {
     if(isset($_GET['access_token']))
     $access_token = $_GET['access_token'];
-    if(isset($access_token ) && !empty($access_token)) update_option('efbl_access_token', $access_token);
+    if(isset($access_token ) && !empty($access_token)):
+      if(current_user_can('editor') || current_user_can('administrator')) update_option('efbl_access_token', $access_token);
+  endif;
     // echo '<pre>'; print_r(get_option('efbl_access_token', false));exit;
   ?>
    
@@ -62,7 +64,7 @@ $data = '';
   <p><?php _e('Log into your Facebook account using the button below and approve the plugin to connect your account.', 'easy-facebook-likebox'); ?></p>
 
   <?php 
-  $app_ID = array('222116127877068','405460652816219','256146211143372', '406362656509338','395202813876688');
+  $app_ID = array('222116127877068','405460652816219','256146211143372', '406362656509338','395202813876688', '673589909738017');
   $rand_app_ID = array_rand($app_ID, '1');
   
    $u_app_ID = $app_ID[$rand_app_ID]; 
@@ -71,7 +73,7 @@ $data = '';
  
   <table class="form-table">
     <tbody>
-      <tr><th scope="row"><?php _e('Access Token', 'easy-facebook-likebox'); ?></th><td><textarea id="efbl_access_token" name="efbl_access_token" rows="5" cols="50" placeholder=""><?php echo get_option('efbl_access_token', false); ?></textarea></td>
+      <tr><th scope="row"><?php _e('Access Token', 'easy-facebook-likebox'); ?></th><td><textarea id="efbl_access_token"  name="efbl_access_token" rows="5" cols="50" placeholder=""><?php echo esc_textarea(get_option('efbl_access_token', false)); ?></textarea></td>
       </tr>
     </tbody>
   </table>
@@ -173,12 +175,7 @@ foreach ( $results as $result )
 </form>  
 </div>
 
-<div class="mt-other-plugins-holder">
-  <div id="mt-other-plugins" class="">
-             <!-- Our Plugins  HTML-->
-             <iframe src="https://maltathemes.com/our-plugins/" height="400" width="680"  style="border:0px;float:left;" id="mt-our-plugins" name="Our Plugins"></iframe>
-      </div>
- </div> 
+
 
 <script type="text/javascript">
     //<![CDATA[
