@@ -272,21 +272,44 @@ if (!function_exists('emd_parse_template_tags')) {
 		$mypost = get_post($pid);
 		$permlink = get_permalink($pid);
 		$access_views = get_option($app . "_access_views");
-		if (!empty($access_views['single'])) {
+		$ent_list = get_option($app . "_ent_list");
+		if(!empty($ent_list[$mypost->post_type]['user_key'])){
+			$user_key = $ent_list[$mypost->post_type]['user_key'];
+			$user_id = get_post_meta($pid,$user_key,true);
+			if(!empty($user_id)){
+				$user = get_userdata($user_id);	
+				if(preg_match('/{' . $mypost->post_type . '_login_username}/',$message)){
+					$message = str_replace('{' . $mypost->post_type . '_login_username}', $user->user_login, $message);
+				}
+				if(preg_match('/{' . $mypost->post_type . '_login_password_reset_link}/',$message)){
+					$emd_rp_key = get_password_reset_key($user);
+					$user_login = $user->user_login;
+					//get login page link saved in settings
+					$login_settings = get_option($app . '_login_settings');
+					if(!empty($login_settings['login_page'])){
+						$login_url = get_permalink($login_settings['login_page']);
+						$emd_rp_link = add_query_arg(array('emd_action' => 'rp', 'emd_key' => $emd_rp_key, 'emd_login' => rawurlencode($user_login)),untrailingslashit($login_url));
+						$message = str_replace('{' . $mypost->post_type . '_login_password_reset_link}', $emd_rp_link, $message);
+					}
+				}
+			}
+		}
+		//comment out with new form library
+		/*if (!empty($access_views['single'])) {
 			foreach ($access_views['single'] as $single) {
 				if ($single['obj'] == $mypost->post_type) {
 					$permlink = wp_login_url(esc_url(add_query_arg('fr_emd_notify',1,get_permalink($pid))));
 				}
 			}
-		}
+		}*/
 		if (in_array($mypost->post_status, Array(
 			'pending',
 			'draft'
 		))) {
 			$preview_link = add_query_arg('preview', 'true', get_permalink($pid));
-			$permlink = wp_login_url(add_query_arg('fr_emd_notify',1,$preview_link));
+			//comment out with new form library
+			//$permlink = wp_login_url(add_query_arg('fr_emd_notify',1,$preview_link));
 		}
-
 		if($type == 'rel'){
 			$builtins = Array(
 				$mypost->post_type . '_title' => $mypost->post_title,
@@ -335,8 +358,17 @@ if (!function_exists('emd_parse_template_tags')) {
 		//first get each template tag
 		if (preg_match_all('/\{([^}]*)\}/', $message, $matches)) {
 			foreach ($matches[1] as $match_tag) {
-				//replace if builtin
-				if (in_array($match_tag, array_keys($builtins))) {
+				if(in_array($match_tag,Array('site_name','site_tagline','site_link'))){
+					if(is_multisite()){
+						$site_name = get_network()->site_name;
+					} else {
+						$site_name = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
+					}
+					$message = str_replace('{site_name}',$site_name,$message);
+					$message = str_replace('{site_tagline}',get_option('blogdescription'),$message);
+					$message = str_replace('{site_link}',site_url(),$message);
+				} elseif (in_array($match_tag, array_keys($builtins))) {
+					//replace if builtin
 					$message = str_replace('{' . $match_tag . '}', $builtins[$match_tag], $message);
 				} elseif (!empty($globs) && in_array($match_tag, array_keys($globs))) {
 					$message = str_replace('{' . $match_tag . '}', $globs[$match_tag], $message);
@@ -367,8 +399,14 @@ if (!function_exists('emd_parse_template_tags')) {
 				} elseif (preg_match('/^rel_/', $match_tag)) {
 					$new_rel = "";
 					$has_no_link = 0;
+					$has_redirect = 0;
 					$new_match_tag = preg_replace('/^rel_/', '', $match_tag);
-					if(preg_match('/_nl$/', $match_tag)){
+					//_rl for redirect link
+					if(preg_match('/_rl$/', $match_tag)){
+						$new_match_tag = preg_replace('/_rl$/', '', $new_match_tag);
+						$has_redirect = 1;
+					}
+					elseif(preg_match('/_nl$/', $match_tag)){
 						$new_match_tag = preg_replace('/_nl$/', '', $new_match_tag);
 						$has_no_link = 1;
 					}
@@ -385,6 +423,10 @@ if (!function_exists('emd_parse_template_tags')) {
 							$rpost = get_post($mycon['pid']);
 							if($has_no_link == 1){
 								$new_rel.= $rpost->post_title . ",";
+							}
+							elseif($has_redirect == 1){
+								//{site_login}?redirect_to={emd_order_permalink}
+								$new_rel.= "<a href='{site_login}?redirect_to=" . get_permalink($mycon['pid']) . "'>" . $rpost->post_title . "</a>,";
 							}
 							else {
 								$new_rel.= "<a href='" . get_permalink($mycon['pid']) . "'>" . $rpost->post_title . "</a>,";
@@ -513,6 +555,41 @@ if (!function_exists('emd_get_meta_operator')) {
 		return $operators[$opr];
 	}
 }
+if (!function_exists('emd_check_userEmail')) {
+	add_action('wp_ajax_emd_check_userEmail','emd_check_userEmail');
+	/**
+	 * Check user email
+	 *
+	 * @since WPAS 4.0
+	 *
+	 * @return bool $response
+	 */
+	function emd_check_userEmail() {
+		$response = true;
+		$post_id = '';
+		$form_data = isset($_GET['data_input']) ? $_GET['data_input'] : '';
+		$post_type = isset($_GET['ptype']) ? (string) $_GET['ptype'] : '';
+		$myapp = isset($_GET['myapp']) ? (string) $_GET['myapp'] : '';
+		$ent_list = get_option($myapp . "_ent_list");
+		$ent_attrs = get_option($myapp . "_attr_list");
+		if(!is_array($form_data)){
+			parse_str(stripslashes($form_data),$form_arr);
+		}
+		else {
+			$form_arr = $form_data;
+		}
+		if(!empty($ent_list[$post_type]['user_email_key']) && !empty($form_arr[$ent_list[$post_type]['user_email_key']])){
+			$post_email = $form_arr[$ent_list[$post_type]['user_email_key']];
+			$user_data = get_user_by('email', $post_email);
+			if(!empty($user_data)){
+				$response = false;
+			}
+		}
+		echo $response;
+		die();
+	}
+}
+
 if (!function_exists('emd_check_unique')) {
 	add_action('wp_ajax_emd_check_unique','emd_check_unique');
 	/**
@@ -540,7 +617,7 @@ if (!function_exists('emd_check_unique')) {
 		}
 		$title_set = 0;
 		foreach ($form_arr as $fkey => $myform_field) {
-			if($fkey == 'blt_title'){
+			if($fkey == 'blt_title' && in_array('blt_title',$uniq_fields)){
 				$title_set = 1;
 				$data['blt_title'] = $myform_field;
 			}	
@@ -554,7 +631,6 @@ if (!function_exists('emd_check_unique')) {
 		if (!empty($data) && !empty($post_type)) {
 			$response = emd_check_uniq_from_wpdb($data, $post_id, $post_type, $title_set);
 		}
-		ob_clean();
 		echo $response;
 		die();
 	}

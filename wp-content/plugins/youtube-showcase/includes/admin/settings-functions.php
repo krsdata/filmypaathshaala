@@ -214,6 +214,15 @@ if (!function_exists('emd_ent_map_tab')) {
 				}
 				echo ">";
 				echo "<p class='description'>" . sprintf(__('Hides the previous and next %s links on the frontend for single %s.','emd-plugins'),strtolower($myent['label']),strtolower($myent['label'])) . "</p></td></tr>";
+				echo "<tr><th scope='row'><label for='ent_map_list_" . $kent . "_hide_edit_link'>";
+				echo __('Hide edit links','emd-plugins');
+				echo '</label></th><td>';
+				echo "<input type='checkbox' id='" . esc_attr($app) . "_ent_map_list_" . $kent . "_hide_edit_link' name='" . esc_attr($app) . "_ent_map_list[" . $kent . "][hide_edit_link]' value=1";
+				if(isset($ent_map_list[$kent]['hide_edit_link'])){
+					echo " checked";
+				}
+				echo ">";
+				echo "<p class='description'>" . sprintf(__('Hides edit %s link on the frontend for single %s.','emd-plugins'),strtolower($myent['label']),strtolower($myent['label'])) . "</p></td></tr>";
 			}
 			if($ent_list[$kent]['archive_view']){	
 				echo "<tr><th scope='row'><label for='ent_map_list_" . $kent . "_archive_temp'>";
@@ -409,12 +418,18 @@ if (!function_exists('emd_ent_map_tab')) {
 						}
 						$fields_table .= "</select></td>";
 						foreach($app_custom_roles as $krole => $vrole){
+							if(!empty($role_caps['edit_' . $kent . 's']) && in_array($krole,$role_caps['edit_' . $kent . 's'])){
+								$access_arr = $role_access;
+							}
+							else {
+								$access_arr = $visitor_access;
+							}
 							$fields_table .= "<td style='text-align:center;'><select class='emd-attr-access' id='" . esc_attr($app) . "_ent_map_list_" . $kent . "_edit_attrs_" . $krole . "_featured_img' name='" . esc_attr($app) . "_ent_map_list[" . $kent . "][edit_attrs][" . $krole . "][featured_img]'";
 							if(!empty($ent_map_list[$kent]['attrs']['featured_img']) && $ent_map_list[$kent]['attrs']['featured_img'] == 'hide'){
 								$fields_table .= " disabled";
 							}
 							$fields_table .= ">";
-							foreach($visitor_access as $rkey => $rval){
+							foreach($access_arr as $rkey => $rval){
 								$fields_table .= "<option value='" . $rkey . "'";
 								if(!empty($ent_map_list[$kent]['edit_attrs'][$krole]['featured_img']) && $ent_map_list[$kent]['edit_attrs'][$krole]['featured_img'] == $rkey){
 									$fields_table .= " selected";
@@ -513,8 +528,24 @@ if (!function_exists('emd_ent_map_tab')) {
 				$rel_attrs = Array();
 				if(!empty($rel_list)){
 					foreach($rel_list as $rkey => $rval){
-						if($rval['from'] == $kent){
-							$rels[$rkey] = $rkey;
+						if($rval['show'] == 'from' && $rval['from'] == $kent){
+							$rels[$rkey] = Array('key' => $rkey, 'title' => $rval['from_title']);
+							if(!empty($rval['attrs'])){
+								foreach($rval['attrs'] as $rakey => $raval){
+									$rel_attrs[$rakey] = $raval;
+								}
+							}
+						}
+						else if($rval['show'] == 'to' && $rval['to'] == $kent){
+							$rels[$rkey] = Array('key' => $rkey, 'title' => $rval['to_title']);
+							if(!empty($rval['attrs'])){
+								foreach($rval['attrs'] as $rakey => $raval){
+									$rel_attrs[$rakey] = $raval;
+								}
+							}
+						}	
+						else if($rval['from'] == $kent){
+							$rels[$rkey] = Array('key' => $rkey, 'title' => $rval['from_title']);
 							if(!empty($rval['attrs'])){
 								foreach($rval['attrs'] as $rakey => $raval){
 									$rel_attrs[$rakey] = $raval;
@@ -526,37 +557,37 @@ if (!function_exists('emd_ent_map_tab')) {
 				$rel_trs = "";
 				if(!empty($rels)){
 					foreach($rels as $myrel){
-						$rel_trs .= "<tr><td style='font-weight:500;'>" . $rel_list[$myrel]['from_title'] . "</td>";
-						$rel_trs .= "<td style='text-align:center;'><select class='emd-attr-visibility' id='" . esc_attr($app) . "_ent_map_list_" . $kent . "_hide_rels' name='" . esc_attr($app) . "_ent_map_list[" . $kent . "][hide_rels][" . $myrel . "]'>";
+						$rel_trs .= "<tr><td style='font-weight:500;'>" . $myrel['title'] . "</td>";
+						$rel_trs .= "<td style='text-align:center;'><select class='emd-attr-visibility' id='" . esc_attr($app) . "_ent_map_list_" . $kent . "_hide_rels' name='" . esc_attr($app) . "_ent_map_list[" . $kent . "][hide_rels][" . $myrel['key'] . "]'>";
 						$rel_options = Array('show' => __('Enable','emd-plugins'),
 									'hide' => __('Disable','emd-plugins'),
 									'hide_frontend' => __('Show only in Admin','emd-plugins')
 								);
 						foreach($rel_options as $fkey => $fval){
 							$rel_trs .= "<option value='" . $fkey . "'";
-							if(!empty($ent_map_list[$kent]['hide_rels'][$myrel]) && $ent_map_list[$kent]['hide_rels'][$myrel] == $fkey){
+							if(!empty($ent_map_list[$kent]['hide_rels'][$myrel['key']]) && $ent_map_list[$kent]['hide_rels'][$myrel['key']] == $fkey){
 								$rel_trs .= " selected";
 							}
 							$rel_trs .= ">" . $fval . "</option>";
 						}
 						$rel_trs .= "</select></td>";
 						if(!empty($shc_list['frontedit'])){
-							$rel_trs .= "<td style='text-align:center;'><select class='emd-attr-access emd-attr-visitor' id='" . esc_attr($app) . "_ent_map_list_" . $kent . "_edit_rels_visitor_" . $myrel . "'' name='" . esc_attr($app) . "_ent_map_list[" . $kent . "][edit_rels][visitor][" . $myrel . "]'";
-							if(!empty($ent_map_list[$kent]['hide_rels'][$myrel]) && in_array($ent_map_list[$kent]['hide_rels'][$myrel],Array('hide','hide_frontend'))){
+							$rel_trs .= "<td style='text-align:center;'><select class='emd-attr-access emd-attr-visitor' id='" . esc_attr($app) . "_ent_map_list_" . $kent . "_edit_rels_visitor_" . $myrel['key'] . "' name='" . esc_attr($app) . "_ent_map_list[" . $kent . "][edit_rels][visitor][" . $myrel['key'] . "]'";
+							if(!empty($ent_map_list[$kent]['hide_rels'][$myrel['key']]) && in_array($ent_map_list[$kent]['hide_rels'][$myrel['key']],Array('hide','hide_frontend'))){
 								$rel_trs .= " disabled";
 							}
 							$rel_trs .= ">";
 							foreach($visitor_access as $rkey => $rval){
 								$rel_trs .= "<option value='" . $rkey . "'";
-								if(!empty($ent_map_list[$kent]['edit_rels']['visitor'][$myrel]) && $ent_map_list[$kent]['edit_rels']['visitor'][$myrel] == $rkey){
+								if(!empty($ent_map_list[$kent]['edit_rels']['visitor'][$myrel['key']]) && $ent_map_list[$kent]['edit_rels']['visitor'][$myrel['key']] == $rkey){
 									$rel_trs .= " selected";
 								}
 								$rel_trs .= ">" . $rval . "</option>";
 							}
 							$rel_trs .= "</select></td>";
 							foreach($app_custom_roles as $krole => $vrole){
-								$rel_trs .= "<td style='text-align:center;'><select class='emd-attr-access' id='" . esc_attr($app) . "_ent_map_list_" . $kent . "_edit_rels_" . $krole . "_" . $myrel . "'' name='" . esc_attr($app) . "_ent_map_list[" . $kent . "][edit_rels][" . $krole . "][" . $myrel . "]'";
-								if(!empty($ent_map_list[$kent]['hide_rels'][$myrel]) && $ent_map_list[$kent]['hide_rels'][$myrel] == 'hide'){
+								$rel_trs .= "<td style='text-align:center;'><select class='emd-attr-access' id='" . esc_attr($app) . "_ent_map_list_" . $kent . "_edit_rels_" . $krole . "_" . $myrel['key'] . "' name='" . esc_attr($app) . "_ent_map_list[" . $kent . "][edit_rels][" . $krole . "][" . $myrel['key'] . "]'";
+								if(!empty($ent_map_list[$kent]['hide_rels'][$myrel['key']]) && $ent_map_list[$kent]['hide_rels'][$myrel['key']] == 'hide'){
 									$rel_trs .= " disabled";
 								}
 								$rel_trs .= ">";
@@ -569,7 +600,7 @@ if (!function_exists('emd_ent_map_tab')) {
 								}
 								foreach($access_arr as $rkey => $rval){
 									$rel_trs .= "<option value='" . $rkey . "'";
-									if(!empty($ent_map_list[$kent]['edit_rels'][$krole][$myrel]) && $ent_map_list[$kent]['edit_rels'][$krole][$myrel] == $rkey){
+									if(!empty($ent_map_list[$kent]['edit_rels'][$krole][$myrel['key']]) && $ent_map_list[$kent]['edit_rels'][$krole][$myrel['key']] == $rkey){
 										$rel_trs .= " selected";
 									}
 									$rel_trs .= ">" . $rval . "</option>";
@@ -1017,8 +1048,7 @@ if (!function_exists('emd_ent_map_sanitize')) {
 		$ent_map_list = get_option($input['app'] . '_ent_map_list');
 		$attr_list = get_option($input['app'] . '_attr_list');
 		$rel_list = get_option($input['app'] . '_rel_list');
-		$forms_list = get_option($input['app'] . '_glob_forms_list');
-		$map_keys = apply_filters('emd_entity_map_keys',Array('hide_archive_page_nav','hide_prev_next','hide_rels','edit_rels','hide_rel_attrs','attrs','edit_attrs','single_temp','archive_temp','single_container','archive_container','make_visitor_visible','rewrite','cust_fields','width','height','zoom','map_type','marker','load_info','comment_placeholder','thread_depth','max_files','max_file_size','file_exts','comments_per_page','comments_labels','comments_attach','comments_attach_visitor','comments_max_file_size','comments_max_files','comments_file_exts','default_country','default_state'),$input['app']);
+		$map_keys = apply_filters('emd_entity_map_keys',Array('hide_archive_page_nav','hide_prev_next','hide_edit_link','hide_rels','edit_rels','hide_rel_attrs','attrs','edit_attrs','single_temp','archive_temp','single_container','archive_container','make_visitor_visible','rewrite','cust_fields','width','height','zoom','map_type','marker','load_info','comment_placeholder','thread_depth','max_files','max_file_size','file_exts','comments_per_page','comments_labels','comments_attach','comments_attach_visitor','comments_max_file_size','comments_max_files','comments_file_exts','default_country','default_state'),$input['app']);
 		foreach($input as $ikey => $vkey){
 			if($ikey != 'app'){
 				foreach($map_keys as $mkey){
@@ -1029,42 +1059,8 @@ if (!function_exists('emd_ent_map_sanitize')) {
 						unset($ent_map_list[$ikey][$mkey]);    
 					}
 				}
-				if(!empty($forms_list)){
-					$shc_list = get_option($input['app'] . '_shc_list');
-					foreach($forms_list as $fkey => $fval){
-						foreach($fval as $fattrkey => $fattrval){
-							if(is_array($fattrval) && isset($fattrval['show']) && 
-								isset($attr_list[$ikey][$fattrkey]) &&
-								empty($attr_list[$ikey][$fattrkey]['uniqueAttr']) &&
-								empty($attr_list[$ikey][$fattrkey]['required'])
-							){
-								if($vkey['attrs'][$fattrkey] == 'hide'){
-									$forms_list[$fkey][$fattrkey]['show'] = 0;
-								}
-							}
-							elseif(is_array($fattrval) && isset($fattrval['show']) && 
-								preg_match('/^blt_/',$fattrkey) && 
-								!empty($vkey['attrs'][$fattrkey])&& 
-								!empty($shc_list['forms'][$fkey]) &&
-								$shc_list['forms'][$fkey]['ent'] == $ikey
-							){
-									if($vkey['attrs'][$fattrkey] == 'hide'){
-										$forms_list[$fkey][$fattrkey]['show'] = 0;
-									}
-							}
-							elseif(is_array($fattrval) && isset($fattrval['show']) &&
-								isset($rel_list[$fattrkey])
-							){
-								if(isset($vkey['hide_rels'][$fattrkey]) && $vkey['hide_rels'][$fattrkey] == 'hide'){
-									$forms_list[$fkey][$fattrkey]['show'] = 0;
-								}
-							}
-						}
-					}
-				}
 			}
 		}
-		update_option($input['app'] . '_glob_forms_list', $forms_list);
 		return $ent_map_list;
 	}
 }
@@ -1305,30 +1301,6 @@ if (!function_exists('emd_tax_settings_sanitize')) {
 				}
 			}
 		}
-		$tax_list = get_option($input['app'] . '_tax_list');
-		$forms_list = get_option($input['app'] . '_glob_forms_list');
-		if(!empty($tax_list)){
-			foreach($tax_list as $tent => $vtax){
-				foreach($vtax as $ktax => $valtax){
-					$new_tax_list[$ktax]= $ktax;
-				}
-			}
-		}
-		if(!empty($forms_list)){
-			foreach($forms_list as $fkey => $fval){
-				foreach($fval as $ftaxkey => $ftaxval){
-					if(is_array($ftaxval) && isset($ftaxval['show']) && !empty($new_tax_list[$ftaxkey])){
-						if(isset($input[$ftaxkey]['hide']) && $input[$ftaxkey]['hide'] == 'hide'){
-							$forms_list[$fkey][$ftaxkey]['show'] = 0;
-						}
-						else {
-							$forms_list[$fkey][$ftaxkey]['show'] = 1;
-						}
-					}
-				}
-			}
-		}
-		update_option($input['app'] . '_glob_forms_list',$forms_list);
 		return $tax_settings;
 	}
 }

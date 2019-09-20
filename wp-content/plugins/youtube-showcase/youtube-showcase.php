@@ -3,7 +3,7 @@
  * Plugin Name: Youtube Showcase
  * Plugin URI: https://emarketdesign.com
  * Description: YouTube Showcase is a powerful but simple-to-use YouTube video gallery plugin with responsive frontend.
- * Version: 3.1.1
+ * Version: 3.2.0
  * Author: eMarket Design
  * Author URI: https://emarketdesign.com
  * Text Domain: youtube-showcase
@@ -88,7 +88,7 @@ if (!class_exists('Youtube_Showcase')):
 		 * @return void
 		 */
 		private function define_constants() {
-			define('YOUTUBE_SHOWCASE_VERSION', '3.1.1');
+			define('YOUTUBE_SHOWCASE_VERSION', '3.2.0');
 			define('YOUTUBE_SHOWCASE_AUTHOR', 'eMarket Design');
 			define('YOUTUBE_SHOWCASE_NAME', 'Youtube Showcase');
 			define('YOUTUBE_SHOWCASE_PLUGIN_FILE', __FILE__);
@@ -131,12 +131,6 @@ if (!class_exists('Youtube_Showcase')):
 			if (!class_exists('Emd_Query')) {
 				require_once YOUTUBE_SHOWCASE_PLUGIN_DIR . 'includes/class-emd-query.php';
 			}
-			if (!class_exists('Zebra_Form')) {
-				require_once YOUTUBE_SHOWCASE_PLUGIN_DIR . '/assets/ext/zebraform/Zebra_Form.php';
-			}
-			if (!function_exists('emd_submit_form')) {
-				require_once YOUTUBE_SHOWCASE_PLUGIN_DIR . 'includes/form-functions.php';
-			}
 			if (!function_exists('emd_shc_get_layout_list')) {
 				require_once YOUTUBE_SHOWCASE_PLUGIN_DIR . 'includes/shortcode-functions.php';
 			}
@@ -153,9 +147,6 @@ if (!class_exists('Youtube_Showcase')):
 			//app specific files
 			if (!function_exists('emd_show_settings_page')) {
 				require_once YOUTUBE_SHOWCASE_PLUGIN_DIR . 'includes/admin/settings-functions.php';
-			}
-			if (!function_exists('emd_form_register_settings')) {
-				require_once YOUTUBE_SHOWCASE_PLUGIN_DIR . 'includes/admin/settings-functions-forms.php';
 			}
 			if (!function_exists('emd_global_register_settings')) {
 				require_once YOUTUBE_SHOWCASE_PLUGIN_DIR . 'includes/admin/settings-functions-globs.php';
@@ -188,7 +179,10 @@ if (!class_exists('Youtube_Showcase')):
 			require_once YOUTUBE_SHOWCASE_PLUGIN_DIR . 'includes/class-install-deactivate.php';
 			require_once YOUTUBE_SHOWCASE_PLUGIN_DIR . 'includes/entities/class-emd-video.php';
 			require_once YOUTUBE_SHOWCASE_PLUGIN_DIR . 'includes/entities/emd-video-shortcodes.php';
-			require_once YOUTUBE_SHOWCASE_PLUGIN_DIR . 'includes/forms.php';
+			if (!function_exists('emd_show_forms_page')) {
+				require_once YOUTUBE_SHOWCASE_PLUGIN_DIR . 'includes/emd-form-builder-lite/emd-form-builder.php';
+			}
+			require_once YOUTUBE_SHOWCASE_PLUGIN_DIR . 'includes/emd-lite/emd-lite.php';
 			require_once YOUTUBE_SHOWCASE_PLUGIN_DIR . 'includes/scripts.php';
 			require_once YOUTUBE_SHOWCASE_PLUGIN_DIR . 'includes/query-filters.php';
 			require_once YOUTUBE_SHOWCASE_PLUGIN_DIR . 'includes/plugin-feedback-functions.php';
@@ -254,28 +248,38 @@ if (!class_exists('Youtube_Showcase')):
 		 * @return void
 		 */
 		public function display_settings() {
-			add_menu_page(__('Video Settings', $this->textdomain) , __('Video Settings', $this->textdomain) , 'manage_options', $this->app_name, array(
+			$settings_pages_cap = 'manage_options';
+			$settings_pages_cap = apply_filters('emd_settings_pages_cap', $settings_pages_cap, $this->app_name);
+			add_menu_page(__('Video Settings', $this->textdomain) , __('Video Settings', $this->textdomain) , $settings_pages_cap, $this->app_name, array(
 				$this,
 				'display_getting_started_page'
 			));
-			add_submenu_page($this->app_name, __('Getting Started', $this->textdomain) , __('Getting Started', $this->textdomain) , 'manage_options', $this->app_name);
-			add_submenu_page($this->app_name, __('Glossary', $this->textdomain) , __('Glossary', $this->textdomain) , 'manage_options', $this->app_name . '_glossary', array(
+			add_submenu_page($this->app_name, __('Getting Started', $this->textdomain) , __('Getting Started', $this->textdomain) , $settings_pages_cap, $this->app_name);
+			add_submenu_page($this->app_name, __('Glossary', $this->textdomain) , __('Glossary', $this->textdomain) , $settings_pages_cap, $this->app_name . '_glossary', array(
 				$this,
 				'display_glossary_page'
 			));
-			add_submenu_page($this->app_name, __('Settings', $this->textdomain) , __('Settings', $this->textdomain) , 'manage_options', $this->app_name . '_settings', array(
+			add_submenu_page($this->app_name, __('Settings', $this->textdomain) , __('Settings', $this->textdomain) , $settings_pages_cap, $this->app_name . '_settings', array(
 				$this,
 				'display_settings_page'
 			));
-			add_submenu_page($this->app_name, __('Shortcodes', $this->textdomain) , __('Shortcodes', $this->textdomain) , 'manage_options', $this->app_name . '_shortcodes', array(
+			add_submenu_page($this->app_name, __('YouTube API', $this->textdomain) , __('YouTube API', $this->textdomain) , $settings_pages_cap, $this->app_name . '_youtube', array(
+				$this,
+				'display_youtube_page'
+			));
+			add_submenu_page($this->app_name, __('Shortcodes', $this->textdomain) , __('Shortcodes', $this->textdomain) , $settings_pages_cap, $this->app_name . '_shortcodes', array(
 				$this,
 				'display_shortcodes_page'
 			));
-			add_submenu_page($this->app_name, __('Plugins', $this->textdomain) , __('Plugins', $this->textdomain) , 'manage_options', $this->app_name . '_store', array(
+			add_submenu_page($this->app_name, __('Forms', $this->textdomain) , __('Forms', $this->textdomain) , $settings_pages_cap, $this->app_name . '_forms', array(
+				$this,
+				'display_forms_page'
+			));
+			add_submenu_page($this->app_name, __('Plugins', $this->textdomain) , __('Plugins', $this->textdomain) , $settings_pages_cap, $this->app_name . '_store', array(
 				$this,
 				'display_store_page'
 			));
-			add_submenu_page($this->app_name, __('Support', $this->textdomain) , __('Support', $this->textdomain) , 'manage_options', $this->app_name . '_support', array(
+			add_submenu_page($this->app_name, __('Support', $this->textdomain) , __('Support', $this->textdomain) , $settings_pages_cap, $this->app_name . '_support', array(
 				$this,
 				'display_support_page'
 			));
@@ -327,6 +331,12 @@ if (!class_exists('Youtube_Showcase')):
 		}
 		public function display_shortcodes_page() {
 			do_action('emd_show_shortcodes_page', $this->app_name);
+		}
+		public function display_forms_page() {
+			do_action('emd_show_forms_page', $this->app_name);
+		}
+		public function display_youtube_page() {
+			emd_lite_get_operations('yt_api', __('Videos', $this->textdomain) , $this->textdomain);
 		}
 		/**
 		 * Displays single, archive, tax and no-access frontend views

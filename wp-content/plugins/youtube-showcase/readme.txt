@@ -4,8 +4,8 @@ Plugin URI: https://emdplugins.com
 Author URI: https://emarketdesign.com
 Donate link: https://emarketdesign.com/donate-emarket-design/
 Requires at least: 4.5
-Tested up to: 5.2.0
-Stable tag: 3.1.1
+Tested up to: 5.2.3
+Stable tag: 3.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: youtube,video,video gallery,youtube gallery,youtube channel
@@ -156,6 +156,9 @@ The simplest way to install is to click on 'Plugins' then 'Add' and type 'YouTub
 8. [eMD CSV Import Export Extension](https://emdplugins.com/plugin-features/youtube-showcase-importexport-addon/) for bulk import/export from/to CSV files
 
 == Changelog ==
+=3.2.0=
+* NEW Added Emd form builder support
+* FIXED Session cleanup workflow by creating a custom table to process records.
 =3.1.1=
 * TWEAK Misc. library updates for better stability and compatibility.
 = 3.1.0 =

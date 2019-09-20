@@ -50,7 +50,10 @@ $has_sidebar = apply_filters( 'emd_show_temp_sidebar', 'right', 'youtube_showcas
 		</nav>
 <?php 	}
 	endwhile; // end of the loop.
-	edit_post_link( esc_html__( 'Edit', 'wpas' ) . ' <i class="fa fa-angle-right"></i>', '<div class="emd-edit-link" style="padding:20px 0;clear:both;text-align:left;">', '</div>' );
+	$show_edit_link = apply_filters('emd_show_single_edit_link',true,'youtube_showcase');
+	if($show_edit_link){
+		edit_post_link( esc_html__( 'Edit', 'wpas' ) . ' <i class="fa fa-angle-right"></i>', '<div class="emd-edit-link" style="padding:20px 0;clear:both;text-align:left;">', '</div>' );
+	}
 	?>
 </div>
 <?php if($has_sidebar ==  'right'){

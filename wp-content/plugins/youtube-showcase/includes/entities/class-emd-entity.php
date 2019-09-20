@@ -244,18 +244,6 @@ class Emd_Entity {
 		}
 		$myapp = str_replace("-", "_", $this->textdomain);
 		$attr_list = get_option($myapp . '_attr_list');
-		$sform_list = Array();
-		$shc_list = get_option($myapp . '_shc_list');
-		if(!empty($shc_list) && !empty($shc_list['forms'])){
-			foreach($shc_list['forms'] as $kform => $sforms){
-				if($sforms['type'] == 'submit'){
-					$sform_list[] = $kform;
-				}
-			}
-		}
-		if(!empty($sform_list)){
-			$glob_forms_list = get_option($myapp . '_glob_forms_list');
-		}
 
 		if (!empty($attr_list[$this->post_type])) {
 			$ent_map_list = get_option($myapp . '_ent_map_list');
@@ -398,25 +386,12 @@ class Emd_Entity {
 					}
 					$this->boxes[$vattr['mid']]['fields'][$kattr]['app'] = $myapp;
 					//validation
-					if(!empty($sform_list)){
-						$vattr_req = 0;
-						foreach($sform_list as $sform){
-							if(isset($glob_forms_list[$sform][$kattr]) && isset($glob_forms_list[$sform][$kattr]['req'])){
-							 	if($glob_forms_list[$sform][$kattr]['req'] == 1){
-									$vattr_req = 1;
-								}
-							}
-							elseif(!isset($glob_forms_list[$sform][$kattr])) {
-								$vattr_req = $vattr['required'];
-							}	
-						}
-						$vattr['required'] = $vattr_req;
-					}
 					if ($vattr['required'] == 1) {
 						$this->boxes[$vattr['mid']]['validation']['rules'][$kattr]['required'] = true;
 					} else {
 						$this->boxes[$vattr['mid']]['validation']['rules'][$kattr]['required'] = false;
 					}
+
 					$valid_rules = Array(
 						'email',
 						'url',
@@ -495,6 +470,7 @@ class Emd_Entity {
 						$this->boxes[$vattr['mid']]['fields'][$kattr]['type'] = $vattr['display_type'];
 					}
 				}
+				$this->boxes[$vattr['mid']]['fields'] = apply_filters('emd_set_args_boxes',$this->boxes[$vattr['mid']]['fields'],$kattr,$this->post_type);
 			}
 		}
 		$tax_list = get_option($myapp . '_tax_list');

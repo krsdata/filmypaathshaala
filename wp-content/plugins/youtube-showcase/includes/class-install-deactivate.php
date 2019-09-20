@@ -277,6 +277,8 @@ if (!class_exists('Youtube_Showcase_Install_Deactivate')):
 				'schedule_end' => '',
 				'enable_operators' => '0',
 				'ajax_search' => '0',
+				'result_templ' => 'cust_table',
+				'result_fields' => '',
 				'noresult_msg' => 'No videos found.',
 				'view_name' => 'video_search',
 				'honeypot' => '1',

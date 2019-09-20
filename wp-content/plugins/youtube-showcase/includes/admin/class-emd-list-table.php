@@ -234,7 +234,8 @@ class Emd_List_Table extends WP_List_Table {
 			$shc_list = get_option($this->app . '_shc_list');
 			//$autocomplete_list = Array();
 			$count = 1;
-			if (isset($shc_list['forms']) && !empty($shc_list['forms'])) {
+			//moved this to forms page
+			/*if (isset($shc_list['forms']) && !empty($shc_list['forms'])) {
 				foreach ($shc_list['forms'] as $keyform => $myform) {
 					$forms['id'] = $count;
 					$forms['name'] = $keyform;
@@ -245,7 +246,7 @@ class Emd_List_Table extends WP_List_Table {
 					$count++;
 					$data[] = $forms;
 				}
-			}
+			}*/
 			if (isset($shc_list['shcs']) && !empty($shc_list['shcs'])) {
 				foreach ($shc_list['shcs'] as $keyshc => $myshc) {
 					if ($keyshc == 'analytics') {
@@ -297,16 +298,18 @@ class Emd_List_Table extends WP_List_Table {
 			if(!empty($forms)){
 				foreach($forms as $myform){
 					$dform = Array();
-					$dform['id'] = $myform->ID;
-					$dform['name'] = $myform->post_title;
 					$fcontent = json_decode($myform->post_content,true);
-					$dform['type'] = $fcontent['type'];
-					$dform['shortcode'] = '[emd_form id=\"' . $myform->ID . '\"]';
-					if(!empty($fcontent['source']) && $fcontent['source'] == 'plugin'){
-						$dform['default'] = 1;
+					if($fcontent['app'] == $this->app){
+						$dform['id'] = $myform->ID;
+						$dform['name'] = $myform->post_title;
+						$dform['type'] = $fcontent['type'];
+						$dform['shortcode'] = '[emd_form id=\"' . $myform->ID . '\"]';
+						if(!empty($fcontent['source']) && $fcontent['source'] == 'plugin'){
+							$dform['default'] = 1;
+						}
+						$dform['created'] = strtotime($myform->post_date);
+						$data[] = $dform;
 					}
-					$dform['created'] = get_option($this->app . '_activation_date');
-					$data[] = $dform;
 				}
 			}
 		}

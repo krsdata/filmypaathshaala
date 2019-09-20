@@ -159,7 +159,7 @@ if ( ! class_exists( 'EMD_Meta_Box' ) )
 
 			if ($this->validation || ( $this->validation  && $this->conditional))
 			{
-				wp_enqueue_script( 'jquery-validate', EMD_MB_URL . '../jvalidate1160/wpas.validate.min.js', array( 'jquery' ), EMD_MB_VER, true );
+				wp_enqueue_script( 'jquery-validate', EMD_MB_URL . '../jvalidate/wpas.validate.min.js', array( 'jquery' ), EMD_MB_VER, true );
 				wp_enqueue_script( 'emd-mb-validate-cond', EMD_MB_JS_URL . 'validate-cond.js', array( 'jquery-validate' ), EMD_MB_VER, true );
 				wp_localize_script('emd-mb-validate-cond','validate_msg',$jqvalid_msg);
 			}

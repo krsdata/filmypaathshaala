@@ -113,6 +113,7 @@ function youtube_showcase_load_admin_enq($hook) {
 			wp_localize_script("unique_validate-js", 'unique_vars', $unique_vars);
 		} elseif ($hook == 'edit.php') {
 			wp_enqueue_style('youtube-showcase-allview-css', YOUTUBE_SHOWCASE_PLUGIN_URL . '/assets/css/allview.css');
+			emd_lite_admin_enq_files('youtube_showcase');
 		}
 		switch ($typenow) {
 			case 'emd_video':
@@ -133,36 +134,10 @@ function youtube_showcase_frontend_scripts() {
 	wp_register_style('youtube-showcase-allview-css', $dir_url . '/assets/css/allview.css');
 	$grid_vars = Array();
 	$local_vars['ajax_url'] = admin_url('admin-ajax.php');
-	$local_vars['validate_msg']['required'] = __('This field is required.', 'emd-plugins');
-	$local_vars['validate_msg']['remote'] = __('Please fix this field.', 'emd-plugins');
-	$local_vars['validate_msg']['email'] = __('Please enter a valid email address.', 'emd-plugins');
-	$local_vars['validate_msg']['url'] = __('Please enter a valid URL.', 'emd-plugins');
-	$local_vars['validate_msg']['date'] = __('Please enter a valid date.', 'emd-plugins');
-	$local_vars['validate_msg']['dateISO'] = __('Please enter a valid date ( ISO )', 'emd-plugins');
-	$local_vars['validate_msg']['number'] = __('Please enter a valid number.', 'emd-plugins');
-	$local_vars['validate_msg']['digits'] = __('Please enter only digits.', 'emd-plugins');
-	$local_vars['validate_msg']['creditcard'] = __('Please enter a valid credit card number.', 'emd-plugins');
-	$local_vars['validate_msg']['equalTo'] = __('Please enter the same value again.', 'emd-plugins');
-	$local_vars['validate_msg']['maxlength'] = __('Please enter no more than {0} characters.', 'emd-plugins');
-	$local_vars['validate_msg']['minlength'] = __('Please enter at least {0} characters.', 'emd-plugins');
-	$local_vars['validate_msg']['rangelength'] = __('Please enter a value between {0} and {1} characters long.', 'emd-plugins');
-	$local_vars['validate_msg']['range'] = __('Please enter a value between {0} and {1}.', 'emd-plugins');
-	$local_vars['validate_msg']['max'] = __('Please enter a value less than or equal to {0}.', 'emd-plugins');
-	$local_vars['validate_msg']['min'] = __('Please enter a value greater than or equal to {0}.', 'emd-plugins');
-	$local_vars['unique_msg'] = __('Please enter a unique value.', 'emd-plugins');
 	$wpas_shc_list = get_option('youtube_showcase_shc_list');
-	$local_vars['video_search'] = emd_get_form_req_hide_vars('youtube_showcase', 'video_search');
-	wp_register_style('video-search-forms', $dir_url . 'assets/css/video-search-forms.css');
-	wp_register_script('video-search-forms-js', $dir_url . 'assets/js/video-search-forms.js');
-	wp_localize_script('video-search-forms-js', 'video_search_vars', $local_vars);
 	wp_register_script('ytscjs', $dir_url . 'assets/js/ytscjs.js', '', '', true);
-	wp_register_style('font-awesome', $dir_url . 'assets/ext/font-awesome-4.7.0/css/font-awesome.min.css');
 	wp_register_script('video-gallery-js', $dir_url . 'assets/js/video-gallery.js', '', '', true);
-	wp_register_style('wpasui', YOUTUBE_SHOWCASE_PLUGIN_URL . 'assets/ext/wpas-jui/wpas-jui.min.css');
 	wp_register_script('ytsc-js', $dir_url . 'assets/js/ytsc.js', '', '', true);
-	wp_register_script('wpas-jvalidate-js', $dir_url . 'assets/ext/jvalidate1160/wpas.validate.min.js', array(
-		'jquery'
-	));
 	wp_register_style('wpas-boot', $dir_url . 'assets/ext/wpas/wpas-bootstrap.min.css');
 	wp_register_script('wpas-boot-js', $dir_url . 'assets/ext/wpas/wpas-bootstrap.min.js', array(
 		'jquery'

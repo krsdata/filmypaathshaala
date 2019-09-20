@@ -184,7 +184,12 @@ if (!function_exists('emd_shc_get_layout_list')) {
 				global ${$shc_count_var};
 				${$shc_count_var} = $fields['shc_count'];
 
-				emd_get_template_part($fields['app'], 'shc', str_replace('_', '-', $fields['shc']) . "-header");
+				if(!empty($fields['type']) && $fields['type'] == 'search_res'){
+					emd_form_builder_search_results($fields,'header',0);
+				}
+				else {
+					emd_get_template_part($fields['app'], 'shc', str_replace('_', '-', $fields['shc']) . "-header");
+				}
 				$res_posts = Array();
 				$count_var = $fields['shc'] . "_count";
 				global ${$count_var};
@@ -202,7 +207,12 @@ if (!function_exists('emd_shc_get_layout_list')) {
 					$in_post_id = get_the_ID();
 					if (!in_array($in_post_id, $res_posts)) {
 						$res_posts[] = $in_post_id;
-						emd_get_template_part($fields['app'], 'shc', str_replace('_', '-', $fields['shc']) . "-content");
+						if(!empty($fields['type']) && $fields['type'] == 'search_res'){
+							emd_form_builder_search_results($fields,'content',$in_post_id);
+						}
+						else {
+							emd_get_template_part($fields['app'], 'shc', str_replace('_', '-', $fields['shc']) . "-content");
+						}
 						${$count_var}++;
 					}
 				}
@@ -217,7 +227,12 @@ if (!function_exists('emd_shc_get_layout_list')) {
 				if(!empty($args_default['filter'])){
 					$emd_query_def->remove_filters();
 				}
-				emd_get_template_part($fields['app'], 'shc', str_replace('_', '-', $fields['shc']) . "-footer");
+				if(!empty($fields['type']) && $fields['type'] == 'search_res'){
+					emd_form_builder_search_results($fields,'footer',0);
+				}
+				else {
+					emd_get_template_part($fields['app'], 'shc', str_replace('_', '-', $fields['shc']) . "-footer");
+				}
 				if ($fields['has_pages'] && $myshc_query->max_num_pages > 1) {
 					global $wp_rewrite;
 					if ($wp_rewrite->using_permalinks()) {
@@ -225,7 +240,8 @@ if (!function_exists('emd_shc_get_layout_list')) {
 							$base = '/' . get_post(get_query_var('page_id'))->post_name . '/page/%#%/';
 						}
 						elseif($wp_rewrite->permalink_structure == '/%postname%/'){
-							$base = '/' . get_query_var('pagename') . '/pageno/%#%/';
+							//$base = '/' . get_query_var('pagename') . '/pageno/%#%/';
+							$base = '/' . get_query_var('pagename') . '/page/%#%/';
 						}
 						else {
 							$base = '/' . get_query_var('pagename') . '/page/%#%/';

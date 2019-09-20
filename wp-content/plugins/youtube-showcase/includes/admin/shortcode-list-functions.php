@@ -26,10 +26,12 @@ if (!function_exists('emd_show_shortcodes_page')) {
 			echo ' ' . __('To create advanced shortcodes click Create New button.','emd-plugins') . '</p>';
 		}
 		else {
-			echo '<span style="padding-right:10px;">' . __('ShortCodes','emd-plugins') . '</span></h2>'; 
+			echo '<span style="padding-right:10px;">' . __('ShortCodes','emd-plugins') . '</span>'; 
+			echo '<a href="#" class="button button-primary btn-primary upgrade-pro">' . esc_html('Create New', 'emd-plugins') . '</a>';
+			echo '</h2>';
 			echo '<p>' . __('The following shortcodes are provided by default. To use the shortcode, click copy button and paste it in a page.','emd-plugins');
 			echo ' ' . sprintf(__('To learn more on how to create new shortcodes with filters go to the %s documentation.%s','emd-plugins'),'<a href="https://docs.emdplugins.com/docs/' . str_replace('_','-',$app) . '" target="_blank">','</a>') . '</p>';
-			echo '<p>' . sprintf(__('Create advanced shortcodes easily with Visual Shortcode builder.%s Upgrade Now!%s','emd-plugins'),'<a href="https://emdplugins.com/plugin_tag/' . str_replace('_','-',$app) . '" target="_blank">','</a>') . '</p>';
+			echo '<style>.tablenav.top{display:none;}</style>';
 		}
 		$list_table = new Emd_List_Table($app,'shortcode',$has_bulk);
                 $list_table->prepare_items();

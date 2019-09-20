@@ -313,6 +313,18 @@ if (!function_exists('emd_show_temp_navigation')) {
 		return $has_navigation;
 	}
 }
+if (!function_exists('emd_show_single_edit_link')) {
+	add_filter('emd_show_single_edit_link','emd_show_single_edit_link',10,2);
+	function emd_show_single_edit_link($show,$app){
+		global $post;
+		$post_type = $post->post_type;
+		$ent_conf = get_option($app . "_ent_map_list");
+		if(!empty($ent_conf[$post_type]['hide_edit_link'])){
+			$show = false;
+		}
+		return $show;
+	}
+}
 if (!function_exists('emd_change_container')) {
 	add_filter('emd_change_container','emd_change_container',10,3);
 	function emd_change_container($container,$app,$type){

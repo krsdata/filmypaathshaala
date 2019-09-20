@@ -1,0 +1,467 @@
+html,body {
+	height: 100%;
+}
+
+body.emd-login-page {
+	background-color: #f7f9fb;
+	font-size: 14px;
+}
+
+.emd-login-page .brand {
+	display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+			justify-content: center;
+			margin:1rem 0;
+}
+
+.emd-login-page .card-wrapper {
+	width: 22rem;
+}
+
+.emd-login-page .card {
+	border-color: transparent;
+	border-radius: 4px;
+    background: rgba(255, 255, 255, 0.68);
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.emd-login-page .card.fat {
+	padding: 10px 20px;
+}
+
+.emd-login-page .card .card-title {
+	margin: 15px 0 20px;
+	text-align: center;
+	font-size: 20px;
+	font-weight: 400;
+	opacity: 0.8;
+}
+
+.emd-login-page .form-control {
+	border-width: 2.3px;
+}
+
+.emd-login-page .form-group label {
+	width: 100%;
+	opacity: 0.85;
+}
+
+.emd-login-page .footer {
+	margin: 40px 0;
+	color: #888;
+	text-align: center;
+}
+
+@media screen and (max-width: 320px) {
+	.emd-login-page .card.fat {
+		padding: 0;
+	}
+
+	.emd-login-page .card.fat .card-body {
+		padding: 15px;
+	}
+}
+.row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.emd-login-page {
+	height: 100vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+@media (min-width: 768px){
+.justify-content-md-center {
+    -ms-flex-pack: center!important;
+    justify-content: center!important;
+}
+}
+.emd-login-page .emd-button-wrap{
+display: -webkit-box;
+display: -ms-flexbox;
+display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+			justify-content: space-between;
+}
+.emd-login-page fieldset {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    min-width: 0;
+}
+.emd-login-page legend {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 20px;
+    font-size: 21px;
+    line-height: inherit;
+    color: #333333;
+    border: 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+.emd-login-page label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+}
+.emd-login-page input[type="checkbox"]:focus {
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+.emd-login-page .form-control {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: #555555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+.emd-login-page .form-control:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+.emd-login-page .form-control::-moz-placeholder {
+    color: #999;
+    opacity: 1;
+}
+.emd-login-page .form-control:-ms-input-placeholder {
+    color: #999;
+}
+
+.emd-login-page .form-control::-webkit-input-placeholder {
+    color: #999;
+}
+
+.emd-login-page .form-control::-ms-expand {
+    border: 0;
+    background-color: transparent;
+}
+
+.emd-login-page .form-control {
+    background-color: #eeeeee;
+    opacity: 1;
+}
+.emd-login-page .form-group {
+    margin-bottom: 15px;
+}
+.emd-login-page .form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+.emd-login-page .custom-control-input {
+    position: absolute;
+    z-index: -1;
+	opacity: 0;
+}
+.emd-login-page .custom-control {
+    position: relative;
+    display: block;
+	min-height: 1.5rem;
+	padding-left: 1.5rem;
+}
+.emd-login-page .custom-control-label::after {
+    position: absolute;
+    top: .25rem;
+    left: 0;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    content: "";
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 50% 50%;
+}
+.emd-login-page .custom-checkbox .custom-control-label::before {
+    border-radius: .25rem;
+}
+.emd-login-page .custom-control-label::before{
+    transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.emd-login-page .custom-control-label::before {
+    position: absolute;
+    top: .25rem;
+    left: 0;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    pointer-events: none;
+    content: "";
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #ffffff;
+}
+.emd-login-page .custom-checkbox .custom-control-input:checked~.custom-control-label::after {
+    background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='white' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
+}
+.custom-control-input:checked~.custom-control-label::before {
+    color: #fff;
+    border-color: #007bff;
+    background-color: #007bff;
+}
+input[type="checkbox"]:focus{
+	outline-offset: 0px;
+}
+.custom-control-input:focus~.custom-control-label::before {
+    -webkit-box-shadow: 0 0 0 1px #fff, 0 0 0 3px #0275d8;
+    box-shadow: 0 0 0 1px #fff, 0 0 0 3px #0275d8;
+}
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #0062cc;
+    border-color: #005cbf;
+}
+
+.emd-login-page  .btn.btn-block {
+    padding: 12px 10px;
+    margin: 10px 0;
+}
+.emd-login-page .btn:not(:disabled):not(.disabled) {
+    cursor: pointer;
+    text-decoration: none;
+    text-transform: capitalize;
+}
+.emd-login-page .btn-primary:hover {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+.emd-login-page .btn:focus,
+.emd-login-page .btn:hover {
+    text-decoration: none;
+}
+.emd-login-page .btn-block {
+    display: block;
+    width: 100%;
+}
+.emd-login-page .btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.emd-login-page .btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.emd-login-page .input-group {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    width: 100%;
+}
+.emd-login-page .input-group>.form-control {
+    position: relative;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    width: 1%;
+    margin-bottom: 0;
+}
+.emd-login-page .input-group>.form-control:not(:last-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.emd-login-page .input-group-append {
+    margin-left: -1px;
+}
+.emd-login-page .input-group-append,
+.emd-login-page .input-group-prepend {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+.emd-login-page #pass-strength-result.strong {
+    background-color: #c1e1b9;
+    border-color: #83c373;
+    opacity: 1;
+}
+.emd-login-page #pass-strength-result.good {
+    background-color: #ffe399;
+    border-color: #ffc733;
+    opacity: 1;
+}
+
+.emd-login-page #pass-strength-result.short {
+    background-color: #f1adad;
+    border-color: #e35b5b;
+    opacity: 1;
+}
+.emd-login-page #pass-strength-result.bad {
+    background-color: #fbc5a9;
+    border-color: #f78b53;
+    opacity: 1;
+}
+.emd-login-page #pass1-text.bad,
+.emd-login-page #pass1.bad {
+    border-color: #f78b53
+}
+.emd-login-page #pass-strength-result {
+    background-color: #eee;
+    border: 1px solid #ddd;
+    color: #23282d;
+    text-align: center;
+    width:100%;
+     opacity: 0;
+}
+.emd-login-page #pass-strength-result.hide-if-no-js{
+     height: 0;
+     padding: 0;
+     margin: 0;
+}
+.emd-login-page #pass-strength-result.hide-if-no-js.bad,
+.emd-login-page #pass-strength-result.hide-if-no-js.good,
+.emd-login-page #pass-strength-result.hide-if-no-js.short,
+.emd-login-page #pass-strength-result.hide-if-no-js.strong{
+    height:auto;
+    margin:  0.4rem 0 0;
+    padding: 3px 5px;
+}
+.emd-login-page #pass1.strong,
+.emd-login-page #pass1.good,
+.emd-login-page #pass1.short,
+.emd-login-page #pass1.bad{
+    border-width: 2px;
+    border-radius: 4px;
+}
+.emd-login-page #pass-strength-result, .color-option, input, textarea {
+    box-sizing: border-box;
+}
+.emd-login-page .show-password #pass1-text {
+    display: inline-block
+}
+.emd-login-page #pass1-text,
+.emd-login-page .pw-weak,
+.emd-login-page .pw-weak,
+.emd-login-page .show-password #pass1 {
+    display: none
+}
+.emd-login-page #pass1-text.short,
+.emd-login-page #pass1.short {
+    border-color: #e35b5b
+}
+
+.emd-login-page #pass1-text.bad,
+.emd-login-page #pass1.bad {
+    border-color: #f78b53
+}
+
+.emd-login-page #pass1-text.good,
+.emd-login-page #pass1.good {
+    border-color: #ffc733
+}
+.emd-login-page #pass1-text.strong,
+.emd-login-page #pass1.strong {
+    border-color: #83c373
+}
+
+.emd-login-page .indicator-hint {
+    padding: 8px 0;
+    font-size: 0.85rem;
+    opacity: 0.6;
+}
+.emd-login-page .pw-weak{
+    padding-top:0.5rem;
+}
+.emd-login-page .emdeye {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMCAyMCI+PHJlY3QgeD0iMCIgZmlsbD0ibm9uZSIgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIi8+PGc+PHBhdGggZD0iTTE3LjIgMy4zbC4xNi4xN2MuMzkuMzkuMzkgMS4wMiAwIDEuNDFMNC41NSAxNy43Yy0uMzkuMzktMS4wMy4zOS0xLjQxIDBsLS4xNy0uMTdjLS4zOS0uMzktLjM5LTEuMDIgMC0xLjQxbDEuNTktMS42Yy0xLjU3LTEtMi43Ni0yLjMtMy41Ni0zLjkzLjgxLTEuNjUgMi4wMy0yLjk4IDMuNjQtMy45OVM4LjA0IDUuMDkgMTAgNS4wOWMxLjIgMCAyLjMzLjIxIDMuNC42bDIuMzgtMi4zOWMuMzktLjM5IDEuMDMtLjM5IDEuNDIgMHptLTcuMDkgNC4wMWMtLjIzLjI1LS4zNC41NC0uMzQuODggMCAuMzEuMTIuNTguMzEuODFsMS44LTEuNzljLS4xMy0uMTItLjI4LS4yMS0uNDUtLjI2LS4xMS0uMDEtLjI4LS4wMy0uNDktLjA0LS4zMy4wMy0uNi4xNi0uODMuNHpNMi40IDEwLjU5Yy42OSAxLjIzIDEuNzEgMi4yNSAzLjA1IDMuMDVsMS4yOC0xLjI4Yy0uNTEtLjY5LS43Ny0xLjQ3LS43Ny0yLjM2IDAtMS4wNi4zNi0xLjk4IDEuMDktMi43Ni0xLjA0LjI3LTEuOTYuNy0yLjc2IDEuMjYtLjguNTgtMS40MyAxLjI3LTEuODkgMi4wOXptMTMuMjItMi4xM2wuOTYtLjk2YzEuMDIuODYgMS44MyAxLjg5IDIuNDIgMy4wOS0uODEgMS42NS0yLjAzIDIuOTgtMy42NCAzLjk5cy0zLjQgMS41MS01LjM2IDEuNTFjLS42MyAwLTEuMjQtLjA3LTEuODMtLjE4bDEuMDctMS4wN2MuMjUuMDIuNS4wNS43Ni4wNSAxLjYzIDAgMy4xMy0uNCA0LjUtMS4yMXMyLjQtMS44NCAzLjEtMy4wOWMtLjQ2LS44Mi0xLjA5LTEuNTEtMS44OS0yLjA5LS4wMy0uMDEtLjA2LS4wMy0uMDktLjA0em0tNS41OCA1LjU4bDQtNGMtLjAxIDEuMS0uNDEgMi4wNC0xLjE4IDIuODEtLjc4Ljc4LTEuNzIgMS4xOC0yLjgyIDEuMTl6Ii8+PC9nPjwvc3ZnPg==);
+    width: 20px;
+    height: 20px;
+    padding: 16px;
+    margin: 0 0 0 6px;
+    opacity: 0.5;
+}
+.emd-login-page .show-password .emdeye {
+	background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMCAyMCI+PHJlY3QgeD0iMCIgZmlsbD0ibm9uZSIgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIi8+PGc+PHBhdGggZD0iTTE5LjcgOS40QzE3LjcgNiAxNCAzLjkgMTAgMy45UzIuMyA2IC4zIDkuNEwwIDEwbC4zLjZjMiAzLjQgNS43IDUuNSA5LjcgNS41czcuNy0yLjEgOS43LTUuNWwuMy0uNi0uMy0uNnpNMTAgMTQuMWMtMy4xIDAtNi0xLjYtNy43LTQuMUMzLjYgOCA1LjcgNi42IDggNi4xYy0uOS42LTEuNSAxLjctMS41IDIuOSAwIDEuOSAxLjYgMy41IDMuNSAzLjVzMy41LTEuNiAzLjUtMy41YzAtMS4yLS42LTIuMy0xLjUtMi45IDIuMy41IDQuNCAxLjkgNS43IDMuOS0xLjcgMi41LTQuNiA0LjEtNy43IDQuMXoiLz48L2c+PC9zdmc+);
+}
+#emd-resetpass .form-group {
+   margin-bottom:0;
+}
+.emd-login-page #login_error {
+    border-left-color: #dc3232;
+}
+.emd-login-page .success {
+    border-left-color: #46b450
+}
+.emd-login-page .error,
+.emd-login-page .message,
+.emd-login-page .success {
+    border: 1px solid #607D8B;
+    border-left: 4px solid #00a0d2;
+    padding: 12px;
+    margin-left: 0;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+}
+#backtosite a,
+.emd-login-page .emd-lost-password a,
+.emd-login-page .emd-register-link a{
+    text-decoration: none;
+    display: block;
+    opacity: 0.8;
+}
+#backtosite a:hover,
+.emd-login-page .emd-lost-password a:hover,
+.emd-login-page .emd-register-link a:hover{
+    opacity:1;
+    color: #8b0000;
+}
+#backtosite{
+    text-align: center;
+}
+#emd-getpass + #backtosite{
+    padding:10px 0;
+}
+#backtosite a{
+padding: 10px 12px;
+border: 1px solid #8b0000;
+}

@@ -36,6 +36,14 @@ class Emd_Video extends Emd_Entity {
 			$this,
 			'updated_messages'
 		));
+		add_action('admin_menu', array(
+			$this,
+			'add_menu_link'
+		));
+		add_action('admin_head-edit.php', array(
+			$this,
+			'add_opt_button'
+		));
 		$is_adv_filt_ext = apply_filters('emd_adv_filter_on', 0);
 		if ($is_adv_filt_ext === 0) {
 			add_action('manage_emd_video_posts_custom_column', array(
@@ -361,6 +369,10 @@ class Emd_Video extends Emd_Entity {
 			self::register();
 		}
 		do_action('emd_set_adv_filtering', $this->post_type, $search_args, $this->boxes, $filter_args, $this->textdomain, $this->plural_label);
+		add_action('admin_notices', array(
+			$this,
+			'show_lite_filters'
+		));
 		$ent_map_list = get_option(str_replace('-', '_', $this->textdomain) . '_ent_map_list');
 	}
 	/**
@@ -426,7 +438,13 @@ class Emd_Video extends Emd_Entity {
 	public function get_operations() {
 		if (current_user_can('manage_operations_emd_videos')) {
 			$myapp = str_replace("-", "_", $this->textdomain);
+			emd_lite_get_operations('opr', $this->plural_label, $this->textdomain);
 			do_action('emd_operations_entity', $this->post_type, $this->plural_label, $this->sing_label, $myapp, $this->menu_entity);
+		}
+	}
+	public function show_lite_filters() {
+		if (get_post_type() == $this->post_type) {
+			emd_lite_get_filters($this->textdomain);
 		}
 	}
 }

@@ -50,31 +50,15 @@ class Emd_Session {
 	 *
 	 */
 	public function __construct($myapp) {
-
-		if( ! $this->should_start_session() ) {
-			return;
-		}
-
-		// Use WP_Session (default)
 		if ( ! defined( 'WP_SESSION_COOKIE' ) ) {
 			define( 'WP_SESSION_COOKIE', $myapp . '_wp_session' );
 		}
 
-		if ( ! class_exists( 'Recursive_ArrayAccess' ) ) {
-			require_once constant(strtoupper($myapp) . "_PLUGIN_DIR") . 'assets/ext/wp-session/class-recursive-arrayaccess.php';
-		}
-		// Include utilities class
-		if ( ! class_exists( 'WP_Session_Utils' ) ) {
-			require_once constant(strtoupper($myapp) . "_PLUGIN_DIR") . 'assets/ext/wp-session/class-wp-session-utils.php';
-		}
+		require_once constant(strtoupper($myapp) . "_PLUGIN_DIR") . 'assets/ext/wp-session/wp-session-manager.php';
+		add_filter( 'wp_session_cookie_secure',     array( $this, 'emd_set_cookie_secure_flag' ), 10, 1 ); // Set the SECURE flag on the cookie
+		add_filter( 'wp_session_cookie_httponly',   array( $this, 'emd_set_http_only_flag' ), 10, 1 ); // Set the SECURE flag on the cookie
+		add_filter( 'wp_session_delete_batch_size', array( $this, 'emd_set_session_delete_batch_Size' ), 10, 1 ); // Set the number of expired session objects to delete on every clean-up pass
 
-		if ( ! class_exists( 'WP_Session' ) ) {
-			require_once constant(strtoupper($myapp) . "_PLUGIN_DIR") . 'assets/ext/wp-session/class-wp-session.php';
-			require_once constant(strtoupper($myapp) . "_PLUGIN_DIR") . 'assets/ext/wp-session/wp-session.php';
-		}
-
-		add_filter( 'wp_session_expiration_variant', array( $this, 'set_expiration_variant_time' ), 99999 );
-		add_filter( 'wp_session_expiration', array( $this, 'set_expiration_time' ), 99999 );
 		$this->init();
 	}
 
@@ -85,121 +69,162 @@ class Emd_Session {
 	 * @return void
 	 */
 	public function init() {
-		$this->session = WP_Session::get_instance();
-	}
+		$open_session = apply_filters('emd_initiate_session_flag', true);
 
-
-	/**
-	 * Retrieve session ID
-	 *
-	 * @access public
-	 * @return string Session ID
-	 */
-	public function get_id() {
-		return $this->session->session_id;
-	}
-
-
-	/**
-	 * Retrieve a session variable
-	 *
-	 * @access public
-	 * @param string $key Session key
-	 * @return string Session variable
-	 */
-	public function get( $key ) {
-		$key = sanitize_key( $key );
-		return isset( $this->session[ $key ] ) ? maybe_unserialize( $this->session[ $key ] ) : false;
+		if(true === $open_session){
+			$this->session = WP_Session::get_instance();
+		}	
 	}
 
 	/**
-	 * Set a session variable
+	 * Add new session variable
 	 *
+	 * @since 3.2
 	 *
-	 * @param string $key Session key
-	 * @param integer $value Session variable
-	 * @return string Session variable
+	 * @param string $key   Name of the session to add
+	 * @param mixed  $value Session value
+	 * @param bool   $add   Whether to add the new value to the previous one or just update
+	 *
+	 * @return void
 	 */
-	public function set( $key, $value ) {
-		$key = sanitize_key( $key );
-		if ( is_array( $value ) ) {
-			$this->session[ $key ] = serialize( $value );
+	public function set( $key, $value, $add = false ) {
+		$key   = sanitize_text_field( $key );
+		$value = $this->sanitize( $value );
+		if ( true === $this->session->offsetExists( $key ) && true === $add ) {
+			$old = $this->get( $key );
+			if ( ! is_array( $old ) ) {
+				$old = (array) $old;
+			}
+			$new                   = array_push( $old, $value );
+			$this->session[ $key ] = serialize( $new );
+
 		} else {
 			$this->session[ $key ] = $value;
 		}
-		return $this->session[ $key ];
 	}
 
 	/**
-	 * Force the cookie expiration variant time to 23 hours
+	 * Get session value
 	 *
-	 * @access public
-	 * @since 2.0
-	 * @param int $exp Default expiration (1 hour)
-	 * @return int
-	 */
-	public function set_expiration_variant_time( $exp ) {
-		return ( 30 * 60 * 23 );
-	}
-
-	/**
-	 * Force the cookie expiration time to 24 hours
+	 * @since 3.2
 	 *
-	 * @access public
-	 * @since 1.9
-	 * @param int $exp Default expiration (1 hour)
-	 * @return int Cookie expiration time
-	 */
-	public function set_expiration_time( $exp ) {
-		return ( 30 * 60 * 24 );
-	}
-
-	/**
-	 * Determines if we should start sessions
+	 * @param string $key     Session key to retrieve the value for
+	 * @param mixed  $default Value to return if the key doesn't exist
 	 *
-	 * @return bool
+	 * @return mixed
 	 */
-	public function should_start_session() {
-		$start_session = true;
-		if( ! empty( $_SERVER[ 'REQUEST_URI' ] ) ) {
+	public function get( $key, $default = false ) {
+		$value = $default;
+		$key   = sanitize_text_field( $key );
 
-			$blacklist = $this->get_blacklist();
-			$uri       = ltrim( $_SERVER[ 'REQUEST_URI' ], '/' );
-			$uri       = untrailingslashit( $uri );
-			if( in_array( $uri, $blacklist ) ) {
-				$start_session = false;
-			}
-			if( false !== strpos( $uri, 'feed=' ) ) {
-				$start_session = false;
-			}
+		if ( true === $this->session->offsetExists( $key ) ) {
+			$value = $this->session[ $key ];
 		}
-		return apply_filters( $this->app_name . '_start_session', $start_session );
+
+		return maybe_unserialize( $value );
 	}
 
 	/**
-	 * Retrieve the URI blacklist
+	 * Get current session superglobal
 	 *
-	 * These are the URIs where we never start sessions
-	 *
-	 * @since  2.5.11
+	 * @since 3.2
 	 * @return array
 	 */
-	public function get_blacklist() {
-		$blacklist = apply_filters( $this->app_name . '_session_start_uri_blacklist', array(
-			'feed',
-			'feed/rss',
-			'feed/rss2',
-			'feed/rdf',
-			'feed/atom',
-			'comments/feed'
-		) );
-		// Look to see if WordPress is in a sub folder or this is a network site that uses sub folders
-		$folder = str_replace( network_home_url(), '', get_site_url() );
-		if( ! empty( $folder ) ) {
-			foreach( $blacklist as $path ) {
-				$blacklist[] = $folder . '/' . $path;
-			}
+	public function get_session() {
+		return $this->session;
+	}
+
+	/**
+	 * Clean a session
+	 *
+	 * @since 3.2
+	 *
+	 * @param string $key Name of the session to clean
+	 *
+	 * @return bool True if the session was cleaned, false otherwise
+	 */
+	public function clean( $key ) {
+		$key     = sanitize_text_field( $key );
+		$cleaned = false;
+		if ( true === $this->session->offsetExists( $key ) ) {
+			unset( $this->session[ $key ] );
+			$cleaned = true;
 		}
-		return $blacklist;
+		return $cleaned;
+	}
+
+	/**
+	 * Reset the entire session
+	 *
+	 * @since 3.2
+	 * @return void
+	 */
+	public function reset() {
+		$this->session = array();
+	}
+
+	/**
+	 * Sanitize session value
+	 *
+	 * @since 3.2
+	 *
+	 * @param mixed $value Value to sanitize
+	 *
+	 * @return string Sanitized value
+	 */
+	public function sanitize( $value ) {
+		if ( is_array( $value ) || is_object( $value ) ) {
+			$value = serialize( $value );
+		}
+		return $value;
+	}
+
+
+	/**
+	 * Set the secure flag on the cookie
+	 *
+	 * Filter: wp_session_cookie_secure
+	 *
+	 * @param boolean $secure_flag
+	 *
+	 * @since 4.0.4
+	 *
+	 * @return boolean flag - true or false, default false
+	 */
+	public function emd_set_cookie_secure_flag ( $secure_flag ) {
+		$secure_flag = boolval( get_option( 'secure_cookies', false) );
+		return $secure_flag;
+	}
+
+	/**
+	 * Set the httponly flag on the cookie
+	 *
+	 * Filter: wp_session_cookie_httponly
+	 *
+	 * @param boolean $http_only_flag
+	 *
+	 * @since 4.0.4
+	 *
+	 * @return boolean flag - true or false, default false
+	 */
+	public function emd_set_http_only_flag ( $http_only_flag ) {
+		$http_only_flag = boolval( get_option( 'cookie_http_only', false) );
+		return $http_only_flag;
+	}
+
+	/**
+	 * Set the amount of expired sessions to delete in one pass
+	 *
+	 * Filter: wp_session_delete_batch_size
+	 *
+	 * @param boolean $batch_size
+	 *
+	 * @since 4.2.0
+	 *
+	 * @return number - number of expired sessions to delete in every call
+	 */
+	public function emd_set_session_delete_batch_Size ( $batch_size ) {
+		$batch_size = intval( get_option( 'session_delete_batch_size', 1000 ) ) ;
+		return $batch_size;
 	}
 }

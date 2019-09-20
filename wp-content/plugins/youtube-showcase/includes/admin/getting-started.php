@@ -324,6 +324,14 @@ line-height: normal;
 <p class="about-description">This page lists the release notes from every production version of YouTube Showcase Community.</p>
 
 
+<h3 style="font-size: 18px;font-weight:700;color: white;background: #708090;padding:5px 10px;width:155px;border: 2px solid #fff;border-radius:4px;text-align:center">3.2.0 changes</h3>
+<div class="wp-clearfix"><div class="changelog emd-section whats-new whats-new-909" style="margin:0">
+<h3 style="font-size:18px;" class="fix"><div  style="font-size:110%;color:#c71585"><span class="dashicons dashicons-admin-tools"></span> FIX</div>
+Session cleanup workflow by creating a custom table to process records.</h3>
+<div ></a></div></div></div><hr style="margin:30px 0"><div class="wp-clearfix"><div class="changelog emd-section whats-new whats-new-908" style="margin:0">
+<h3 style="font-size:18px;" class="new"><div style="font-size:110%;color:#00C851"><span class="dashicons dashicons-megaphone"></span> NEW</div>
+Added Emd form builder support</h3>
+<div ></a></div></div></div><hr style="margin:30px 0">
 <h3 style="font-size: 18px;font-weight:700;color: white;background: #708090;padding:5px 10px;width:155px;border: 2px solid #fff;border-radius:4px;text-align:center">3.1.1 changes</h3>
 <div class="wp-clearfix"><div class="changelog emd-section whats-new whats-new-897" style="margin:0">
 <h3 style="font-size:18px;" class="tweak"><div  style="font-size:110%;color:#33b5e5"><span class="dashicons dashicons-admin-settings"></span> TWEAK</div>

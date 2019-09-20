@@ -7,40 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-05-28T12:36:57-04:00\n"
-"POT-Creation-Date: 2019-05-28T12:36:57-04:00\n"
-
-#: youtube-showcase/forms/video-search.php:36
-msgid "Title"
-msgstr ""
-
-#: youtube-showcase/forms/video-search.php:39
-msgid "Title field is required"
-msgstr ""
-
-#: youtube-showcase/forms/video-search.php:58
-msgid "Category"
-msgstr ""
-
-#: youtube-showcase/forms/video-search.php:61
-msgid "Category field is required"
-msgstr ""
-
-#: youtube-showcase/forms/video-search.php:80
-msgid "Tag"
-msgstr ""
-
-#: youtube-showcase/forms/video-search.php:83
-msgid "Tag field is required"
-msgstr ""
-
-#: youtube-showcase/forms/video-search.php:103
-msgid "Please enter the characters with black color in the image above."
-msgstr ""
-
-#: youtube-showcase/forms/video-search.php:106
-msgid "Security Code field is required"
-msgstr ""
+"PO-Revision-Date: 2019-09-18T14:06:42-04:00\n"
+"POT-Creation-Date: 2019-09-18T14:06:42-04:00\n"
 
 #: youtube-showcase/includes/admin/class-emd-list-table.php:112
 msgid "Copy"
@@ -84,6 +52,10 @@ msgstr ""
 
 #: youtube-showcase/includes/admin/glossary.php:29
 msgid "Attributes"
+msgstr ""
+
+#: youtube-showcase/includes/admin/glossary.php:31
+msgid "Title"
 msgstr ""
 
 #: youtube-showcase/includes/admin/glossary.php:32
@@ -142,6 +114,10 @@ msgstr ""
 msgid "Taxonomies"
 msgstr ""
 
+#: youtube-showcase/includes/admin/glossary.php:60
+msgid "Category"
+msgstr ""
+
 #: youtube-showcase/includes/admin/glossary.php:62
 msgid " Category supports parent-child relationships like categories"
 msgstr ""
@@ -152,6 +128,10 @@ msgstr ""
 
 #: youtube-showcase/includes/admin/glossary.php:62
 msgid "There are no preset values for <b>Category.</b>"
+msgstr ""
+
+#: youtube-showcase/includes/admin/glossary.php:66
+msgid "Tag"
 msgstr ""
 
 #: youtube-showcase/includes/admin/glossary.php:68
@@ -264,7 +244,7 @@ msgid "Visual ShortCode Builder"
 msgstr ""
 
 #: youtube-showcase/includes/admin/shortcode-list-functions.php:25
-#: youtube-showcase/includes/admin/shortcode-list-functions.php:30
+#: youtube-showcase/includes/admin/shortcode-list-functions.php:32
 msgid "The following shortcodes are provided by default. To use the shortcode, click copy button and paste it in a page."
 msgstr ""
 
@@ -276,24 +256,20 @@ msgstr ""
 msgid "ShortCodes"
 msgstr ""
 
-#: youtube-showcase/includes/admin/shortcode-list-functions.php:31
+#: youtube-showcase/includes/admin/shortcode-list-functions.php:33
 msgid "To learn more on how to create new shortcodes with filters go to the %s documentation.%s"
 msgstr ""
 
-#: youtube-showcase/includes/admin/shortcode-list-functions.php:32
-msgid "Create advanced shortcodes easily with Visual Shortcode builder.%s Upgrade Now!%s"
-msgstr ""
-
-#: youtube-showcase/includes/admin/shortcode-list-functions.php:69
+#: youtube-showcase/includes/admin/shortcode-list-functions.php:71
 msgid "Error: Please try again."
 msgstr ""
 
-#: youtube-showcase/includes/admin/shortcode-list-functions.php:88
+#: youtube-showcase/includes/admin/shortcode-list-functions.php:90
 msgid "Form"
 msgstr ""
 
-#: youtube-showcase/includes/admin/shortcode-list-functions.php:93
-#: youtube-showcase/includes/admin/shortcode-list-functions.php:98
+#: youtube-showcase/includes/admin/shortcode-list-functions.php:95
+#: youtube-showcase/includes/admin/shortcode-list-functions.php:100
 msgid "View"
 msgstr ""
 
@@ -321,89 +297,89 @@ msgstr ""
 msgid "Like our plugin? Leave us a review"
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:289
+#: youtube-showcase/includes/class-install-deactivate.php:291
 msgid "Video Gallery"
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:294
+#: youtube-showcase/includes/class-install-deactivate.php:296
 msgid "Video Grid Gallery"
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:307
+#: youtube-showcase/includes/class-install-deactivate.php:309
 msgid "<p>The unique 11 digit alphanumeric video key found on the YouTube video. For example; in https://www.youtube.com/watch?v=uVgWZd7oGOk. uVgWZd7oGOk is the video id.</p>"
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:321
+#: youtube-showcase/includes/class-install-deactivate.php:323
 msgid "Adds the video to featured video list."
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:335
+#: youtube-showcase/includes/class-install-deactivate.php:337
 msgid "<p>Sets the resolution of video thumbnail image. The image size for each option;<br />\n<strong>Medium</strong> - 320 x 180, <strong>High</strong> - 480x360, <strong>Standard</strong> - 640 x 480, <strong>Max</strong> -1280 x 720</p>"
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:339
+#: youtube-showcase/includes/class-install-deactivate.php:341
 msgid "Please Select"
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:340
+#: youtube-showcase/includes/class-install-deactivate.php:342
 msgid "Standard"
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:341
+#: youtube-showcase/includes/class-install-deactivate.php:343
 msgid "Medium"
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:342
+#: youtube-showcase/includes/class-install-deactivate.php:344
 msgid "High"
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:343
+#: youtube-showcase/includes/class-install-deactivate.php:345
 msgid "Max"
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:355
+#: youtube-showcase/includes/class-install-deactivate.php:357
 msgid "When set the player starts video automatically. It may not work in all devices due to vendor preferences."
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:366
+#: youtube-showcase/includes/class-install-deactivate.php:368
 msgid "Show thumbs in mobile"
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:414
+#: youtube-showcase/includes/class-install-deactivate.php:416
 msgid "Categories"
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:426
+#: youtube-showcase/includes/class-install-deactivate.php:428
 msgid "Tags"
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:479
+#: youtube-showcase/includes/class-install-deactivate.php:481
 msgid "New To Youtube Showcase? Check out live demo!"
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:479
-#: youtube-showcase/includes/class-install-deactivate.php:491
+#: youtube-showcase/includes/class-install-deactivate.php:481
+#: youtube-showcase/includes/class-install-deactivate.php:493
 msgid "&#187;"
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:479
-#: youtube-showcase/includes/class-install-deactivate.php:491
+#: youtube-showcase/includes/class-install-deactivate.php:481
+#: youtube-showcase/includes/class-install-deactivate.php:493
 msgid "Dismiss"
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:491
+#: youtube-showcase/includes/class-install-deactivate.php:493
 msgid "Want to Keep Your Visitors Longer on Your Site? Get Pro Now!"
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:497
+#: youtube-showcase/includes/class-install-deactivate.php:499
 msgid "Welcome to Youtube Showcase"
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:498
+#: youtube-showcase/includes/class-install-deactivate.php:500
 msgid "Setup Youtube Showcase Pages"
 msgstr ""
 
-#: youtube-showcase/includes/class-install-deactivate.php:498
+#: youtube-showcase/includes/class-install-deactivate.php:500
 msgid "Skip setup"
 msgstr ""
 
@@ -413,6 +389,1145 @@ msgstr ""
 
 #: youtube-showcase/includes/class-integration-widgets.php:28
 msgid "Integration widget label"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:286
+msgid "Saved successfully."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:294
+msgid "Editing Form:"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:295
+msgid "Save"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:301
+msgid "Click here to add row"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:301
+msgid "Add Row"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:304
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:305
+msgid "Click here to add"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:304
+msgid "Divider"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:305
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:588
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:922
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1233
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1241
+msgid "HTML"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:309
+msgid "Click here to add a form wizard page"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:309
+msgid "Add Page"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:312
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:316
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1041
+msgid "Click to go to this page"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:313
+msgid "Page 1"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:317
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:506
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:518
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:573
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:735
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1042
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1047
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1084
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1210
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1223
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1228
+msgid "Delete"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:318
+msgid "Page %s"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:324
+msgid "Fields"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:325
+msgid "Settings"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:389
+msgid "Drag this field to a row."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:401
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:417
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:435
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:462
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:479
+msgid "Drag this field to a row - available in premium edition."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:481
+msgid "Login Box"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:507
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:574
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1048
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1085
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1211
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1224
+msgid "Drag to reorder"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:519
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:736
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1229
+msgid "Drag to reorder / Click for settings"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:577
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1051
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1088
+msgid "Drag fields here"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:873
+msgid "Label"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:882
+msgid "Required"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:885
+msgid "Size"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:895
+msgid "Size column refers to the form elements length relative to the other elements in the same row. Total element size in each row can not exceed 12 units."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:898
+msgid "Description"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:906
+msgid "Placeholder"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:910
+msgid "Css Class"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:929
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1060
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1070
+msgid "Step Title"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:937
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1064
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1074
+msgid "Step Description"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:948
+msgid "Login Label"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:954
+msgid "Already have an account? Login."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:958
+msgid "Register Label"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:964
+msgid "Need to create an account? Register."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:968
+msgid "Login Username Label"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:974
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1011
+msgid "Username"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:978
+msgid "Login Password Label"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:984
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1021
+msgid "Password"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:988
+msgid "Redirect Link"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:994
+msgid "If left empty after login user will be redirected to single entity page."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1002
+msgid "Enable Registration"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1005
+msgid "Registration Username Label"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1015
+msgid "Registration Password Label"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1025
+msgid "Registration Confirm Password Label"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1031
+msgid "Confirm Password"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1043
+msgid "Page"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1232
+msgid "Click to go to settings"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-builder.php:1250
+msgid "Login / Register Box"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:55
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:1816
+msgid "Please refresh the page and try again."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:71
+msgid "Captcha error. Please refresh the page and try again."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:89
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:1902
+msgid "Invalid username"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:93
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:1899
+msgid "Username already taken"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:134
+msgid "Please try again"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:141
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:930
+msgid "Please enter same password."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:148
+msgid "Please enter username."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:151
+msgid "Please enter password."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:154
+msgid "Please enter confirm password."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:721
+msgid "Max number of files: %s"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:724
+msgid "Max file size: %s"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:727
+msgid "File extensions allowed: %s"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:799
+msgid "Begins"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:800
+msgid "Ends"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:801
+msgid "Word"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:929
+msgid "This field is required."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:931
+msgid "Please fix this field."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:932
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:933
+msgid "Please enter a valid URL."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:934
+msgid "Please enter a valid date."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:935
+msgid "Please enter a valid date ( ISO )"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:936
+msgid "Please enter a valid number."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:937
+msgid "Please enter only digits."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:938
+msgid "Please enter a valid credit card number."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:939
+msgid "Please enter the same value again."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:940
+msgid "Please enter no more than {0} characters."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:941
+msgid "Please enter at least {0} characters."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:942
+msgid "Please enter a value between {0} and {1} characters long."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:943
+msgid "Please enter a value between {0} and {1}."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:944
+msgid "Please enter a value less than or equal to {0}."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:945
+msgid "Please enter a value greater than or equal to {0}."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:946
+msgid "Please enter a unique value."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:947
+msgid "This email has been already registered."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:1071
+msgid "January_February_March_April_May_June_July_August_September_October_November_December"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:1072
+msgid "Su_Mo_Tu_We_Th_Fr_Sa"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:1094
+msgid "File Upload"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:1099
+msgid "ERROR:"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:1100
+msgid "Invalid file type."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:1101
+msgid "File size is greater than allowed limit."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:1102
+msgid "Maximum number of allowable file uploads has been exceeded."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:1360
+msgid "Submit"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:1771
+msgid "Login"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:1833
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-frontend.php:1836
+msgid "The password or username you entered is incorrect."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-functions.php:162
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-functions.php:209
+msgid "Show Form"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-functions.php:164
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-functions.php:211
+msgid "Hide Form"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-functions.php:951
+msgid "Current Page"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-functions.php:954
+msgid "All"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-functions.php:957
+msgid "Selected"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:18
+msgid "General"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:19
+msgid "Display"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:20
+msgid "Submissions"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:22
+msgid "Confirmations"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:24
+msgid "Scheduling"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:25
+msgid "Anti Spam"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:27
+msgid "Pages"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:31
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:86
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:304
+msgid "Search"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:33
+msgid "Code"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:42
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:47
+msgid "Form Settings:"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:50
+msgid "Error when saving."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:82
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:240
+msgid "None"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:83
+msgid "Registration and Login Forms"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:84
+msgid "Login Form only"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:96
+msgid "Name"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:97
+msgid "Type"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:98
+msgid "Entity"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:99
+msgid "Show Register / Login Form"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:100
+msgid "Displays or hides registration and login forms on this form for non-logged-in users."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:101
+msgid "No Access Message"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:101
+msgid "You are not allowed to access to this area. Please contact the site administrator."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:105
+msgid "Desktops"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:106
+msgid "Phones"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:107
+msgid "Tablets"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:108
+msgid "Large Desktops"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:110
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:237
+msgid "Top"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:111
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:157
+msgid "Left"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:112
+msgid "Inside"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:115
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:147
+msgid "Small"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:116
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:146
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:151
+msgid "Large"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:118
+msgid "Targeted Device"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:119
+msgid "Label Placement"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:120
+msgid "Sets the field label position relative to the field input location. Options are Top,Left or Inside. Pick your label placement based on the space you have available for the form. Min 680px required for inside/top label placement with 3 column layout. If you enabled operators in your search form, you will need more space for multi-layout designs. You can always adjust the width css element of your form container when needed. Enabling operators will give access to all of your data so limiting access by role may always be a good idea."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:122
+msgid "Element Size"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:123
+msgid "Display Radios and Checkboxes Inline"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:124
+msgid "Form Class"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:128
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:244
+msgid "Publish"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:129
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:245
+msgid "Draft"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:130
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:246
+msgid "Future"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:131
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:247
+msgid "Private"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:132
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:248
+msgid "Trash"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:134
+msgid "Standard (White - #FFFFF)"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:135
+msgid "Primary (Blue - #006DCC)"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:136
+msgid "Info (Light Blue - #49AFCD)"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:137
+msgid "Success (Green - #5BB75B)"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:138
+msgid "Warning (Orange - #FAA732)"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:139
+msgid "Danger (Red - #DA4F49)"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:140
+msgid "Inverse (Black - #363636)"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:141
+msgid "Link (Blue -  #0088CC)"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:142
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:298
+msgid "Custom"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:145
+msgid "XLarge"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:148
+msgid "Mini"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:152
+msgid "2x"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:153
+msgid "3x"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:154
+msgid "4x"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:155
+msgid "5x"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:158
+msgid "Right"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:187
+msgid "Show text"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:188
+msgid "Redirect"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:189
+msgid "Go to another form"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:209
+msgid "Thanks for your submission."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:210
+msgid "There has been an error when submitting your entry. Please contact the site administrator."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:220
+msgid "Never Show"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:221
+msgid "Always Show"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:222
+msgid "Visitors Only"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:231
+msgid "Tabs"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:232
+msgid "Arrows"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:233
+msgid "Circles"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:234
+msgid "Dots"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:236
+msgid "Bottom"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:238
+msgid "Both"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:241
+msgid "Slide"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:242
+msgid "Fade"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:250
+msgid "Wizard Style"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:251
+msgid "Display Vertical Wizard Steps"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:252
+msgid "Wizard Button Toolbar"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:254
+msgid "Wizard Transition Effect"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:256
+msgid "Save Wizard Step Data"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:298
+msgid "Basic HTML Table"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:298
+msgid "Advanced Datagrid Table"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:300
+msgid "Enable Ajax"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:301
+msgid "Enable Search Operators"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:302
+msgid "Display Records On Page Load"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:303
+msgid "Result Template Type"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:305
+msgid "Click to Select"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:306
+msgid "Show Columns"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:307
+msgid "Show Export"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:308
+msgid "Show Toggle"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:309
+msgid "Show All Records"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:310
+msgid "Page Size"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:311
+msgid "Page List"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:311
+msgid "Enter semicolon separated values such as 10, 20, 50, all"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:312
+msgid "Maintain Selected on Page Change"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:313
+msgid "Result Fields"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:314
+msgid "No Result Message"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:314
+msgid "Your search returned no results."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:318
+msgid "CDN CSS File"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:318
+msgid "Enter semicolon separated CSS file urls starting with http(s)."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:319
+msgid "CDN JS File"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-form-settings.php:319
+msgid "Enter semicolon separated JavaScript file urls starting with http(s)."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:76
+msgid "<strong>ERROR</strong>: Cookies are blocked due to unexpected output. For help, please see <a href=\"%1$s\">this documentation</a> or try the <a href=\"%2$s\">support forums</a>."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:77
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:82
+msgid "https://codex.wordpress.org/Cookies"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:77
+msgid "https://wordpress.org/support/"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:81
+msgid "<strong>ERROR</strong>: Cookies are blocked or not supported by your browser. You must <a href=\"%s\">enable cookies</a> to use WordPress."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:193
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:252
+msgid "Your password reset link appears to be invalid. Please request a new link below."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:196
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:247
+msgid "Your password reset link has expired. Please request a new link below."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:199
+msgid "Invalid username, email or password."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:202
+msgid "We have sent you a welcome email. Please click the verification link in the email to get started."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:222
+msgid "You are now logged out."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:224
+msgid "User registration is currently not allowed."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:226
+msgid "Check your email for the confirmation link."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:228
+msgid "Check your email for your new password."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:265
+msgid "Your password has been reset."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:271
+msgid "Please enter your username or email address. You will receive a link to create a new password via email."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:345
+msgid "Back to %s"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:365
+msgid "Log into Your Account"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:371
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:424
+msgid "Username or Email"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:383
+msgid "Remember Me"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:394
+msgid "Log In"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:401
+msgid "Lost Password?"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:405
+msgid "Register"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:431
+msgid "Get New Password"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:440
+msgid "Reset Password"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:454
+msgid "Strength indicator"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:459
+msgid "Confirm use of weak password"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:478
+msgid "<strong>ERROR</strong>: Enter a username or email address."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:483
+msgid "<strong>ERROR</strong>: There is no user registered with that email address."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:494
+msgid "<strong>ERROR</strong>: Invalid username or email."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:531
+msgid "Someone has requested a password reset for the following account:"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:532
+msgid "Site Name: %s"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:533
+msgid "Username: %s"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:534
+msgid "If this was a mistake, just ignore this email and nothing will happen."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:535
+msgid "To reset your password, click here."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:538
+msgid "[%s] Password Reset"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:548
+msgid "The email could not be sent. Please contact site administrator"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/emd-shc-login-functions.php:561
+msgid "Login Page Link"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/settings-functions-login.php:56
+msgid "Login/Register:"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/settings-functions-login.php:56
+msgid "Use the options below to customize Login page."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/settings-functions-login.php:61
+msgid "Login Page"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/settings-functions-login.php:83
+msgid "Use [emd_login app=\"%s\"] shortcode in your page. Attributes: ent=\"emd_customer,emd_vendor\" show_reg=1 , reg_label=\"\",reg_link=\"\",show_lost=1  "
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/settings-functions-login.php:85
+msgid "Password Reset Message Subject"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/settings-functions-login.php:94
+msgid "Password Reset Message"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/settings-functions-login.php:111
+msgid "Use these template tags to customize your email: {username}, {password_reset_link}, {sitename}"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/settings-functions-login.php:116
+msgid "User Role Redirects"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/settings-functions-login.php:118
+msgid "Set a redirect url which users belonging to a role will be redirected to after a successful login or logout."
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/settings-functions-login.php:127
+msgid "%s Login"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/settings-functions-login.php:135
+msgid "If left empty, user will be directed to the corresponding user entity page"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/settings-functions-login.php:138
+msgid "If left empty, user will be directed to the site's homepage"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/settings-functions-login.php:142
+msgid "%s Logout"
+msgstr ""
+
+#: youtube-showcase/includes/emd-form-builder-lite/settings-functions-login.php:149
+msgid "If left empty user, will be directed to the login page"
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:37
+msgid "<strong>After purchasing the premium edition, please remove the free plugin</strong>. Don't worry, all your records will be preserved."
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:46
+msgid "Check out <a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">our documentation</a> for step-by-step instructions."
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:232
+msgid "Import, Export and Update %s From/To CSV"
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:233
+msgid "Do you have hundreds of %s in a spreadsheet and think about how to get them in WordPress? No problem!"
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:235
+msgid "Sometimes, adding or updating %s one by one is NOT the smartest thing to do. Bulk import, update and take snapshots at will - more time to play!"
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:239
+msgid "Get your %s in %s fast"
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:240
+msgid "Bulk update videos with a single click"
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:241
+msgid "Take periodic backups to protect yourself against data loss"
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:242
+msgid "Reset and start from scratch anytime"
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:245
+msgid "Create custom fields with ease"
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:246
+msgid "Migrate %s from one site to another with ease"
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:256
+msgid "Get your YouTube videos and update stats with a few clicks"
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:257
+msgid "You can get your YouTube videos in WordPress and update their stats on demand or schedule. Bonus: Video updates are done automatically. "
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:259
+msgid "You can add multiple playlists and/or usernames and decide how often you want to get new videos or make updates to existing ones. Easy!"
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:263
+msgid "Import from unlimited playlists"
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:264
+msgid "Import from unlimited usernames"
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:265
+msgid "On-demand video imports and updates"
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:266
+msgid "On-schedule imports and updates"
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:269
+msgid "Set your batch size for each run"
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:270
+msgid "On-demand video stat updates"
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:324
+#: youtube-showcase/includes/emd-lite/emd-lite.php:325
+msgid "Update to a Premium Edition to unlock Filters & Columns"
+msgstr ""
+
+#: youtube-showcase/includes/emd-lite/emd-lite.php:325
+msgid "Filters &amp; Columns"
 msgstr ""
 
 #: youtube-showcase/includes/entities/class-emd-video-widgets.php:39
@@ -428,89 +1543,53 @@ msgstr ""
 msgid "Featured Videos"
 msgstr ""
 
-#: youtube-showcase/includes/entities/class-emd-video.php:77
+#: youtube-showcase/includes/entities/class-emd-video.php:85
 msgid "Featured Image"
 msgstr ""
 
-#: youtube-showcase/includes/entities/class-emd-video.php:259
-#: youtube-showcase/includes/entities/class-emd-video.php:344
+#: youtube-showcase/includes/entities/class-emd-video.php:267
+#: youtube-showcase/includes/entities/class-emd-video.php:352
 msgid "Video"
 msgstr ""
 
-#: youtube-showcase/includes/entities/class-emd-video.php:260
+#: youtube-showcase/includes/entities/class-emd-video.php:268
 msgid "Add New"
 msgstr ""
 
-#: youtube-showcase/includes/entities/class-emd-video.php:261
+#: youtube-showcase/includes/entities/class-emd-video.php:269
 msgid "Add New Video"
 msgstr ""
 
-#: youtube-showcase/includes/entities/class-emd-video.php:262
+#: youtube-showcase/includes/entities/class-emd-video.php:270
 msgid "Edit Video"
 msgstr ""
 
-#: youtube-showcase/includes/entities/class-emd-video.php:263
+#: youtube-showcase/includes/entities/class-emd-video.php:271
 msgid "New Video"
 msgstr ""
 
-#: youtube-showcase/includes/entities/class-emd-video.php:264
+#: youtube-showcase/includes/entities/class-emd-video.php:272
 msgid "All Videos"
 msgstr ""
 
-#: youtube-showcase/includes/entities/class-emd-video.php:265
+#: youtube-showcase/includes/entities/class-emd-video.php:273
 msgid "View Video"
 msgstr ""
 
-#: youtube-showcase/includes/entities/class-emd-video.php:267
+#: youtube-showcase/includes/entities/class-emd-video.php:275
 msgid "No Videos Found"
 msgstr ""
 
-#: youtube-showcase/includes/entities/class-emd-video.php:268
+#: youtube-showcase/includes/entities/class-emd-video.php:276
 msgid "No Videos Found In Trash"
 msgstr ""
 
-#: youtube-showcase/includes/entities/class-emd-video.php:349
+#: youtube-showcase/includes/entities/class-emd-video.php:357
 msgid "Video Info"
 msgstr ""
 
-#: youtube-showcase/includes/entities/class-emd-video.php:417
+#: youtube-showcase/includes/entities/class-emd-video.php:429
 msgid "Operations"
-msgstr ""
-
-#: youtube-showcase/includes/forms.php:104
-msgid "Title is required"
-msgstr ""
-
-#: youtube-showcase/includes/forms.php:138
-msgid "Category is required!"
-msgstr ""
-
-#: youtube-showcase/includes/forms.php:172
-msgid "Tag is required!"
-msgstr ""
-
-#: youtube-showcase/includes/forms.php:182
-msgid "Please enter the characters with black color."
-msgstr ""
-
-#: youtube-showcase/includes/forms.php:184
-msgid "Code"
-msgstr ""
-
-#: youtube-showcase/includes/forms.php:189
-msgid "Captcha is required"
-msgstr ""
-
-#: youtube-showcase/includes/forms.php:193
-msgid "Characters from captcha image entered incorrectly!"
-msgstr ""
-
-#: youtube-showcase/includes/forms.php:197
-msgid "Search"
-msgstr ""
-
-#: youtube-showcase/includes/integration-shortcodes.php:17
-msgid "You are not allowed to access to this area. Please contact the site administrator."
 msgstr ""
 
 #: youtube-showcase/includes/login-register-functions.php:72
@@ -611,10 +1690,6 @@ msgstr ""
 
 #: youtube-showcase/includes/plugin-feedback-functions.php:174
 msgid "Pro Version"
-msgstr ""
-
-#: youtube-showcase/includes/plugin-feedback-functions.php:194
-msgid "Settings"
 msgstr ""
 
 #: youtube-showcase/includes/plugin-feedback-functions.php:211
@@ -726,11 +1801,6 @@ msgstr ""
 msgid "Please share what you expected."
 msgstr ""
 
-#: youtube-showcase/includes/scripts.php:68
-#: youtube-showcase/includes/scripts.php:152
-msgid "Please enter a unique value."
-msgstr ""
-
 #: youtube-showcase/includes/scripts.php:69
 msgid "required"
 msgstr ""
@@ -742,70 +1812,6 @@ msgstr ""
 #: youtube-showcase/includes/scripts.php:98
 #: youtube-showcase/includes/scripts.php:103
 msgid "Relationship"
-msgstr ""
-
-#: youtube-showcase/includes/scripts.php:136
-msgid "This field is required."
-msgstr ""
-
-#: youtube-showcase/includes/scripts.php:137
-msgid "Please fix this field."
-msgstr ""
-
-#: youtube-showcase/includes/scripts.php:138
-msgid "Please enter a valid email address."
-msgstr ""
-
-#: youtube-showcase/includes/scripts.php:139
-msgid "Please enter a valid URL."
-msgstr ""
-
-#: youtube-showcase/includes/scripts.php:140
-msgid "Please enter a valid date."
-msgstr ""
-
-#: youtube-showcase/includes/scripts.php:141
-msgid "Please enter a valid date ( ISO )"
-msgstr ""
-
-#: youtube-showcase/includes/scripts.php:142
-msgid "Please enter a valid number."
-msgstr ""
-
-#: youtube-showcase/includes/scripts.php:143
-msgid "Please enter only digits."
-msgstr ""
-
-#: youtube-showcase/includes/scripts.php:144
-msgid "Please enter a valid credit card number."
-msgstr ""
-
-#: youtube-showcase/includes/scripts.php:145
-msgid "Please enter the same value again."
-msgstr ""
-
-#: youtube-showcase/includes/scripts.php:146
-msgid "Please enter no more than {0} characters."
-msgstr ""
-
-#: youtube-showcase/includes/scripts.php:147
-msgid "Please enter at least {0} characters."
-msgstr ""
-
-#: youtube-showcase/includes/scripts.php:148
-msgid "Please enter a value between {0} and {1} characters long."
-msgstr ""
-
-#: youtube-showcase/includes/scripts.php:149
-msgid "Please enter a value between {0} and {1}."
-msgstr ""
-
-#: youtube-showcase/includes/scripts.php:150
-msgid "Please enter a value less than or equal to {0}."
-msgstr ""
-
-#: youtube-showcase/includes/scripts.php:151
-msgid "Please enter a value greater than or equal to {0}."
 msgstr ""
 
 #: youtube-showcase/layouts/emd-archive.php:33
@@ -820,38 +1826,6 @@ msgstr ""
 msgid "Next <i class=\"fa fa-angle-right\"></i>"
 msgstr ""
 
-#: youtube-showcase/layouts/emd-login.php:4
-msgid "Log into Your Account"
-msgstr ""
-
-#: youtube-showcase/layouts/emd-login.php:6
-msgid "Username or Email"
-msgstr ""
-
-#: youtube-showcase/layouts/emd-login.php:10
-msgid "Password"
-msgstr ""
-
-#: youtube-showcase/layouts/emd-login.php:14
-msgid "Remember Me"
-msgstr ""
-
-#: youtube-showcase/layouts/emd-login.php:21
-msgid "Log In"
-msgstr ""
-
-#: youtube-showcase/layouts/emd-login.php:26
-msgid "Lost Password?"
-msgstr ""
-
-#: youtube-showcase/layouts/emd-login.php:31
-msgid "Register"
-msgstr ""
-
-#: youtube-showcase/layouts/emd-register.php:6
-msgid "Username"
-msgstr ""
-
 #: youtube-showcase/layouts/emd-register.php:10
 msgid "Email"
 msgstr ""
@@ -862,14 +1836,6 @@ msgstr ""
 
 #: youtube-showcase/layouts/emd-register.php:18
 msgid "Last Name"
-msgstr ""
-
-#: youtube-showcase/layouts/emd-register.php:26
-msgid "Confirm Password"
-msgstr ""
-
-#: youtube-showcase/layouts/emd-register.php:39
-msgid "Login"
 msgstr ""
 
 #: youtube-showcase/layouts/emd-single.php:47
@@ -886,7 +1852,7 @@ msgstr ""
 msgid "No records have been found matching the term."
 msgstr ""
 
-#: youtube-showcase/layouts/shc-video-search-header.php:1
+#: youtube-showcase/layouts/shc-video-search-header.php:2
 msgid "Video Results"
 msgstr ""
 
@@ -894,12 +1860,16 @@ msgstr ""
 msgid "Cheatin&#8217; huh?"
 msgstr ""
 
-#: youtube-showcase/youtube-showcase.php:257
+#: youtube-showcase/youtube-showcase.php:253
 msgid "Video Settings"
 msgstr ""
 
-#: youtube-showcase/youtube-showcase.php:262
+#: youtube-showcase/youtube-showcase.php:258
 msgid "Glossary"
+msgstr ""
+
+#: youtube-showcase/youtube-showcase.php:266
+msgid "YouTube API"
 msgstr ""
 
 #: youtube-showcase/youtube-showcase.php:270
@@ -907,13 +1877,17 @@ msgid "Shortcodes"
 msgstr ""
 
 #: youtube-showcase/youtube-showcase.php:274
-msgid "Plugins"
+msgid "Forms"
 msgstr ""
 
 #: youtube-showcase/youtube-showcase.php:278
+msgid "Plugins"
+msgstr ""
+
+#: youtube-showcase/youtube-showcase.php:282
 msgid "Support"
 msgstr ""
 
-#: youtube-showcase/youtube-showcase.php:297
+#: youtube-showcase/youtube-showcase.php:301
 msgid "Licenses"
 msgstr ""
