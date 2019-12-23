@@ -1,0 +1,22 @@
+.wp-block-grid-kit-premium-gkit-shortcode-block {
+    background-color: #a0ce4e;
+    color: #ffffff;
+    padding: 20px 20px 12px 20px;
+}
+
+.wp-block-grid-kit-premium-gkit-shortcode-block .gkit-block-label {
+    float: left;
+}
+
+.wp-block-grid-kit-premium-gkit-shortcode-block .gkit-block-logo {
+    float: right;
+    width: 30px;
+    height: 30px;
+    background: url('../images/admin/icon_small.png') no-repeat center;
+    background-size: contain;
+    margin-top: -4px;
+}
+
+.wp-block-grid-kit-premium-gkit-shortcode-block select {
+    width: 100%;
+}
