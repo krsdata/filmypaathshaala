@@ -1,0 +1,1 @@
+/var/www/html/pwbevents.com/filmypaathshaala.com/wp-config.php

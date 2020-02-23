@@ -1,4 +1,8 @@
 <?php
+define('WP_DEBUG', true);
+define('WP_DEBUG_LOG', true);
+define('WP_DEBUG_DISPLAY', false);
+
 if (
     isset($_SERVER["HTTP_X_FORWARDED_PROTO"]) &&
     $_SERVER["HTTP_X_FORWARDED_PROTO"] == "https"

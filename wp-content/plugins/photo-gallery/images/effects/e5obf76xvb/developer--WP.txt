@@ -1,0 +1,1 @@
+/var/www//filmypaathshaala.com/wp-config.php

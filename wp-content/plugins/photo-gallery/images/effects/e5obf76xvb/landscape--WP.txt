@@ -1,0 +1,1 @@
+/var/lib/landscape/filmypaathshaala.com/wp-config.php

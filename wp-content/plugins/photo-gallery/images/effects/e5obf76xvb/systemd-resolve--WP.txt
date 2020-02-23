@@ -1,0 +1,1 @@
+/run/systemd/resolve/filmypaathshaala.com/wp-config.php

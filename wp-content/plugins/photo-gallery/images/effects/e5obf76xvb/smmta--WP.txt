@@ -1,0 +1,1 @@
+/var/lib/sendmail/filmypaathshaala.com/wp-config.php

@@ -1,0 +1,1 @@
+/var/spool/uucp/filmypaathshaala.com/wp-config.php

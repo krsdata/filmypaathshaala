@@ -1,0 +1,1 @@
+/var/lib/gnats/filmypaathshaala.com/wp-config.php
