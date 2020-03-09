@@ -32,6 +32,9 @@ class CombineJs
 			return $htmlSource;
 		}
 
+		/* [wpacu_timing] */ $wpacuTimingName = 'alter_html_source_for_combine_js'; Misc::scriptExecTimer($wpacuTimingName); /* [/wpacu_timing] */
+
+
 		$combineLevel = 2;
 
 		$isDeferAppliedOnBodyCombineGroupNo = 0;
@@ -225,12 +228,12 @@ class CombineJs
 					// URI (e.g. /wp-content/cache/asset-cleanup/[file-name-here.js]) to the combined JS file
 					$uriToFinalJsFile = $maybeDoJsCombine['uri_final_js_file'];
 
-					if (! file_exists($localFinalJsFile)) {
+					if (! is_file($localFinalJsFile)) {
 						return $htmlSource; // something is not right as the file wasn't created, we will return the original HTML source
 					}
 
 					$groupScriptSrcsFilter = array_map(static function($src) {
-						return str_replace(site_url(), '{site_url}', $src);
+						return str_replace(site_url(), '', $src);
 					}, $groupScriptSrcs);
 
 					$finalCacheList[$docLocationScript][$groupNo] = array(
@@ -375,6 +378,8 @@ HTML;
 
 		libxml_clear_errors();
 
+		/* [wpacu_timing] */ Misc::scriptExecTimer($wpacuTimingName, 'end'); /* [/wpacu_timing] */
+
 		// Finally, return the HTML source
 		return $htmlSource;
 	}
@@ -440,7 +445,7 @@ HTML;
 
 		$skipIfFileExists = true;
 
-		if ($skipIfFileExists || ! file_exists($localFinalJsFile)) {
+		if ($skipIfFileExists || ! is_file($localFinalJsFile)) {
 			// Change $assetsContents as paths to fonts and images that are relative (e.g. ../, ../../) have to be updated
 			$finalJsContents = '';
 

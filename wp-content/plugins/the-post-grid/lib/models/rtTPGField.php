@@ -1,6 +1,6 @@
 <?php
 
-if(!class_exists('rtTPGField')):
+if (!class_exists('rtTPGField')):
     class rtTPGField
     {
         private $type;
@@ -19,21 +19,20 @@ if(!class_exists('rtTPGField')):
         private $alignment;
         private $placeholder;
 
-        function __construct(){
+        function __construct() {
         }
 
-        private function setArgument($attr){
+        private function setArgument($attr) {
             $this->type = isset($attr['type']) ? ($attr['type'] ? $attr['type'] : 'text') : 'text';
             $this->multiple = isset($attr['multiple']) ? ($attr['multiple'] ? $attr['multiple'] : false) : false;
-            $this->name = isset($attr['name']) ? ($attr['name'] ? $attr['name'] : null) : null;
             $this->name = isset($attr['name']) ? ($attr['name'] ? $attr['name'] : null) : null;
             $this->default = isset($attr['default']) ? ($attr['default'] ? $attr['default'] : null) : null;
             $this->value = isset($attr['value']) ? ($attr['value'] ? $attr['value'] : null) : null;
 
-            if(!$this->value){
-                if($this->multiple){
+            if (!$this->value) {
+                if ($this->multiple) {
                     $v = get_post_meta(get_the_ID(), $this->name);
-                }else{
+                } else {
                     $v = get_post_meta(get_the_ID(), $this->name, true);
                 }
                 $this->value = ($v ? $v : $this->default);
@@ -49,64 +48,61 @@ if(!class_exists('rtTPGField')):
             $this->option = isset($attr['option']) ? ($attr['option'] ? $attr['option'] : null) : null;
             $this->attr = isset($attr['attr']) ? ($attr['attr'] ? $attr['attr'] : null) : null;
             $this->alignment = isset($attr['alignment']) ? ($attr['alignment'] ? $attr['alignment'] : null) : null;
-
+            $this->class = $this->class ? $this->class . " rt-form-control" : "rt-form-control";
         }
 
-        public function Field($attr)
-        {
+        public function Field($attr) {
             $this->setArgument($attr);
+            $holderId = $this->name . "_holder";
             $html = null;
-            $html .= "<div class='field-holder {$this->holderClass}'>";
-                    $html .= "<div class='field-label'>";
-                        if($this->label){
-                            $html .="<label>{$this->label}</label>";
-                        }
-                    $html .= "</div>";
-                    $html .= "<div class='field'>";
-                        switch($this->type){
-                            case 'text':
-                                $html .= $this->text();
-                                break;
+            $html .= "<div class='rt-field-wrapper {$this->holderClass}' id='{$holderId}'>";
+            $html .= sprintf('<div class="rt-label">%s</div>',
+                $this->label ? sprintf('<label for="">%s</label>', $this->label) : ''
+            );
+            $html .= "<div class='rt-field'>";
+            switch ($this->type) {
+                case 'text':
+                    $html .= $this->text();
+                    break;
 
-                            case 'url':
-                                $html .= $this->url();
-                                break;
+                case 'url':
+                    $html .= $this->url();
+                    break;
 
-                            case 'number':
-                                $html .= $this->number();
-                                break;
+                case 'number':
+                    $html .= $this->number();
+                    break;
 
-                            case 'select':
-                                $html .= $this->select();
-                                break;
+                case 'select':
+                    $html .= $this->select();
+                    break;
 
-                            case 'textarea':
-                                $html .= $this->textArea();
-                                break;
+                case 'textarea':
+                    $html .= $this->textArea();
+                    break;
 
-                            case 'checkbox':
-                                $html .= $this->checkbox();
-                                break;
+                case 'checkbox':
+                    $html .= $this->checkbox();
+                    break;
 
-                            case 'radio':
-                                $html .= $this->radioField();
-                                break;
+                case 'radio':
+                    $html .= $this->radioField();
+                    break;
 
-                            case 'custom_css':
-                                $html .= $this->customCss();
-                                break;
-                        }
-                        if($this->description) {
-                            $html .= "<p class='description'>{$this->description}</p>";
-                        }
-                    $html .="</div>"; // field
-            $html .="</div>"; // field holder
+                case 'custom_css':
+                    $html .= $this->customCss();
+                    break;
+            }
+            if ($this->description) {
+                $html .= "<p class='description'>{$this->description}</p>";
+            }
+            $html .= "</div>"; // field
+            $html .= "</div>"; // field holder
 
             return $html;
         }
 
-        private function text()
-        {
+        private function text() {
             $h = null;
             $h .= "<input
                     type='text'
@@ -120,15 +116,15 @@ if(!class_exists('rtTPGField')):
             return $h;
         }
 
-        private  function customCss(){
+        private function customCss() {
             $h = null;
             $h .= '<div class="rt-custom-css">';
-                $h .= '<div class="custom_css_container">';
-                    $h .= "<div name='{$this->name}' id='ret-".mt_rand()."' class='custom-css'>";
-                    $h .= '</div>';
-                $h .= '</div>';
+            $h .= '<div class="custom_css_container">';
+            $h .= "<div name='{$this->name}' id='ret-" . mt_rand() . "' class='custom-css'>";
+            $h .= '</div>';
+            $h .= '</div>';
 
-                $h .= "<textarea
+            $h .= "<textarea
                         style='display: none;'
                         class='custom_css_textarea'
                         id='{$this->id}'
@@ -139,8 +135,7 @@ if(!class_exists('rtTPGField')):
             return $h;
         }
 
-        private function url()
-        {
+        private function url() {
             $h = null;
             $h .= "<input
                     type='url'
@@ -154,8 +149,7 @@ if(!class_exists('rtTPGField')):
             return $h;
         }
 
-        private function number()
-        {
+        private function number() {
             $h = null;
             $h .= "<input
                     type='number'
@@ -169,31 +163,29 @@ if(!class_exists('rtTPGField')):
             return $h;
         }
 
-        private function select()
-        {
+        private function select() {
             $h = null;
-            if($this->multiple){
+            if ($this->multiple) {
                 $this->attr = " style='min-width:160px;'";
-                $this->name = $this->name."[]";
-                $this->attr = $this->attr." multiple='multiple'";
+                $this->name = $this->name . "[]";
+                $this->attr = $this->attr . " multiple='multiple'";
                 $this->value = (is_array($this->value) && !empty($this->value) ? $this->value : array());
-            }else{
+            } else {
                 $this->value = array($this->value);
             }
 
             $h .= "<select name='{$this->name}' id='{$this->id}' class='{$this->class}' {$this->attr}>";
-                if(is_array($this->options) && !empty($this->options)){
-                    foreach($this->options as $key => $value){
-                        $slt = (in_array($key, $this->value) ? "selected" : null);
-                        $h .= "<option {$slt} value='{$key}'>{$value}</option>";
-                    }
+            if (is_array($this->options) && !empty($this->options)) {
+                foreach ($this->options as $key => $value) {
+                    $slt = (in_array($key, $this->value) ? "selected" : null);
+                    $h .= "<option {$slt} value='{$key}'>{$value}</option>";
                 }
+            }
             $h .= "</select>";
             return $h;
         }
 
-        private function textArea()
-        {
+        private function textArea() {
             $h = null;
             $h .= "<textarea
                     class='{$this->class} rt-textarea'
@@ -205,14 +197,13 @@ if(!class_exists('rtTPGField')):
             return $h;
         }
 
-        private function checkbox()
-        {
+        private function checkbox() {
             $h = null;
-            if($this->multiple){
-                $this->name = $this->name."[]";
+            if ($this->multiple) {
+                $this->name = $this->name . "[]";
                 $this->value = (is_array($this->value) && !empty($this->value) ? $this->value : array());
             }
-            if($this->multiple) {
+            if ($this->multiple) {
                 $h .= "<div class='checkbox-group {$this->alignment}' id='{$this->id}'>";
                 if (is_array($this->options) && !empty($this->options)) {
                     foreach ($this->options as $key => $value) {
@@ -223,15 +214,14 @@ if(!class_exists('rtTPGField')):
                     }
                 }
                 $h .= "</div>";
-            }else{
+            } else {
                 $checked = ($this->value ? "checked" : null);
                 $h .= "<label><input type='checkbox' {$checked} id='{$this->id}' name='{$this->name}' value='1' />{$this->option}</label>";
             }
             return $h;
         }
 
-        private function radioField()
-        {
+        private function radioField() {
             $h = null;
             $h .= "<div class='radio-group {$this->alignment}' id='{$this->id}'>";
             if (is_array($this->options) && !empty($this->options)) {

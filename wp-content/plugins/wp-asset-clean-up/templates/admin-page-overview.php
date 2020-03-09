@@ -8,14 +8,15 @@ if (! isset($data)) {
 
 include_once '_top-area.php';
 ?>
-<div style="padding: 0 0 10px; line-height: 22px;"><strong>Note:</strong> This overview contains all the changes of any kind (unload rules, load exceptions, preloads, notes, async/defer SCRIPT attributes, changed positions, etc.) made via Asset CleanUp to any of the loaded (enqueued) CSS/JS files. To make any changes to the values below, please use the "CSS &amp; JavaScript Load Manager" or "Bulk Changes" tabs.</div>
-<hr />
 <div class="wrap wpacu-overview-wrap">
+    <div style="padding: 0 0 10px; line-height: 22px;"><strong>Note:</strong> This overview contains all the changes of any kind (unload rules, load exceptions, preloads, notes, async/defer SCRIPT attributes, changed positions, etc.) made via Asset CleanUp to any of the loaded (enqueued) CSS/JS files. To make any changes to the values below, please use the "CSS &amp; JavaScript Load Manager" or "Bulk Changes" tabs.</div>
+    <hr />
+
     <div style="padding: 0 10px 0 0;">
-        <h3><?php _e('Stylesheets (.css)', 'wp-asset-clean-up'); ?>
+        <h3><span class="dashicons dashicons-admin-appearance"></span> <?php _e('Stylesheets (.css)', 'wp-asset-clean-up'); ?>
         <?php
         if (isset($data['handles']['styles']) && count($data['handles']['styles']) > 0) {
-            echo ' &#10230; Total: '.count($data['handles']['styles']);
+            echo ' &#10230; Total handles with rules: '.count($data['handles']['styles']);
         }
         ?></h3>
         <?php
@@ -67,10 +68,10 @@ include_once '_top-area.php';
 
         <hr style="margin: 15px 0;"/>
 
-            <h3><?php _e('Scripts (.js)', 'wp-asset-clean-up'); ?>
+            <h3><span class="dashicons dashicons-media-code"></span> <?php _e('Scripts (.js)', 'wp-asset-clean-up'); ?>
 	        <?php
 	        if (isset($data['handles']['scripts']) && count($data['handles']['scripts']) > 0) {
-		        echo ' &#10230; Total: '.count($data['handles']['scripts']);
+		        echo ' &#10230; Total handles with rules: '.count($data['handles']['scripts']);
 	        }
 	        ?></h3>
 	    <?php

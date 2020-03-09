@@ -32,7 +32,7 @@ if ($data['bulk_unloaded_type'] === 'post_type') {
 		<ul class="wpacu_asset_options">
 			<?php
 			if ($data['row']['is_post_type_unloaded']) {
-			?>
+				?>
 				<li>
 					<label><input data-handle="<?php echo $data['row']['obj']->handle; ?>"
 					              class="wpacu_bulk_option wpacu_style wpacu_keep_bulk_rule"
@@ -74,7 +74,7 @@ if ($data['bulk_unloaded_type'] === 'post_type') {
 					              value="<?php echo $data['row']['obj']->handle; ?>"/>
 						<?php echo $unloadBulkText; ?></label>
 				</li>
-			<?php
+				<?php
 			}
 			?>
 		</ul>

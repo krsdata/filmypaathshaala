@@ -1,19 +1,40 @@
 <?php
-
+/**
+ * @var string $grid
+ * @var string $pLink
+ * @var string $class
+ * @var bool $link
+ * @var string $link_target
+ * @var string $title_tag
+ * @var string $categories
+ * @var string $read_more_text
+ * @var string $date
+ * @var string $author
+ * @var bool $overlay
+ * @var array $items
+ */
 $html = null;
 $html .= "<div class='{$grid} {$class}'>";
     $html .= '<div class="rt-holder">';
 		if(!empty($imgSrc)) {
 			$html .= '<div class="rt-img-holder">';
-			if($overlay) {
-				$html .= sprintf('<div class="overlay"><a class="view-details" href="%s"><i class="fa fa-info"></i></a></div>', $pLink);
+			if($overlay && $link) {
+				$html .= sprintf('<div class="overlay"><a class="view-details" href="%s"%s><i class="fa fa-info"></i></a></div>', $pLink, $link_target);
 			}
-			$html .= "<a href='{$pLink}'><img class='img-responsive' src='{$imgSrc}' alt='{$title}'></a>";
+			if($link) {
+                $html .= sprintf('<a href="%s"%s><img class="img-responsive" src="%s" alt="%s"></a>', $pLink,$link_target, $imgSrc, $title);
+            }else{
+			    $html .= "<img class='img-responsive' src='{$imgSrc}' alt='{$title}'>";
+            }
 			$html .= '</div> ';
 		}
         $html .= '<div class="rt-detail">';
             if(in_array('title', $items)){
-                $html .= sprintf('<%1$s class="entry-title"><a href="%2$s">%3$s</a></%1$s>', $title_tag, $pLink, $title);
+                if($link) {
+                    $html .= sprintf('<%1$s class="entry-title"><a href="%2$s"%4$s>%3$s</a></%1$s>', $title_tag, $pLink, $title,$link_target);
+                }else{
+                    $html .= sprintf('<%1$s class="entry-title">%2$s</%1$s>', $title_tag, $title);
+                }
             }
             $postMetaTop = $postMetaMid =null;
 
@@ -44,10 +65,8 @@ $html .= "<div class='{$grid} {$class}'>";
                 $html .= "<div class='post-content'>{$excerpt}</div>";
             }
             $postMetaBottom = null;
-
-
-            if(in_array('read_more', $items)){
-                $postMetaBottom .= "<span class='read-more'><a href='{$pLink}'>{$read_more_text}</a></span>";
+            if(in_array('read_more', $items) && $link){
+                $postMetaBottom .= sprintf('<div class="read-more"><a href="%s"%s>%s</a></div>', $pLink, $link_target, $read_more_text);
             }
             if(!empty($postMetaBottom)){
                 $html .= "<div class='post-meta'>$postMetaBottom</div>";

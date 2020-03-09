@@ -40,17 +40,3 @@ function covermag_customize_register($wp_customize) {
 add_action('customize_register', 'covermag_customize_register', 99999);
 
 
-
-/*Add the demo file*/
-function covermag_add_demo_files($demos) {
-    $demos[] = array(
-        'import_file_name'             => esc_html__( 'Child - CoverMag', 'covermag' ),
-        'local_import_file'            => trailingslashit( get_stylesheet_directory() ) . 'demo-content/covermag/covernews.xml',
-        'local_import_widget_file'     => trailingslashit( get_stylesheet_directory() ) . 'demo-content/covermag/covernews.wie',
-        'local_import_customizer_file' => trailingslashit( get_stylesheet_directory() ) . 'demo-content/covermag/covernews.dat',
-        'import_preview_image_url'     => trailingslashit( get_stylesheet_directory_uri() ) . 'demo-content/assets/covernews-covermag.jpg',
-        'preview_url'                  => 'https://demo.afthemes.com/covernews/covermag',
-    );
-    return $demos;
-}
-add_filter( 'aft_demo_import_files', 'covermag_add_demo_files');

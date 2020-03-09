@@ -2,7 +2,7 @@
 /*
 *      Robo Gallery By Robosoft
 *      Contact: https://robosoft.co/robogallery/ 
-*      Copyright (c) 2014-2019, Robosoft. All rights reserved.
+*      Copyright (c) 2014-2020, Robosoft. All rights reserved.
 */
 
 if ( ! defined( 'WPINC' ) ) exit;

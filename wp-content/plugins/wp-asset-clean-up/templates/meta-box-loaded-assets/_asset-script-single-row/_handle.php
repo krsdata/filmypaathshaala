@@ -11,8 +11,17 @@ if ( ! isset($data, $isCoreFile, $hideCoreFiles, $jqueryIconHtmlHandle, $childHa
 	<label for="script_<?php echo $data['row']['obj']->handle; ?>"> <?php _e('Handle:', 'wp-asset-clean-up'); ?> <strong><span style="color: green;"><?php echo $data['row']['obj']->handle; ?></span></strong> <?php if (in_array($data['row']['obj']->handle, array('jquery', 'jquery-core', 'jquery-migrate'))) { echo '&nbsp;'.$jqueryIconHtmlHandle; } ?></label>
 	&nbsp;<em>* JavaScript (.js)</em>
 	<?php if ($isCoreFile && ! $hideCoreFiles) { ?>
-		<span class="dashicons dashicons-warning wordpress-core-file"><span class="wpacu-tooltip">WordPress Core File<br />Not sure if needed or not? In this case, it's better to leave it loaded to avoid breaking the website.</span></span>
+		<span class="dashicons dashicons-wordpress-alt wordpress-core-file"><span class="wpacu-tooltip">WordPress Core File<br />Not sure if needed or not? In this case, it's better to leave it loaded to avoid breaking the website.</span></span>
 		<?php
+	}
+
+	// Any conditions set such as "IE" or "lt IE 8"?
+    $dataRowExtra = (array)$data['row']['obj']->extra;
+    if (isset($dataRowExtra['conditional']) && $dataRowExtra['conditional']) {
+	    // Notify the user the assets load only on Internet Explorer
+        if (strpos($dataRowExtra['conditional'], 'IE') !== false) {
+			echo '&nbsp;&nbsp;<span><img style="vertical-align: middle;" width="25" height="25" src="'.WPACU_PLUGIN_URL.'/assets/icons/icon-ie.svg" alt="" title="Microsoft / Public domain" />&nbsp;<span style="font-weight: 400; color: #1C87CF;">Loads only in Internet Explorer based on the following condition:</span> <em> if '.$dataRowExtra['conditional'].'</em></span>';
+        }
 	}
 	?>
 </div>

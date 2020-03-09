@@ -251,10 +251,8 @@ SQL;
 		if (isset($this->data['handles']['styles']) || isset($this->data['handles']['scripts'])) {
 			// Only fetch the assets information if there is something to be shown
 			// to avoid useless queries to the database
-			if ($assetsInfo = get_transient(WPACU_PLUGIN_ID . '_assets_info')) {
-				$this->data['assets_info'] = json_decode($assetsInfo, ARRAY_A);
+			$this->data['assets_info'] = Main::getHandlesInfo();
 			}
-		}
 
 		Main::instance()->parseTemplate('admin-page-overview', $this->data, true);
 	}
@@ -293,8 +291,13 @@ SQL;
                 $src = site_url() . $src;
             }
 
-            $ver = (isset( $data['assets_info'][ $assetType ][ $handle ]['ver'] ) && $data['assets_info'][ $assetType ][ $handle ]['ver']) ? $data['assets_info'][ $assetType ][ $handle ]['ver'] : $wp_version;
-            ?>
+	        $ver = $wp_version; // default
+	        if (isset($data['assets_info'][ $assetType ][ $handle ]['ver'] ) && $data['assets_info'][ $assetType ][ $handle ]['ver'] ) {
+		        $ver = is_array($data['assets_info'][ $assetType ][ $handle ]['ver'] )
+			        ? implode(',', $data['assets_info'][ $assetType ][ $handle ]['ver'] )
+			        : $data['assets_info'][ $assetType ][ $handle ]['ver'] ;
+	        }
+	        ?>
             <strong><span style="color: green;"><?php echo $handle; ?></span></strong>
             <small><em>v<?php echo $ver; ?></em></small>
             <?php
@@ -325,9 +328,7 @@ SQL;
 	        if (isset($handleData['positions']) && $handleData['positions']) {
                 $handleExtras[1] = '<span style="color: #004567; font-weight: 600;">Moved to <code>&lt;'.$handleData['positions'].'&gt;</code></span>';
             }
-            ?>
 
-            <?php
 	        /*
 	         * 1) Per page (homepage, a post, a category, etc.)
 	         * Async, Defer attributes
@@ -338,7 +339,7 @@ SQL;
 		        $handleExtras[2] = 'Homepage attributes: <strong>'.implode(', ', $handleData['script_attrs']['home_page']).'</strong>';
 	        }
 
-	        // date archive pages
+	        // Date archive pages
 	        if (isset($handleData['script_attrs']['date']) && ! empty($handleData['script_attrs']['date'])) {
 		        ksort($handleData['script_attrs']['date']);
 		        $handleExtras[22] = 'Date archive attributes: <strong>'.implode(', ', $handleData['script_attrs']['date']).'</strong>';
@@ -350,7 +351,7 @@ SQL;
 		        $handleExtras[23] = '404 Not Found attributes: <strong>'.implode(', ', $handleData['script_attrs']['404']).'</strong>';
 	        }
 
-	        // search results page
+	        // Search results page
 	        if (isset($handleData['script_attrs']['search']) && ! empty($handleData['script_attrs']['search'])) {
 		        ksort($handleData['script_attrs']['search']);
 		        $handleExtras[24] = '404 Not Found attributes: <strong>'.implode(', ', $handleData['script_attrs']['search']).'</strong>';
@@ -374,7 +375,7 @@ SQL;
 	            $handleExtras[3] .= rtrim($postsList, ' / ');
 	        }
 
-            // user archive page (specific author)
+            // User archive page (specific author)
 	        if (isset($handleData['script_attrs']['user']) && ! empty($handleData['script_attrs']['user'])) {
 		        $handleExtras[31] = 'Per author page attributes: ';
 
@@ -421,7 +422,7 @@ SQL;
 	        if (isset($handleData['script_site_wide_attrs'])) {
 		        $handleExtras[4] = 'Site-wide attributes: ';
 		        foreach ( $handleData['script_site_wide_attrs'] as $attrValue ) {
-			        $handleExtras[4] .= '<strong>' . $attrValue . '</strong>';
+			        $handleExtras[4] .= '<strong>' . $attrValue . '</strong>, ';
 
 			        // Are there any exceptions? e.g. async, defer unloaded site-wide, but loaded on the homepage
 			        if ( isset( $handleData['attrs_no_load'] ) && ! empty( $handleData['attrs_no_load'] ) ) {
@@ -527,14 +528,26 @@ SQL;
 	        if (! empty($handleExtras)) {
 		        echo '<small>' . implode( ' <span style="font-weight: 300; color: grey;">/</span> ', $handleExtras ) . '</small>';
 	        }
-            ?>
 
-            <?php if ( $src ) {
-                $appendAfterSrc = strpos($src, '?') === false ? '?ver='.$ver : '&wpacu_ver='.$ver;
-                ?>
+            if ( $src ) {
+                $verDb = (isset($data['assets_info'][ $assetType ][ $handle ]['ver']) && $data['assets_info'][ $assetType ][ $handle ]['ver']) ? $data['assets_info'][ $assetType ][ $handle ]['ver'] : false;
+
+		        $appendAfterSrc = (strpos($src, '?') === false) ? '?' : '&';
+
+		        if ( $verDb ) {
+		            if (is_array($verDb)) {
+			            $appendAfterSrc .= http_build_query(array('ver' => $data['assets_info'][ $assetType ][ $handle ]['ver']));
+                    } else {
+			            $appendAfterSrc .= 'ver='.$ver;
+                    }
+		        } else {
+			        $appendAfterSrc .= 'ver='.$wp_version; // default
+		        }
+		        ?>
                 <div><a <?php if ($isExternalSrc) { ?> data-wpacu-external-source="<?php echo $src . $appendAfterSrc; ?>" <?php } ?> href="<?php echo $src . $appendAfterSrc; ?>" target="_blank"><small><?php echo str_replace( site_url(), '', $src ); ?></small></a> <?php if ($isExternalSrc) { ?><span data-wpacu-external-source-status></span><?php } ?></div>
-            <?php } ?>
             <?php
+            }
+
             // Any note?
             if (isset($handleData['notes']) && $handleData['notes']) {
                 ?>
@@ -684,7 +697,7 @@ SQL;
 
 		// Unload via RegEx
 		if (isset($handleData['unload_regex']) && $handleData['unload_regex']) {
-			$handleChangesOutput['unloaded_via_regex'] = '<span style="color: #cc0000;">Unloads if</span> the request URI (from the URL) matches this RegEx: <code>'.($handleData['unload_regex']).'</code>';
+			$handleChangesOutput['unloaded_via_regex'] = '<span style="color: #cc0000;">Unloads if</span> the request URI (from the URL) matches this RegEx(es): <code>'.nl2br($handleData['unload_regex']).'</code>';
 
 			if (isset($handleChangesOutput['site_wide'])) {
 				$handleChangesOutput['unloaded_via_regex'] .= ' * <em>overwritten by the site-wide rule</em>';
@@ -720,10 +733,10 @@ SQL;
 		    if (isset($handleChangesOutput['load_exception_on_this_post'])) {
 		        $textToShow = ' and also if the request URI (from the URL) matches this RegEx';
             } else {
-			    $textToShow = '<span style="color: green;">Loaded (as an exception)</span> if the request URI (from the URL) matches this RegEx';
+			    $textToShow = '<span style="color: green;">Loaded (as an exception)</span> if the request URI (from the URL) matches this RegEx(es)';
             }
 
-			$handleChangesOutput['load_exception_regex'] = $textToShow.': <code>'.$handleData['load_regex'].'</code>';
+			$handleChangesOutput['load_exception_regex'] = $textToShow.': <code>'.nl2br($handleData['load_regex']).'</code>';
 			$anyLoadExceptionRule = true;
 		}
 

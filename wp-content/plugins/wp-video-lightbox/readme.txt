@@ -3,8 +3,8 @@ Contributors: Tips and Tricks HQ, Ruhul Amin, wptipsntricks
 Donate link: https://www.tipsandtricks-hq.com/
 Tags: wordpress lightbox, wordpress video lightbox, video lightbox, wp video lightbox, wordpress video embed, add video to wordpress, gallery, image, images, lightbox, lightview, overlay, photo, photos, picture, video  
 Requires at least: 3.0
-Tested up to: 5.2
-Stable tag: 1.8.8
+Tested up to: 5.3
+Stable tag: 1.8.9
 License: GPLv2 or later
 
 Very easy to use WordPress lightbox plugin to display YouTube and Vimeo videos in an elegant lightbox overlay.
@@ -16,6 +16,8 @@ The WordPress Video Lightbox plugin allows you to embed videos on a page using l
 This plugin can be used to display images, flash, YouTube, Vimeo, iFrame etc in a lightbox overlay. The embedded videos can be viewed on iPhone and iPad too.
 
 https://www.youtube.com/watch?v=WoLLwF6OwzQ
+
+https://www.youtube.com/watch?v=kDN2d8jU3zM
 
 = Embedding Vimeo Video =
 
@@ -114,6 +116,9 @@ https://www.tipsandtricks-hq.com/wordpress-video-lightbox-plugin-display-videos-
 None
 
 == Changelog ==
+
+= 1.8.9 =
+* Made some changes to the settings.
 
 = 1.8.8 =
 * Video lightbox is now compatible with WordPress 5.0.

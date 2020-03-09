@@ -7,6 +7,7 @@ if ( ! isset($data, $ver, $styleHandleHasSrc, $showGoogleFontRemoveNotice) ) {
 	exit; // no direct access
 }
 
+// If there is a source (in rare cases there are handles such as "woocommerce-inline" that do not have a source)
 if (isset($data['row']['obj']->src, $data['row']['obj']->srcHref) && $data['row']['obj']->src && $data['row']['obj']->srcHref) {
 	$styleHandleHasSrc = $isExternalSrc = true; // default
 
@@ -38,10 +39,20 @@ if (isset($data['row']['obj']->src, $data['row']['obj']->srcHref) && $data['row'
 	$toUnderline = 'display='.$data['plugin_settings']['google_fonts_display'];
 	$relSrc = str_replace($toUnderline, '<u style="background: #f2faf2;">'.$toUnderline.'</u>', $relSrc);
 
-	$appendAfterSrcHref = (strpos($data['row']['obj']->srcHref, '?') === false) ? '?' : '&';
+	if ($isExternalSrc) {
+		$verToAppend = ''; // no need for any "ver"
+	} else {
+		$appendAfterSrcHref = ( strpos( $data['row']['obj']->srcHref, '?' ) === false ) ? '?' : '&';
 
-	if (isset($data['row']['obj']->ver) && $data['row']['obj']->ver) {
-		$verToAppend = is_array($data['row']['obj']->ver) ? http_build_query(array('ver' => $data['row']['obj']->ver)) : 'ver='.$ver;
+		if ( isset( $data['row']['obj']->ver ) && $data['row']['obj']->ver ) {
+			$verToAppend = $appendAfterSrcHref .
+			               (is_array( $data['row']['obj']->ver )
+				               ? http_build_query( array( 'ver' => $data['row']['obj']->ver ) )
+				               : 'ver=' . $ver);
+		} else {
+			global $wp_version;
+			$verToAppend = $appendAfterSrcHref . 'ver=' . $wp_version;
+		}
 	}
 
 	if ( $isGoogleFontLink && $data['plugin_settings']['google_fonts_remove'] ) {
@@ -61,7 +72,7 @@ if (isset($data['row']['obj']->src, $data['row']['obj']->srcHref) && $data['row'
 	}
 	?>
 	<div class="wpacu-source-row" style="margin-top: 12px;">
-		<?php _e('Source:', 'wp-asset-clean-up'); ?> <a <?php if ($isExternalSrc) { ?>data-wpacu-external-source="<?php echo $data['row']['obj']->srcHref . $appendAfterSrcHref . $verToAppend; ?>" <?php } ?> target="_blank" style="color: green;" href="<?php echo $data['row']['obj']->srcHref . $appendAfterSrcHref . $verToAppend; ?>"><?php echo $relSrc; ?></a> <?php if ($isExternalSrc) { ?><span data-wpacu-external-source-status></span><?php } ?>
+		<?php _e('Source:', 'wp-asset-clean-up'); ?> <a <?php if ($isExternalSrc) { ?>data-wpacu-external-source="<?php echo $data['row']['obj']->srcHref . $verToAppend; ?>" <?php } ?> target="_blank" style="color: green;" href="<?php echo $data['row']['obj']->srcHref . $verToAppend; ?>"><?php echo $relSrc; ?></a> <?php if ($isExternalSrc) { ?><span data-wpacu-external-source-status></span><?php } ?>
 		&nbsp;&#10230;&nbsp;
 		Preload (if kept loaded)?
 		&nbsp;<select style="display: inline-block; width: auto;"
@@ -72,5 +83,9 @@ if (isset($data['row']['obj']->src, $data['row']['obj']->srcHref) && $data['row'
 		</select>
 		<small>* applies site-wide</small> <small><a style="text-decoration: none; color: inherit;" target="_blank" href="https://assetcleanup.com/docs/?p=202"><span class="dashicons dashicons-editor-help"></span></a></small>
 	</div>
+	<?php
+} else {
+	?>
+    <input type="hidden" name="wpacu_preloads[styles][<?php echo $data['row']['obj']->handle; ?>]" value="" />
 	<?php
 }

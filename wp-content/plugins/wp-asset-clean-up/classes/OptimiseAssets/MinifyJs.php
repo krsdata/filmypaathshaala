@@ -4,7 +4,6 @@ namespace WpAssetCleanUp\OptimiseAssets;
 use WpAssetCleanUp\Main;
 use WpAssetCleanUp\Menu;
 use WpAssetCleanUp\MetaBoxes;
-use MatthiasMullie\Minify;
 
 /**
  * Class MinifyJs
@@ -19,8 +18,12 @@ class MinifyJs
 	 */
 	public static function applyMinification($jsContent)
 	{
-		$minifier = new Minify\JS($jsContent);
-			return trim($minifier->minify());
+		if (class_exists('\MatthiasMullie\Minify\JS')) {
+				$minifier = new \MatthiasMullie\Minify\JS($jsContent);
+				return trim($minifier->minify());
+			}
+
+			return $jsContent;
 		}
 
 	/**
@@ -55,7 +58,10 @@ class MinifyJs
 			'#/wp-content/plugins/elementor/assets/(.*?).min.js#',
 
 			// WooCommerce Assets
-			'#/wp-content/plugins/woocommerce/assets/js/(.*?).min.js#'
+			'#/wp-content/plugins/woocommerce/assets/js/(.*?).min.js#',
+
+            // TranslatePress Multilingual
+            '#/translatepress-multilingual/assets/js/trp-editor.js#',
 
 			);
 

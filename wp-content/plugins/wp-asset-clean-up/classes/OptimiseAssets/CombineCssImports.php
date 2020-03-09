@@ -203,8 +203,11 @@ class CombineCssImports extends Minify
 			// check if current file was not imported previously in the same
 			// import chain.
 			if (in_array($importPath, $parents)) {
-				throw new FileImportException('Failed to import file "'.$importPath.'": circular reference detected.');
-			}
+				// No need to have and endless loop (the same file imported again and again)
+				$search[] = $match[0];
+				$replace[] = '';
+				continue;
+				}
 
 			// grab referenced file & optimize it (which may include importing
 			// yet other @import statements recursively)

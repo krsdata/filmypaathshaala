@@ -13,7 +13,8 @@ define( 'ROBO_GALLERY_IMAGES_FIELD_URL', plugin_dir_url( __FILE__ ) );
 
 function robo_gallery_images_field( $field, $meta ) {
 
-	wp_enqueue_script( 'robo-gallery-images-field', ROBO_GALLERY_IMAGES_FIELD_URL . 'js/script.js', array( 'jquery' ), ROBO_GALLERY_VERSION );
+	wp_enqueue_script( 'robo-gallery-images-field-lib', ROBO_GALLERY_IMAGES_FIELD_URL . 'js/gallery.lib.min.js', array( 'jquery' ), ROBO_GALLERY_VERSION );
+	wp_enqueue_script( 'robo-gallery-images-field', ROBO_GALLERY_IMAGES_FIELD_URL . 'js/script.min.js', array( 'jquery', 'robo-gallery-images-field-lib' ), ROBO_GALLERY_VERSION );
 	wp_enqueue_style( 'robo-gallery-images-field', ROBO_GALLERY_IMAGES_FIELD_URL . 'css/style.css', array(), '', 'all', ROBO_GALLERY_VERSION );
 	
 	/* remove extra content from OUR PLUGIN settings section */
@@ -22,12 +23,12 @@ function robo_gallery_images_field( $field, $meta ) {
 
 
 	if ( empty( $meta ) || $meta == ' ' || $meta == '' || !is_array($meta) ) {
-		$meta = ' ';
+		$meta = '';
 	} else $meta = implode( ',', $meta );
 
 	echo '<div class="robo-gallery-images-field rbs_block ">';
 	echo '	<input type="hidden" class="robo-gallery-images-field-value" id="' . $field->args( 'id' ) . '" name="' . $field->args( 'id' ) . '" value="' . $meta . '" />';
-	echo '	<button class="btn btn-info btn-lg "><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> ' . ( $field->args( 'button' ) ? $field->args( 'button' ) : 'Manage gallery' ) . ' </button>';
+	echo '	<button class="btn btn-info btn-lg " id="' . $field->args( 'id' ) . '_button"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> ' . ( $field->args( 'button' ) ? $field->args( 'button' ) : 'Manage gallery' ) . ' </button>';
 	echo '</div>';
 
 	$desc = $field->args( 'desc' );

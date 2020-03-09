@@ -16,6 +16,11 @@ class Tools
 	public $wpacuFor = 'reset';
 
 	/**
+	 * @var array
+	 */
+	public $errorLogsData = array();
+
+	/**
 	 * @var
 	 */
 	public $resetChoice;
@@ -36,6 +41,14 @@ class Tools
 	public function __construct()
 	{
 		$this->wpacuFor = Misc::getVar('request', 'wpacu_for', $this->wpacuFor);
+
+		if ($this->wpacuFor === 'debug') {
+			$isLogPHPErrors       = @ini_get( 'log_errors' );
+			$logPHPErrorsLocation = @ini_get( 'error_log' ) ?: 'none set';
+
+			$this->errorLogsData['log_status'] = $isLogPHPErrors;
+			$this->errorLogsData['log_file']   = $logPHPErrorsLocation;
+		}
 	}
 
 	/**
@@ -58,6 +71,10 @@ class Tools
 		if (Misc::getVar('post', 'wpacu-get-system-info')) {
 			$this->downloadSystemInfo();
 		}
+
+		if (Misc::getVar('post', 'wpacu-get-error-log') && is_file($this->errorLogsData['log_file'])) {
+		    self::downloadFile($this->errorLogsData['log_file']);
+        }
 
 		if (! empty($_POST) && $this->wpacuFor === 'import_export') {
 			$wpacuImportExport = new ImportExport();
@@ -115,6 +132,10 @@ class Tools
 		if ($this->data['for'] === 'system_info') {
 		    $this->data['system_info'] = $this->getSystemInfo();
         }
+
+		if ($this->data['for'] === 'debug') {
+			$this->data['error_log'] = $this->errorLogsData;
+		}
 
 		Main::instance()->parseTemplate('admin-page-tools', $this->data, true);
 	}
@@ -395,7 +416,7 @@ class Tools
 	    $storageStats = OptimizeCommon::getStorageStats();
 
 	    if (isset($storageStats['total_size'], $storageStats['total_files'])) {
-		    $return .= 'Total cached assets: '.$storageStats['total_files'].' ('.$storageStats['total_size'].')';
+		    $return .= 'Total cached files: '.$storageStats['total_files'].' ('.$storageStats['total_size'].') of which '.$storageStats['total_files_assets'].' are CSS/JS assets ('.$storageStats['total_size_assets'].')';
 	    } else {
 		    $return .= 'Not used';
         }
@@ -489,6 +510,27 @@ SQL;
         }
 
 	    return json_encode($arrayFromJson);
+    }
+
+	/**
+	 * e.g. error_log file for debugging purposes
+	 *
+	 * @param $localPathToFile
+	 */
+	public static function downloadFile($localPathToFile)
+    {
+	    if (! Menu::userCanManageAssets()) {
+		    exit();
+	    }
+
+	    $date = date('j-M-Y');
+	    $host = parse_url(site_url(), PHP_URL_HOST);
+
+	    header('Content-type: text/plain');
+	    header('Content-Disposition: attachment; filename="'.$host.'-website-errors-'.$date.'.log"');
+
+	    echo file_get_contents($localPathToFile);
+	    exit();
     }
 
 	/**
@@ -660,7 +702,7 @@ SQL;
 	    $transientLikesSql = '';
 
 	    foreach ($transientLikes as $transientLike) {
-		    $transientLikesSql .= " option_name LIKE '%".$transientLike."%' OR ";
+		    $transientLikesSql .= " option_name LIKE '".$transientLike."%' OR ";
 	    }
 
 	    $transientLikesSql = rtrim($transientLikesSql, ' OR ');

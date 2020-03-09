@@ -52,8 +52,11 @@ $wpacuTabList = array(
 	 * @param $data
 	 * @param string $for ('default': bulk unloads, regex unloads)
 	 */
-	function wpacuRenderHandleTd($handle, $assetType, $data, $for = 'default') {
+	function wpacuRenderHandleTd($handle, $assetType, $data, $for = 'default')
+    {
 	    global $wp_version;
+
+	    $isCoreFile = false; // default
 
 		if ( $for === 'default' ) {
 		    $src = (isset( $data['assets_info'][ $assetType ][ $handle ]['src'] ) && $data['assets_info'][ $assetType ][ $handle ]['src']) ? $data['assets_info'][ $assetType ][ $handle ]['src'] : false;
@@ -65,16 +68,34 @@ $wpacuTabList = array(
 			    || strpos(str_replace(site_url(), '', $src), '?') === 0 // Starts with ? right after the site url (it's a local URL)
 			) {
 				$isExternalSrc = false;
+				$isCoreFile = \WpAssetCleanUp\Misc::isCoreFile($data['assets_info'][$assetType][$handle]);
 			}
 
 			if (strpos($src, '/') === 0 && strpos($src, '//') !== 0) {
 				$src = site_url() . $src;
 			}
 
-		    $ver = (isset( $data['assets_info'][ $assetType ][ $handle ]['ver'] ) && $data['assets_info'][ $assetType ][ $handle ]['ver']) ? $data['assets_info'][ $assetType ][ $handle ]['ver'] : $wp_version;
+			if (isset($data['assets_info'][ $assetType ][ $handle ]['ver']) && $data['assets_info'][ $assetType ][ $handle ]['ver']) {
+				$verToPrint = $verToAppend = is_array($data['assets_info'][ $assetType ][ $handle ]['ver'])
+					? implode(',', $data['assets_info'][ $assetType ][ $handle ]['ver'])
+					: $data['assets_info'][ $assetType ][ $handle ]['ver'];
+				$verToAppend = is_array($data['assets_info'][ $assetType ][ $handle ]['ver'])
+                    ? http_build_query(array('ver' => $data['assets_info'][ $assetType ][ $handle ]['ver']))
+                    : 'ver='.$data['assets_info'][ $assetType ][ $handle ]['ver'];
+			} else {
+				$verToAppend = 'ver='.$wp_version;
+                $verToPrint = $wp_version;
+            }
 			?>
             <strong><span style="color: green;"><?php echo $handle; ?></span></strong>
-            <small><em>v<?php echo $ver; ?></em></small>
+            <small><em>v<?php echo $verToPrint; ?></em></small>
+			<?php
+			if ($isCoreFile) {
+				?>
+                <span title="WordPress Core File" style="font-size: 15px; vertical-align: middle;" class="dashicons dashicons-wordpress-alt wpacu-tooltip"></span>
+				<?php
+			}
+			?>
             <?php
 			// [wpacu_pro]
 			$preloadedStatus = isset($data['assets_info'][ $assetType ][ $handle ]['preloaded_status']) ? $data['assets_info'][ $assetType ][ $handle ]['preloaded_status'] : false;
@@ -83,7 +104,7 @@ $wpacuTabList = array(
             ?>
 
 			<?php if ( $src ) {
-			    $appendAfterSrc = strpos($src, '?') === false ? '?ver='.$ver : '&wpacu_ver='.$ver;
+			    $appendAfterSrc = strpos($src, '?') === false ? '?'.$verToAppend : '&'.$verToAppend;
 			    ?>
                 <div><a <?php if ($isExternalSrc) { ?> data-wpacu-external-source="<?php echo $src . $appendAfterSrc; ?>" <?php } ?> href="<?php echo $src . $appendAfterSrc; ?>" target="_blank"><small><?php echo str_replace( site_url(), '', $src ); ?></small></a> <?php if ($isExternalSrc) { ?><span data-wpacu-external-source-status></span><?php } ?></div>
 			<?php } ?>

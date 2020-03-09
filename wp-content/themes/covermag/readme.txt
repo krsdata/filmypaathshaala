@@ -2,8 +2,8 @@
 
 Contributors: AF themes
 Requires at least: 4.0
-Tested up to: 4.9
-Stable tag: 1.0.4
+Tested up to: 5
+Stable tag: 1.0.6
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: news, blog, entertainment, one-column, two-columns, left-sidebar, right-sidebar, custom-background, custom-menu, featured-images, full-width-template, custom-header, translation-ready, theme-options, threaded-comments
@@ -39,6 +39,12 @@ Support: https://afthemes.com/supports/
 CoverMag includes support for Infinite Scroll in Jetpack.
 
 == Change-log ==
+= 1.0.6 - Feb 13 2020 =
+* Updates - New search field.
+
+= 1.0.5 - Feb 04 2020 =
+* Fixed some design glitch
+
 = 1.0.4 - Oct 06 2018 =
 * CoverMag demo import functionality added
 

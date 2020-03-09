@@ -292,7 +292,18 @@
             });
         },
 
+        n.searchReveal = function () {
+            jQuery('.search-overlay .search-icon').on('click', function (e) {
+                jQuery(this).parent().toggleClass('reveal-search');
 
+                if( e.target.class != 'cart-search') {
+                    jQuery('.search-overlay').removeClass('reveal-search');
+                }
+                return false;
+            });
+
+
+        },
 
         // SHOW/HIDE SCROLL UP //
         n.show_hide_scroll_top = function () {
@@ -359,7 +370,7 @@
 
 
         e(document).ready(function () {
-            n.mobileMenu.init(), n.DataBackground(), n.setInstaHeight(), n.em_sticky(), n.jQueryMarquee(),n.jQueryMarqueeRight(), n.SlickCarousel(), n.Preloader(), n.Search(), n.scroll_up();
+            n.mobileMenu.init(), n.DataBackground(), n.setInstaHeight(), n.em_sticky(), n.jQueryMarquee(),n.jQueryMarqueeRight(), n.SlickCarousel(), n.Preloader(), n.Search(), n.searchReveal(), n.scroll_up();
         }), e(window).scroll(function () {
         n.stickyMenu(), n.show_hide_scroll_top();
     }), e(window).resize(function () {

@@ -488,26 +488,37 @@ class CleanUp
 	 */
 	public function cleanUpHtmlOutputForAssetsCall()
 	{
-		// WP Rocket (No Minify or Concatenate)
+		if (array_key_exists('wpacu_clean_load', $_GET)) {
+			// No Admin Bar
+			add_filter('show_admin_bar', '__return_false', PHP_INT_MAX);
+		}
+
+		// No Autoptimize
+		add_filter('autoptimize_filter_noptimize', '__return_false');
+
+		// No Fast Velocity Minify
+		add_action('plugins_loaded', static function() {
+			remove_action( 'setup_theme', 'fastvelocity_process_frontend' );
+		}, PHP_INT_MAX);
+
+		// No WP Rocket (Minify / Concatenate)
 		add_filter('get_rocket_option_minify_css', '__return_false');
 		add_filter('get_rocket_option_minify_concatenate_css', '__return_false');
 
 		add_filter('get_rocket_option_minify_js', '__return_false');
 		add_filter('get_rocket_option_minify_concatenate_js', '__return_false');
 
-		// W3 Total Cache: No Minify
+		// No W3 Total Cache: Minify
 		add_filter('w3tc_minify_enable', '__return_false');
 
-		// [SG Optimiser]
+		// [NO SG Optimiser]
 		self::filterSGOptions();
-
-		// Do not strip query strings
-		add_filter('sgo_rqs_exclude', array('.css', '.js'));
 
 		// Emulate page builder param to view page with no SG Optimiser on request
 		// Extra params to be used in case 'SG Optimiser' is called before Asset CleanUp: 'fl_builder', 'vcv-action', 'et_fb', 'ct_builder', 'tve'
 		add_filter('sgo_pb_params', static function($pbParams) {
-			$pbParams[] = 'wpassetclean_load';
+			$pbParams[] = WPACU_LOAD_ASSETS_REQ_KEY; // fetching assets
+			$pbParams[] = 'wpacu_clean_load'; // loading the page unoptimized for debugging purposes
 			return $pbParams;
 		});
 
@@ -518,10 +529,11 @@ class CleanUp
 		add_filter('sgo_js_async_exclude',    array($this, 'allJsHandles'));
 
 		add_filter('sgo_html_minify_exclude_params', static function ($excludeParams) {
-			$excludeParams[] = WPACU_LOAD_ASSETS_REQ_KEY;
+			$excludeParams[] = WPACU_LOAD_ASSETS_REQ_KEY; // fetching assets
+			$excludeParams[] = 'wpacu_clean_load'; // loading the page unoptimized for debugging purposes
 			return $excludeParams;
 		});
-		// [/SG Optimiser]
+		// [/NO SG Optimiser]
 	}
 
 	/**

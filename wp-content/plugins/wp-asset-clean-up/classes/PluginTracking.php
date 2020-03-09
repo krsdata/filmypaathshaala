@@ -160,7 +160,7 @@ class PluginTracking
 
 		// Retrieve current plugin information
 		$adminPluginFile = ABSPATH . '/wp-admin/includes/plugin.php';
-		if (! function_exists( 'get_plugins') && file_exists($adminPluginFile)) {
+		if (! function_exists( 'get_plugins') && is_file($adminPluginFile)) {
 			include $adminPluginFile;
 		}
 
@@ -211,7 +211,7 @@ class PluginTracking
 
 		$this->setup_data();
 
-		$response = wp_remote_post('https://gabelivan.com/tracking/?wpacu_action=checkin', array(
+		$response = wp_remote_post('https://www.gabelivan.com/tracking/?wpacu_action=checkin', array(
 			'method'      => 'POST',
 			'timeout'     => 8,
 			'redirection' => 5,

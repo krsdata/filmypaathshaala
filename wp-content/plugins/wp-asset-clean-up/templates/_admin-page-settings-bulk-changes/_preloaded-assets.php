@@ -115,7 +115,7 @@ do_action('wpacu_admin_notices');
             ?>
         </p>
         <div id="wpacu-updating-settings" style="margin-left: 285px; top: 10px;">
-            <img src="<?php echo admin_url(); ?>/images/spinner.gif" align="top" width="20" height="20" alt="" />
+            <img src="<?php echo admin_url('images/spinner.gif'); ?>" align="top" width="20" height="20" alt="" />
         </div>
     </div>
 </form>

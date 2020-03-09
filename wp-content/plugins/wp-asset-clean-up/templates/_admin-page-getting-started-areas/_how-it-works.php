@@ -14,11 +14,11 @@ if (! isset($data)) {
 <p>Once the setup is completed, the pages will have a better speed score since there will be less HTTP requests (.css &amp; .js files) loaded by the browser (this can be tested using tools such as GTMetrix) and combined with a backend page caching system it will improve the page speed even more.
 <p><?php _e('Page caching solutions include', 'wp-asset-clean-up'); ?>:</p>
 <ul style="font-size: 14px; list-style: disc; margin-left: 25px;">
-	<li style="line-height: 21px; margin-bottom: 15px;">A plugin such as <a target="_blank" href="https://gabelivan.com/visit/wp-rocket">WP Rocket</a> that creates static HTML files (which are lighter thanks to Asset CleanUp) and reads them avoiding PHP code processing within the active plugins &amp; theme, including database queries which can use lots of server resources if you have high traffic. <?php echo sprintf(__('The page caching improves the %sTTFB%s (time to first byte) which measures the duration from the user or client making an HTTP request to the first byte of the page being received by the client\'s browser.', 'wp-asset-clean-up'), '<a href="http://gabelivan.com/visit/wp-rocket-ttfb">', '</a>'); ?></li>
+	<li style="line-height: 21px; margin-bottom: 15px;">A plugin such as <a target="_blank" href="https://www.gabelivan.com/visit/wp-rocket">WP Rocket</a> that creates static HTML files (which are lighter thanks to Asset CleanUp) and reads them avoiding PHP code processing within the active plugins &amp; theme, including database queries which can use lots of server resources if you have high traffic. <?php echo sprintf(__('The page caching improves the %sTTFB%s (time to first byte) which measures the duration from the user or client making an HTTP request to the first byte of the page being received by the client\'s browser.', 'wp-asset-clean-up'), '<a href="http://gabelivan.com/visit/wp-rocket-ttfb">', '</a>'); ?></li>
 	<li style="line-height: 21px; margin-bottom: 20px;">
         <?php echo sprintf(
                 __('A hosting service that has its in-built WordPress caching like %sWPEngine%s or Kinsta, a web application accelerator like Varnish that can be setup the server etc.', 'wp-asset-clean-up'),
-                '<a href="https://gabelivan.com/visit/wp-engine">',
+                '<a href="https://www.gabelivan.com/visit/wp-engine">',
                 '</a>'
         ); ?>
     </li>

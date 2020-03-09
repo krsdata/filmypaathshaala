@@ -31,6 +31,7 @@ class Menu
 		    WPACU_PLUGIN_ID . '_getting_started',
 		    WPACU_PLUGIN_ID . '_settings',
 		    WPACU_PLUGIN_ID . '_assets_manager',
+		    WPACU_PLUGIN_ID . '_plugins_manager',
 		    WPACU_PLUGIN_ID . '_bulk_unloads',
 		    WPACU_PLUGIN_ID . '_overview',
 		    WPACU_PLUGIN_ID . '_tools',
@@ -48,7 +49,7 @@ class Menu
         	exit();
         }
 
-        add_action('admin_page_access_denied', array($this, 'pluginPagesAccessDenied'));
+	    add_action('admin_page_access_denied', array($this, 'pluginPagesAccessDenied'));
     }
 
     /**
@@ -81,11 +82,20 @@ class Menu
 
 	    add_submenu_page(
 		    self::$_slug,
-		    __('CSS/JS Load Manager', 'wp-asset-clean-up'),
-		    __('CSS/JS Load Manager', 'wp-asset-clean-up'),
+		    __('CSS/JS Manager', 'wp-asset-clean-up'),
+		    __('CSS/JS Manager', 'wp-asset-clean-up'),
 		    self::getAccessCapability(),
 		    WPACU_PLUGIN_ID . '_assets_manager',
 		    array(new AssetsPagesManager, 'page')
+	    );
+
+	    add_submenu_page(
+		    self::$_slug,
+		    __('Plugins Manager', 'wp-asset-clean-up'),
+		    __('Plugins Manager', 'wp-asset-clean-up'),
+		    self::getAccessCapability(),
+		    WPACU_PLUGIN_ID . '_plugins_manager',
+		    array(new PluginsManager, 'page')
 	    );
 
 	    add_submenu_page(

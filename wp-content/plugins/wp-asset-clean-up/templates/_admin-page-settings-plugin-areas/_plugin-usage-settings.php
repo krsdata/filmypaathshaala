@@ -81,7 +81,7 @@ foreach (\WpAssetCleanUp\MetaBoxes::$noMetaBoxesForPostTypes as $noMetaBoxesForP
 
                         <hr /><div class="wpacu-clearfix" style="height: 0;"></div>
 
-                        <p style="margin-top: 8px;"><?php _e('When you edit a post, page or custom post type and rarely manage loaded CSS/JS from the "Asset CleanUp: CSS & JavaScript Manager" meta box, you can choose to fetch the list when you click on a button. This will help declutter the edit page on load and also save resources as AJAX calls to the front-end won\'t be made to retrieve the assets\' list.', 'wp-asset-clean-up'); ?></p>
+                        <p style="margin-top: 8px;"><?php _e('When you are in the Dashboard and edit a post, page, custom post type, category or custom taxonomy and rarely manage loaded CSS/JS from the "Asset CleanUp: CSS & JavaScript Manager", you can choose to fetch the list when you click on a button. This will help declutter the edit page on load and also save resources as AJAX calls to the front-end won\'t be made to retrieve the assets\' list.', 'wp-asset-clean-up'); ?></p>
                         <ul style="margin-bottom: 0;">
                             <li>
                                 <label for="assets_list_show_status_default">
@@ -186,7 +186,7 @@ foreach (\WpAssetCleanUp\MetaBoxes::$noMetaBoxesForPostTypes as $noMetaBoxesForP
                         <li>
                             <label for="assets_list_layout_plugin_area_status_expanded">
                                 <input id="assets_list_layout_plugin_area_status_expanded"
-					                   checked="checked"
+				                       <?php if (! $data['assets_list_layout_plugin_area_status'] || $data['assets_list_layout_plugin_area_status'] === 'expanded') { ?>checked="checked"<?php } ?>
                                        type="radio"
                                        name="<?php echo WPACU_PLUGIN_ID . '_settings'; ?>[assets_list_layout_plugin_area_status]"
                                        value="expanded"> <?php _e('Expanded', 'wp-asset-clean-up'); ?> (<?php _e('Default', 'wp-asset-clean-up'); ?>)
@@ -361,9 +361,9 @@ foreach (\WpAssetCleanUp\MetaBoxes::$noMetaBoxesForPostTypes as $noMetaBoxesForP
             <td>
                 <select id="wpacu_fetch_cached_files_details_from"
                         name="<?php echo WPACU_PLUGIN_ID . '_settings'; ?>[fetch_cached_files_details_from]">
-                    <option <?php if ($data['fetch_cached_files_details_from'] === 'db_disk') { ?>selected="selected"<?php } ?> value="db_disk">Database &amp; Disk (50% / 50%)</option>
+                    <option <?php if ($data['fetch_cached_files_details_from'] === 'disk') { ?>selected="selected"<?php } ?> value="disk">Disk (default)</option>
                     <option <?php if ($data['fetch_cached_files_details_from'] === 'db') { ?>selected="selected"<?php } ?> value="db">Database</option>
-                    <option <?php if ($data['fetch_cached_files_details_from'] === 'disk') { ?>selected="selected"<?php } ?> value="disk">Disk</option>
+                    <option <?php if ($data['fetch_cached_files_details_from'] === 'db_disk') { ?>selected="selected"<?php } ?> value="db_disk">Database &amp; Disk (50% / 50%)</option>
                 </select> &nbsp; <span style="color: #004567; vertical-align: middle;" class="dashicons dashicons-info"></span> <a style="vertical-align: middle;" id="wpacu-fetch-assets-details-location-modal-target" href="#wpacu-fetch-assets-details-location-modal">Read more</a>
             </td>
         </tr>
@@ -381,22 +381,30 @@ foreach (\WpAssetCleanUp\MetaBoxes::$noMetaBoxesForPostTypes as $noMetaBoxesForP
                 <br />This is relevant in case there are alterations made to the content of the CSS/JS files via minification, combination or any other settings that would require an update to the content of a file (e.g. apply "font-display" to @font-face in stylesheets). When the caching is cleared, the previously cached CSS/JS files stored in <code><?php echo \WpAssetCleanUp\OptimiseAssets\OptimizeCommon::getRelPathPluginCacheDir(); ?></code> that are older than (X) days will be deleted as they are outdated and likely not referenced anymore in any source code (e.g. old cached pages, Google Search cached version etc.). <span style="color: #004567;" class="dashicons dashicons-info"></span> <a href="https://assetcleanup.com/docs/?p=237" target="_blank">Read more</a>
             </td>
         </tr>
-        <!-- [wpacu_lite] -->
+        <?php
+        ?>
+
         <tr valign="top">
             <th scope="row">
-                <label for="wpacu_disable_freemius"><?php _e('Disable Freemius Analytics &amp; Insights?', 'wp-asset-clean-up'); ?></label>
+                <label for="wpacu_frontend"><?php _e('Do not load the plugin on certain pages', 'wp-asset-clean-up'); ?></label>
             </th>
             <td>
-                <label class="wpacu_switch">
-                    <input id="wpacu_disable_freemius"
-                           type="checkbox"
-			            <?php echo (($data['disable_freemius'] == 1) ? 'checked="checked"' : ''); ?>
-                           name="<?php echo WPACU_PLUGIN_ID . '_settings'; ?>[disable_freemius]"
-                           value="1" /> <span class="wpacu_slider wpacu_round"></span> </label>
-                &nbsp;If enabled, it will not trigger any popup asking you about the reason why you decided to deactivate the plugin (from <em>"Plugins" -&gt; "Installed Plugins"</em> page). It's good if you do debugging and often deactivate the plugin or you just don't like plugin feedback popups. <span style="color: #004567;" class="dashicons dashicons-info"></span> <a id="wpacu-deactivate-modal-info-target" href="#wpacu-deactivate-modal-info"><?php _e('Read more', 'wp-asset-clean-up'); ?></a>
+                &nbsp;If you wish to prevent Asset CleanUp Pro from triggering on certain pages (except the Dashboard) or group of pages for any reason (e.g. incompatibility with another plugin), you can specify some URI patterns in the following textarea (one per line), just like the examples shown below:
+                <div style="margin: 8px 0 5px;">
+                <textarea id="wpacu_do_not_load_plugin_patterns"
+                           name="<?php echo WPACU_PLUGIN_ID . '_settings'; ?>[do_not_load_plugin_patterns]"
+                           rows="4"
+                           style="width: 100%;"><?php echo $data['do_not_load_plugin_patterns']; ?></textarea>
+                </div>
+                <div>
+                    <p>You can either use specific strings or patterns (the # delimiter will be automatically applied to the <code>preg_match()</code> PHP function that would check if the requested URI is matched). Please do not include the domain name. Here are a few examples:</p>
+                    <ul>
+                        <li><code>/checkout/</code> - if it contains the string</li>
+                        <li><code>/product/(.*?)/</code> - any product page (most likely from WooCommerce)</li>
+                    </ul>
+                </div>
             </td>
         </tr>
-        <!-- [/wpacu_lite] -->
     </table>
 </div>
 
@@ -435,14 +443,13 @@ foreach (\WpAssetCleanUp\MetaBoxes::$noMetaBoxesForPostTypes as $noMetaBoxesForP
 <div id="wpacu-fetch-assets-details-location-modal" class="wpacu-modal" style="padding-top: 100px;">
     <div class="wpacu-modal-content" style="max-width: 800px;">
         <span class="wpacu-close">&times;</span>
-        <p>Any optimized files (e.g. via minification, combination) have their caching information (such as original location, new optimized location, version) stored in both the database and the disk by default to balance the usage of resources when you have loads of files to have their details fetched.</p>
+        <p>Any optimized files (e.g. via minification, combination) have their caching information (such as original location, new optimized location, version) stored in the disk by default (in most cases, it's the most effective option) to avoid extra connections to the database for a few files' information.</p>
+        <p>However, if you already have a light database and lots of Apache/NGINX resources already in use by your theme/other plugins, you can balance the usage of <?php echo WPACU_PLUGIN_TITLE; ?>'s resources and go for the "Database &amp; Disk (50% / 50%)" option (Example: If, for instance, on a page, there are 19 CSS/JS files which are optimized &amp; cached, 10 would have their caching information fetched from the database while 9 from the disk).</p>
 
         <p>The contents are stored like in the following example:</p>
         <p><code>{"source_uri":"\/wp-content\/plugins\/plugin-title-here\/assets\/style.css","optimize_uri":"\/wp-content\/uploads\/asset-cleanup\/css\/item\/handle-title-here-v10-8683e3d8975dab70c7f368d58203e66e70fb3e06.css","ver":10}</code></p>
 
         <p>Once this information is retrieved, the file's original URL will be updated to match the optimized one for the file's content stored in <code><?php echo \WpAssetCleanUp\OptimiseAssets\OptimizeCommon::getRelPathPluginCacheDir(); ?></code>.</p>
-
-        <p>If, for instance, on a page, there are 19 CSS/JS files which are optimized &amp; cached, 10 would have their caching information fetched from the database while 9 from the disk in case you leave it to the default option which is <strong>Database &amp; Disk (50% / 50%)</strong>. If your website has a very large database and you will want to reduce the database queries, you could choose to get the information from the <strong>Disk</strong> instead.</p>
 
         <p><strong>Note:</strong> If you are using a plugin such as WP Rocket, WP Fastest Cache or the caching system provided by your hosting company, then this fetching process would be significantly reduced as visitors will access static HTML pages read from the caching. Technically, no SQL queries should be made as the WordPress environment would not be loaded as it happens with a non-cached page (e.g. when you are logged-in and access the front-end pages).</p>
     </div>

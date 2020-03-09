@@ -9,7 +9,7 @@ if (! isset($data)) {
 $inlineCodeStatus = $data['plugin_settings']['assets_list_inline_code_status'];
 $isCoreFile       = isset($data['row']['obj']->wp) && $data['row']['obj']->wp;
 $hideCoreFiles    = $data['plugin_settings']['hide_core_files'];
-$isBulkUnloaded   = $data['row']['is_global_rule'];
+$isGroupUnloaded  = $data['row']['is_group_unloaded'] || $data['row']['is_post_type_unloaded'];
 
 // Does it have "children"? - other JS file(s) depending on it
 $childHandles     = isset($data['all_deps']['scripts'][$data['row']['obj']->handle]) ? $data['all_deps']['scripts'][$data['row']['obj']->handle] : array();
@@ -24,7 +24,7 @@ if ($data['row']['global_unloaded']) {
 }
 
 // Unloaded site-wide OR on all posts, pages etc.
-if ($isBulkUnloaded) {
+if ($isGroupUnloaded) {
 	$data['row']['class'] .= ' wpacu_is_bulk_unloaded';
 }
 ?>

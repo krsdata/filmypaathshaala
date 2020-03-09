@@ -57,6 +57,9 @@ new \WpAssetCleanUp\AdminBar();
 // Initialize information
 new \WpAssetCleanUp\Info();
 
+// Any debug?
+new \WpAssetCleanUp\Debug();
+
 // Common functions for both CSS & JS combinations
 // Clear CSS/JS caching functionality
 $wpacuOptimizeCommon = new \WpAssetCleanUp\OptimiseAssets\OptimizeCommon();

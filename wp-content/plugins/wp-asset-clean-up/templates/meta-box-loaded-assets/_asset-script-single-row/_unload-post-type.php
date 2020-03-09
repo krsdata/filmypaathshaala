@@ -8,7 +8,7 @@ if (! isset($data)) {
 }
 
 if ($data['bulk_unloaded_type'] === 'post_type') {
-?>
+	?>
 	<div class="wpacu_asset_options_wrap" <?php if ($data['row']['global_unloaded']) { echo 'style="display: none;"'; } ?>>
 		<?php
 		// Unloaded On All Pages Belonging to the page's Post Type
@@ -30,7 +30,6 @@ if ($data['bulk_unloaded_type'] === 'post_type') {
 		?>
 		<ul class="wpacu_asset_options">
 			<?php
-			// [START] ALL PAGES HAVING THE SAME POST TYPE
 			if ($data['row']['is_post_type_unloaded']) {
 				?>
 				<li>

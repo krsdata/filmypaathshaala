@@ -31,7 +31,7 @@ $listAreaStatus = $data['plugin_settings']['assets_list_layout_areas_status'];
 
 <div class="wpacu-assets-collapsible-wrap wpacu-wrap-area">
     <a class="wpacu-assets-collapsible <?php if ($listAreaStatus !== 'contracted') { ?>wpacu-assets-collapsible-active<?php } ?>" href="#wpacu-assets-styles-collapsible-content">
-        <span class="dashicons dashicons-admin-appearance"></span> &nbsp; <?php _e('Styles (.css files)', 'wp-asset-clean-up'); ?> &#10141; Total (+ core files): <?php echo $data['total_styles']; ?>
+        <span class="dashicons dashicons-admin-appearance"></span> &nbsp; <?php _e('Styles (.css files)', 'wp-asset-clean-up'); ?> &#10141; Total enqueued (+ core files): <?php echo $data['total_styles']; ?>
     </a>
 
     <div id="wpacu-assets-styles-collapsible-content"
@@ -93,7 +93,7 @@ $listAreaStatus = $data['plugin_settings']['assets_list_layout_areas_status'];
 
 <div class="wpacu-assets-collapsible-wrap wpacu-wrap-area">
     <a class="wpacu-assets-collapsible <?php if ($listAreaStatus !== 'contracted') { ?>wpacu-assets-collapsible-active<?php } ?>" href="#wpacu-assets-scripts-collapsible-content">
-        <span class="dashicons dashicons-media-code"></span> &nbsp; <?php _e('Scripts (.js files)', 'wp-asset-clean-up'); ?> &#10141; Total (+ core files): <?php echo $data['total_scripts']; ?>
+        <span class="dashicons dashicons-media-code"></span> &nbsp; <?php _e('Scripts (.js files)', 'wp-asset-clean-up'); ?> &#10141; Total enqueued (+ core files): <?php echo $data['total_scripts']; ?>
     </a>
 
     <div id="wpacu-assets-scripts-collapsible-content"
@@ -141,6 +141,13 @@ $listAreaStatus = $data['plugin_settings']['assets_list_layout_areas_status'];
     </div>
 </div>
 <?php
+if ( isset( $data['all']['hardcoded'] ) && ! empty( $data['all']['hardcoded'] ) ) {
+	include_once __DIR__ . '/_assets-hardcoded-list.php';
+} elseif ($data['is_frontend_view']) {
+	// The following string will be replaced within a "wp_loaded" action hook
+	echo '{wpacu_assets_collapsible_wrap_hardcoded_list}';
+}
+
 include '_inline_js.php';
 /*
  * -------------------

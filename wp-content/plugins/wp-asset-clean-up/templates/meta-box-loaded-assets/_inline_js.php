@@ -4,7 +4,7 @@ if (! isset($data)) {
 	exit;
 }
 ?>
-<script type="text/javascript">
+<script type="text/javascript" data-wpacu-own-inline-script="true">
     var wpacuContentLinks           = document.getElementsByClassName('wpacu-assets-collapsible'),
         wpacuInlineCodeContentLinks = document.getElementsByClassName('wpacu-assets-inline-code-collapsible'),
         wpacuI, wpacuITwo;
@@ -161,4 +161,61 @@ if (! isset($data)) {
             wpacuAdjustTextareaHeight(el, minHeight);
         });
     }());
+
+    /* For Hardcoded Assets List */
+    jQuery(document).ready(function($) {
+        var $wpacuEl, $wpacuP, $wpacuUp, $wpacuPs, wpacuTotalHeight;
+
+        $(document).on('click', '.wpacu-has-view-more > p.wpacu-view-more-link-area > a', function (e) {
+            e.preventDefault();
+            //console.log('View more click...');
+
+            wpacuTotalHeight = 0;
+
+            $wpacuEl = $(this);
+            $wpacuP = $wpacuEl.parent();
+            $wpacuUp = $wpacuP.parent();
+            $wpacuPs = $wpacuUp.find('div');
+
+            // Measure how tall inside should be by adding together heights of all inside elements (except read-more)
+            $wpacuPs.each(function () {
+                wpacuTotalHeight += jQuery(this).outerHeight();
+            });
+
+            $wpacuUp.css({
+                // Set height to prevent instant jumpdown when max height is removed
+                'height': $wpacuUp.height(),
+                'max-height': 9999
+            }).animate({
+                'height': wpacuTotalHeight
+            }, function () {
+                $wpacuUp.css({'height': 'auto'});
+            });
+
+            // Fade out read-more
+            $wpacuP.fadeOut();
+
+            // Prevent jump-down
+            return false;
+        });
+    });
+
+    <?php
+    // [wpacu_lite]
+    if (! is_admin()) {
+        // Admin manages the list in the front-end view
+        $upgradeToProLink = WPACU_PLUGIN_GO_PRO_URL.'?utm_source=manage_hardcoded_assets&utm_medium=go_pro_frontend';
+    ?>
+        var wpacuElGoPro = document.getElementsByClassName('wpacu-manage-hardcoded-assets-requires-pro-popup');
+
+        for (var wpacuII = 0; wpacuII < wpacuElGoPro.length; wpacuII++) {
+            // Here we have the same onclick
+            wpacuElGoPro.item(wpacuII).onclick = function() {
+                window.location.replace('<?php echo $upgradeToProLink; ?>');
+            };
+        }
+    <?php
+    }
+    // [/wpacu_lite]
+    ?>
 </script>

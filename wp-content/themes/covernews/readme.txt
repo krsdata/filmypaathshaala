@@ -3,7 +3,7 @@
 Contributors: AF themes
 Requires at least: 4.0
 Tested up to: 5
-Stable tag: 1.3.1
+Stable tag: 1.3.6
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: news, blog, entertainment, one-column, two-columns, left-sidebar, right-sidebar, custom-background, custom-menu, featured-images, full-width-template, custom-header, translation-ready, rtl-language-support, theme-options, threaded-comments
@@ -37,6 +37,24 @@ CoverNews is a clean and elegant free WordPress theme that is perfect for online
 CoverNews includes support for Infinite Scroll in Jetpack.
 
 == Change-log ==
+= 1.3.6 - March 08 2020 =
+* Fixes - Some styling glitch.
+
+= 1.3.5 - Feb 26 2020 =
+* Fixes - Top Header Date.
+
+= 1.3.4 - Feb 14 2020 =
+* Fixes - Search field toggle.
+
+= 1.3.3 - Feb 13 2020 =
+* Updates - New search field.
+
+= 1.3.2 - Jan 19 2020 =
+* Updates - Breadcrumbs schema.
+* Updates - Top Header date format to default WP Settings.
+* Fixes - IE/Edge dropdown glitch.
+* Fixes - Some styling glitch.
+
 = 1.3.1 - Nov 15 2019 =
 * New - Body hook for third party scripts added.
 * New - Recommended plugin for image optimization.

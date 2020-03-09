@@ -7,7 +7,7 @@
 *      Contact: https://robosoft.co/robogallery/ 
 *      Licensed under the GPLv2 license - http://opensource.org/licenses/gpl-2.0.php
 *
-*      Copyright (c) 2014-2019, Robosoft. All rights reserved.
+*      Copyright (c) 2014-2020, Robosoft. All rights reserved.
 *      Available only in  https://robosoft.co/robogallery/ 
 */
 if ( ! defined( 'WPINC' ) ) exit;

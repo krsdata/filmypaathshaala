@@ -52,7 +52,7 @@ if (! isset($data)) {
 				              type="checkbox"
 				              name="wpacu_global_unload_scripts[]"
 				              value="<?php echo $data['row']['obj']->handle; ?>"/>
-					<?php _e('Unload site-wide', 'wp-asset-clean-up'); ?> (<?php _e('everywhere', 'wp-asset-clean-up'); ?>)</label>
+					<?php _e('Unload site-wide', 'wp-asset-clean-up'); ?> <small>* <?php _e('everywhere', 'wp-asset-clean-up'); ?></small></label>
 			</li>
 			<?php
 		}
@@ -60,7 +60,7 @@ if (! isset($data)) {
 	</ul>
 
 	<?php if ($data['row']['global_unloaded']) { ?>
-		<div style="margin: 7px 0 -2px 0;">
+		<div style="margin: 7px 0 -2px 0; font-weight: 500;">
 			<small><span class="dashicons dashicons-warning"
 			             style="color: inherit !important; opacity: 0.6; vertical-align: middle;"></span> All other unload rules (e.g. per page, RegEx) are overwritten by this site-wide rule.</small>
 		</div>

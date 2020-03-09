@@ -18,7 +18,7 @@ class OptimizeCss
 	/**
 	 *
 	 */
-	const MOVE_NOSCRIPT_TO_BODY_FOR_ASYNC_PRELOADS = '<meta name="wpacu-generator" content="ASSET CLEANUP NOSCRIPT FOR ASYNC PRELOADS">';
+	const MOVE_NOSCRIPT_TO_BODY_FOR_ASYNC_PRELOADS = '<span style="display: none;" data-name=wpacu-delimiter data-content="ASSET CLEANUP NOSCRIPT FOR ASYNC PRELOADS"></span>';
 
 	/**
 	 * @var float|int
@@ -124,7 +124,7 @@ class OptimizeCss
 			if (isset(Main::instance()->wpAllStyles['registered'][$styleHandle]->src) && ($src = Main::instance()->wpAllStyles['registered'][$styleHandle]->src)) {
 				$localAssetPath = OptimizeCommon::getLocalAssetPath($src, 'css');
 
-				if (! $localAssetPath || ! file_exists($localAssetPath)) {
+				if (! $localAssetPath || ! is_file($localAssetPath)) {
 					continue; // not a local file
 				}
 
@@ -150,7 +150,7 @@ class OptimizeCss
 			$value = $wpStylesRegistered[$handle];
 
 			$localAssetPath = OptimizeCommon::getLocalAssetPath($value->src, 'css');
-			if (! $localAssetPath || ! file_exists($localAssetPath)) {
+			if (! $localAssetPath || ! is_file($localAssetPath)) {
 				continue; // not a local file
 			}
 
@@ -220,7 +220,7 @@ class OptimizeCss
 					$localPathToCssOptimized = str_replace( '//', '/', ABSPATH . $savedValuesArray['optimize_uri'] );
 
 					// Read the file from its caching (that makes the processing faster)
-					if ( isset( $savedValuesArray['source_uri'] ) && file_exists( $localPathToCssOptimized ) ) {
+					if ( isset( $savedValuesArray['source_uri'] ) && is_file( $localPathToCssOptimized ) ) {
 						if (Main::instance()->settings['fetch_cached_files_details_from'] === 'db_disk') {
 							$GLOBALS['wpacu_from_location_inc']++;
 						}
@@ -277,7 +277,7 @@ class OptimizeCss
 			 */
 			$localAssetPath = OptimizeCommon::getLocalAssetPath($src, 'css');
 
-			if (! file_exists($localAssetPath)) {
+			if (! is_file($localAssetPath)) {
 				return array();
 			}
 
@@ -327,12 +327,11 @@ class OptimizeCss
 		// Relative path to the new file
 		// Save it to /wp-content/cache/css/{OptimizeCommon::$optimizedSingleFilesDir}/
 		if ($fileVer !== $wp_version) {
-			if (! is_array($fileVer)) {
-				$fileVer = trim( str_replace( ' ', '_', preg_replace( '/\s+/', ' ', $fileVer ) ) );
-			} else {
+			if (is_array($fileVer)) {
+				// Convert to string if it's an array (rare cases)
 				$fileVer = implode('-', $fileVer);
 			}
-
+			$fileVer = trim(str_replace(' ', '_', preg_replace('/\s+/', ' ', $fileVer)));
 			$fileVer = (strlen($fileVer) > 50) ? substr(md5($fileVer), 0, 20) : $fileVer; // don't end up with too long filenames
 		}
 
@@ -390,28 +389,42 @@ class OptimizeCss
 			return $htmlSource;
 		}
 
+		/* [wpacu_timing] */ Misc::scriptExecTimer('alter_html_source_for_optimize_css'); /* [/wpacu_timing] */
+
 		// Are there any assets unloaded where their "children" are ignored?
 		// Since they weren't dequeued the WP way (to avoid unloading the "children"), they will be stripped here
 		if (! Main::instance()->preventAssetsSettings()) {
+			/* [wpacu_timing] */ $wpacuTimingName = 'alter_html_source_unload_ignore_deps_css'; Misc::scriptExecTimer($wpacuTimingName); /* [/wpacu_timing] */
 			$htmlSource = self::ignoreDependencyRuleAndKeepChildrenLoaded($htmlSource);
+			/* [wpacu_timing] */ Misc::scriptExecTimer($wpacuTimingName, 'end'); /* [/wpacu_timing] */
 		}
 
 		if (self::isInlineCssEnabled()) {
+			/* [wpacu_timing] */ $wpacuTimingName = 'alter_html_source_for_inline_css'; Misc::scriptExecTimer($wpacuTimingName); /* [/wpacu_timing] */
 			$htmlSource = self::doInline($htmlSource);
+			/* [wpacu_timing] */ Misc::scriptExecTimer($wpacuTimingName, 'end'); /* [/wpacu_timing] */
 		}
 
 		if (self::isWorthCheckingForOptimization()) {
+			/* [wpacu_timing] */ $wpacuTimingName = 'alter_html_source_original_to_optimized_css'; Misc::scriptExecTimer($wpacuTimingName); /* [/wpacu_timing] */
 			// 'wpacu_css_optimize_list' caching list is also checked; if it's empty, no optimization is made
 			$htmlSource = self::updateHtmlSourceOriginalToOptimizedCss($htmlSource);
+			/* [wpacu_timing] */ Misc::scriptExecTimer($wpacuTimingName, 'end'); /* [/wpacu_timing] */
+
 
 			// Are there any dynamic loaded CSS that were optimized? Check them too
 			if (self::isInlineCssEnabled() && Main::instance()->settings['cache_dynamic_loaded_css']) {
-				$htmlSource = self::doInline($htmlSource, 'cached');
+				/* [wpacu_timing] */ $wpacuTimingName = 'alter_html_source_for_dynamic_loaded_css'; Misc::scriptExecTimer($wpacuTimingName); /* [/wpacu_timing] */
+				$htmlSource = self::doInline($htmlSource, 'from_cache_for_dynamic_loaded_css');
+				/* [wpacu_timing] */ Misc::scriptExecTimer($wpacuTimingName, 'end'); /* [/wpacu_timing] */
 			}
 		}
 
 		if (! Main::instance()->preventAssetsSettings()) {
+			/* [wpacu_timing] */ $wpacuTimingName = 'alter_html_source_for_preload_css'; Misc::scriptExecTimer($wpacuTimingName); /* [/wpacu_timing] */
+			/* [wpacu_pro] */ $htmlSource = apply_filters('wpacu_optimize_css_html_source', $htmlSource); /* [/wpacu_pro] */
 			$htmlSource = Preloads::instance()->doChanges($htmlSource);
+			/* [wpacu_timing] */ Misc::scriptExecTimer($wpacuTimingName, 'end'); /* [/wpacu_timing] */
 		}
 
 		$proceedWithCombineOnThisPage = true;
@@ -428,22 +441,33 @@ class OptimizeCss
 		}
 
 		if ($proceedWithCombineOnThisPage) {
+			/* [wpacu_timing] */ $wpacuTimingName = 'alter_html_source_for_combine_css'; Misc::scriptExecTimer($wpacuTimingName); /* [/wpacu_timing] */
 			$htmlSource = CombineCss::doCombine($htmlSource);
+			/* [wpacu_timing] */ Misc::scriptExecTimer($wpacuTimingName, 'end'); /* [/wpacu_timing] */
 		}
 
 		if (! Main::instance()->preventAssetsSettings() && Main::instance()->settings['minify_loaded_css'] && Main::instance()->settings['minify_loaded_css_inline']) {
+			/* [wpacu_timing] */ $wpacuTimingName = 'alter_html_source_for_minify_inline_style_tags'; Misc::scriptExecTimer($wpacuTimingName); /* [/wpacu_timing] */
 			$htmlSource = MinifyCss::minifyInlineStyleTags($htmlSource);
+			/* [wpacu_timing] */ Misc::scriptExecTimer($wpacuTimingName, 'end'); /* [/wpacu_timing] */
 		}
 
 		// Final cleanups
 		$htmlSource = preg_replace('#<link(\s+|)data-wpacu-link-rel-href-before=(["\'])' . '(.*)' . '(\1)#Usmi', '<link ', $htmlSource);
 		$htmlSource = preg_replace('#<link(.*)data-wpacu-style-handle=\'(.*)\'#Umi', '<link \\1', $htmlSource);
 
+		/* [wpacu_timing] */ $wpacuTimingName = 'alter_html_source_for_google_fonts_optimization_removal'; Misc::scriptExecTimer($wpacuTimingName); /* [/wpacu_timing] */
 		// Alter HTML Source for Google Fonts Optimization / Removal
 		$htmlSource = FontsGoogle::alterHtmlSource($htmlSource);
+		/* [wpacu_timing] */ Misc::scriptExecTimer($wpacuTimingName, 'end'); /* [/wpacu_timing] */
 
 		// NOSCRIPT fallbacks: Applies for Google Fonts (async) (Lite and Pro) and Preloads (Async in Pro version)
+		/* [wpacu_timing] */ $wpacuTimingName = 'alter_html_source_for_add_async_preloads_noscript'; Misc::scriptExecTimer($wpacuTimingName); /* [/wpacu_timing] */
 		$htmlSource = apply_filters('wpacu_add_async_preloads_noscript', $htmlSource);
+		/* [wpacu_timing] */ Misc::scriptExecTimer($wpacuTimingName, 'end'); /* [/wpacu_timing] */
+
+		// Final timing (for the whole HTML source)
+		/* [wpacu_timing] */ Misc::scriptExecTimer('alter_html_source_for_optimize_css', 'end'); /* [/wpacu_timing] */
 
 		return $htmlSource;
 	}
@@ -625,7 +649,7 @@ class OptimizeCss
 
 				// If the minified files are deleted (e.g. /wp-content/cache/ is cleared)
 				// do not replace the CSS file path to avoid breaking the website
-				if (! file_exists(rtrim(ABSPATH, '/') . $listValues[1])) {
+				if (! is_file(rtrim(ABSPATH, '/') . $listValues[1])) {
 					continue;
 				}
 
@@ -715,7 +739,7 @@ class OptimizeCss
 
 	/**
 	 * @param $htmlSource
-	 * @param $fetch
+	 * @param $fetch - 'all', 'from_cache_for_dynamic_loaded_css' (if "Cache Dynamic Loaded CSS" is enabled in "Settings" -> "Optimize CSS")
 	 *
 	 * @return mixed
 	 */
@@ -724,10 +748,11 @@ class OptimizeCss
 		$minifyInlineTags = (! Main::instance()->preventAssetsSettings() && Main::instance()->settings['minify_loaded_css'] && Main::instance()->settings['minify_loaded_css_inline']);
 		$allPatterns = self::getAllInlineChosenPatterns();
 
+		// Skip any LINK tags within conditional comments (e.g. Internet Explorer ones)
 		if ($fetch === 'all') {
-			preg_match_all('#<link[^>]*stylesheet[^>]*(>)#Umi', $htmlSource, $matchesSourcesFromTags, PREG_SET_ORDER);
-		} elseif ($fetch === 'cached') {
-			preg_match_all('#<link[^>]*stylesheet[^>]*('.OptimizeCommon::getRelPathPluginCacheDir().').*(>)#Usmi', $htmlSource, $matchesSourcesFromTags, PREG_SET_ORDER);
+			preg_match_all('#<link[^>]*stylesheet[^>]*(>)#Umi', OptimizeCommon::cleanerHtmlSource($htmlSource, array('strip_content_between_conditional_comments')), $matchesSourcesFromTags, PREG_SET_ORDER);
+		} elseif ($fetch === 'from_cache_for_dynamic_loaded_css') {
+			preg_match_all('#<link[^>]*stylesheet[^>]*('.OptimizeCommon::getRelPathPluginCacheDir().').*(>)#Usmi', OptimizeCommon::cleanerHtmlSource($htmlSource, array('strip_content_between_conditional_comments')), $matchesSourcesFromTags, PREG_SET_ORDER);
 		}
 
 		// In case automatic inlining is used
@@ -783,26 +808,94 @@ class OptimizeCss
 				$appendBeforeAnyRelPath = $cdnUrlForCss ? OptimizeCommon::cdnToUrlFormat($cdnUrlForCss, 'raw') : '';
 
 				$cssContent = self::maybeFixCssContent(
-					FileSystem::file_get_contents($localAssetPath), // CSS content
+					FileSystem::file_get_contents($localAssetPath, 'combine_css_imports'), // CSS content
 					$appendBeforeAnyRelPath . OptimizeCommon::getPathToAssetDir($linkHrefOriginal) . '/'
 				);
 
-				// Move any @imports to top; This also strips any @imports to Google Fonts if the option is chosen
-				$cssContent = self::importsUpdate($cssContent);
+				$cssContent = self::maybeAlterCssContent($cssContent, $minifyInlineTags, true);
 
-				if ($minifyInlineTags) {
-					$cssContent = MinifyCss::applyMinification($cssContent);
+				if ($cssContent && $cssContent !== '/**/') {
+					$htmlSource = str_replace(
+						$matchedTag,
+						'<style type=\'text/css\' '.$mediaAttr.' data-wpacu-inline-css-file=\'1\'>'."\n".$cssContent."\n".'</style>',
+						$htmlSource
+					);
+				} else {
+					// After CSS alteration (e.g. minify), there's no content left, most likely the CSS file contained only comments, elements without any syntax or empty spaces
+					// Strip the tag completely as there's no reason to print an empty SCRIPT tag to further add to the total DOM elements
+					$htmlSource = str_replace($matchedTag, '', $htmlSource);
 				}
-
-				if (Main::instance()->settings['google_fonts_remove']) {
-					$cssContent = FontsGoogleRemove::cleanFontFaceReferences($cssContent);
-				}
-
-				$htmlSource = str_replace($matchedTag, '<style type=\'text/css\' '.$mediaAttr.' data-wpacu-inline-css-file=\'1\'>'."\n".$cssContent."\n".'</style>', $htmlSource);
 			}
 		}
 
 		return $htmlSource;
+	}
+
+	/**
+	 * This applies to both inline and static JS files contents
+	 *
+	 * @param $cssContent
+	 * @param bool $doCssMinify (false by default as it could be already minified or non-minify type)
+	 * @param bool $useCache - (false by default - this param is relevant only for inline tags that are altered on the fly as existing CSS static enqueued files already have their own caching)
+	 * @param array $extraParams
+	 * @return mixed|string|string[]|null
+	 */
+	public static function maybeAlterCssContent($cssContent, $doCssMinify = false, $useCache = false, $extraParams = array())
+	{
+		if (! trim($cssContent)) {
+			return $cssContent;
+		}
+
+		if ($useCache) {
+			// Anything in the cache? Take it from there and don't spend resources with the minification
+			// (which in some environments uses the CPU, depending on the complexity of the JavaScript code) and any other alteration
+			$cssContentBeforeHash = sha1( $cssContent );
+
+			$pathToInlineCssOptimizedItem = WP_CONTENT_DIR . self::getRelPathCssCacheDir() . '/item/inline/' . $cssContentBeforeHash . '.css';
+
+			// Check if the file exists before moving forward
+			if ( is_file( $pathToInlineCssOptimizedItem ) ) {
+				$cachedCssFileExpiresIn = self::$cachedCssAssetsFileExpiresIn;
+
+				if ( filemtime( $pathToInlineCssOptimizedItem ) < ( time() - 1 * $cachedCssFileExpiresIn ) ) {
+					// Has the caching period expired? Remove the file as a new one has to be generated
+					@unlink( $pathToInlineCssOptimizedItem );
+				} else {
+					// Not expired / Return its content from the cache in a faster way
+					$inlineCssStorageItemJsonContent = trim( FileSystem::file_get_contents( $pathToInlineCssOptimizedItem ) );
+
+					if ( $inlineCssStorageItemJsonContent !== '' ) {
+						return $inlineCssStorageItemJsonContent;
+					}
+				}
+			}
+		}
+
+		if ( $doCssMinify && in_array('just_minify', $extraParams) ) {
+			$cssContent = MinifyCss::applyMinification( $cssContent, $useCache );
+		} else {
+			// Move any @imports to top; This also strips any @imports to Google Fonts if the option is chosen
+			$cssContent = self::importsUpdate( $cssContent );
+
+			if ( $doCssMinify ) {
+				$cssContent = MinifyCss::applyMinification( $cssContent, $useCache );
+			}
+
+			if ( Main::instance()->settings['google_fonts_remove'] ) {
+				$cssContent = FontsGoogleRemove::cleanFontFaceReferences( $cssContent );
+			}
+		}
+
+		if ($useCache && isset($pathToInlineCssOptimizedItem)) {
+			// Store the optimized content to the cached CSS file which would be read quicker
+			if ($cssContent === '') {
+				$cssContent = '/**/'; // dummy content to make it not empty (will checked and stripped later on)
+			}
+
+			FileSystem::file_put_contents( $pathToInlineCssOptimizedItem, $cssContent );
+		}
+
+		return $cssContent;
 	}
 
 	/**

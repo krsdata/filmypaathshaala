@@ -35,6 +35,7 @@ class FontsGoogleRemove
 	{
 		$htmlSource = self::cleanLinkTags($htmlSource);
 		$htmlSource = self::cleanFromInlineStyleTags($htmlSource);
+		$htmlSource = str_replace(FontsGoogle::NOSCRIPT_WEB_FONT_LOADER, '', $htmlSource);
 
 		return $htmlSource;
 	}

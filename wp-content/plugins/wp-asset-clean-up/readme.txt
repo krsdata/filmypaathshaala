@@ -1,10 +1,10 @@
 === Asset CleanUp: Page Speed Booster ===
 Contributors: gabelivan
 Tags: minify css, minify javascript, defer css javascript, page speed, dequeue, performance
-Donate link: https://gabelivan.com/items/wp-asset-cleanup-pro/?utm_source=wp_org_lite&utm_medium=donate
+Donate link: https://www.gabelivan.com/items/wp-asset-cleanup-pro/?utm_source=wp_org_lite&utm_medium=donate
 Requires at least: 4.5
-Tested up to: 5.3
-Stable tag: 1.3.5.2
+Tested up to: 5.3.2
+Stable tag: 1.3.5.8
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -21,7 +21,7 @@ For instance, you might use a plugin that generates contact forms and it loads i
 
 "Asset CleanUp" scans your page and detects all the assets that are loaded. All you have to do when editing a page/post is just to select the CSS/JS that are not necessary to load, this way reducing the bloat.
 
-The plugin works best in combination with a cache plugin such as [WP Rocket](https://gabelivan.com/visit/wp-rocket).
+The plugin works best in combination with a cache plugin such as [WP Rocket](https://www.gabelivan.com/visit/wp-rocket).
 
 = Main plugin's benefits include =
 * Decreases the number of HTTP requests loaded and eliminate render-blocking resources (important for faster page load) by unloading useless CSS/JS
@@ -71,13 +71,14 @@ This is an API service used by WordPress for 3rd party applications, such as mob
 Plugin works with WordPress Multisite Network enabled!
 
 > <strong>Asset CleanUp Pro</strong><br />
-> This plugin is the lite version of Asset CleanUp Pro that comes with more benefits including managing assets (CSS & JS files) on all WordPress pages, apply "async" and "defer" attributes on loaded JavaScript files which would boost the speed score even higher, move the loading location of CSS/JS files (from HEAD to BODY to reduce render-blocking or vice-versa if you need specific files to trigger earlier) and premium support. <a href="https://gabelivan.com/items/wp-asset-cleanup-pro/?utm_source=wp_org_lite&utm_medium=inside_quote">Click here to purchase Asset CleanUp Pro!</a>
+> This plugin is the lite version of Asset CleanUp Pro that comes with more benefits including managing assets (CSS & JS files) on all WordPress pages, unloading plugins site-wide or via Regex(es), apply "async" and "defer" attributes on loaded JavaScript files which would boost the speed score even higher, move the loading location of CSS/JS files (from HEAD to BODY to reduce render-blocking or vice-versa if you need specific files to trigger earlier) and premium support. <a href="https://www.gabelivan.com/items/wp-asset-cleanup-pro/?utm_source=wp_org_lite&utm_medium=inside_quote">Click here to purchase Asset CleanUp Pro!</a>
 
 = NOTES =
 People that have tested the plugin are so far happy with it and I want to keep a good reputation for it. In case something is not working for you or have any suggestions, please write to me on the forum and I will be happy to assist you. **BEFORE rating this plugin**, please check the following post http://chrislema.com/theres-wrong-way-give-plugin-feedback-wordpress-org/ and then use your common sense when writing the feedback :)
 
 = GO PRO =
 * Unload CSS/JS files on all WordPress pages including Categories, Tags, Custom Taxonomy (e.g. WooCommerce product category), 404 Not Found, Date & Author Archives, Search Results)
+* Unload targeted plugins site-wide or via Regex(es), thus resulting in not only their CSS/JS stripped, but also their backend PHP code, HTML output printed via wp_head() or wp_footer() action hooks, cookies that are set, etc.)
 * Defer CSS by appending it to the BODY to load it asynchronously (Render blocking CSS delays a web page from being visible in a timely manner)
 * Move JavaScript files from HEAD to BODY and vice-versa (CSS files moved to the BODY are automatically deferred)
 * Defer JavaScript loaded files (by applying "defer" attribute to any enqueued JS file)
@@ -87,7 +88,7 @@ People that have tested the plugin are so far happy with it and I want to keep a
 * Get File Size of the Loaded CSS/JS
 * Premium support and updates within the Dashboard
 
-Give Asset CleanUp a try! If you want to unlock all features, you can <a href="https://gabelivan.com/items/wp-asset-cleanup-pro/?utm_source=wp_org_lite&utm_medium=go_pro">Upgrade to the Pro version</a>.
+Give Asset CleanUp a try! If you want to unlock all features, you can <a href="https://www.gabelivan.com/items/wp-asset-cleanup-pro/?utm_source=wp_org_lite&utm_medium=go_pro">Upgrade to the Pro version</a>.
 
 == Installation ==
 * If you're planning to use the Lite version of the plugin:
@@ -138,7 +139,7 @@ If none of these apply to you and you just don't see assets that should definite
 
 = How can I access all the features? =
 
-You can get access to more features, priority support and automatic updates by <a href="https://gabelivan.com/items/wp-asset-cleanup-pro/?utm_source=wp_org_lite&utm_medium=inside_faq">Upgrading to the Pro version</a>.
+You can get access to more features, priority support and automatic updates by <a href="https://www.gabelivan.com/items/wp-asset-cleanup-pro/?utm_source=wp_org_lite&utm_medium=inside_faq">Upgrading to the Pro version</a>.
 
 = jQuery and jQuery Migrate are often loading on pages/post. Are they always needed? =
 
@@ -178,6 +179,54 @@ With the recently released "Test Mode" feature, you can safely unload assets on 
 4. Homepage CSS & JS Management (List sorted by location)
 
 == Changelog ==
+= 1.3.5.8 =
+* Caching: Expired CSS/JS files are cleared differently (in time after visiting various pages) to save resources and errors related to the PHP memory (e.g. shared hosting packages often have limitations in terms of the server's CPU & memory usage)
+* Allow CSS/JS management for privately published pages
+* Strip empty STYLE/SCRIPT tags if, after optimization, their content is empty (e.g. the CSS was minified as it had only comments in it)
+* Show if there are any hardcoded (non-enqueued) LINK/STYLE/SCRIPT tags in the list of CSS/JS list (management of these tags is available in the Pro version)
+* Make sure the combined CSS/JS file is valid before its tag is generated in the HTML output (in rare cases, the cached CSS/JS files get deleted either by mistake when developers are cleaning up the caching directory OR they weren't properly created in the first place)
+* Compatibility fix to avoid PHP warning error when "Smart Slider 3" & "WP Rocket" are used and the CSS/JS assets are fetched
+
+= 1.3.5.7 =
+* Make the admin aware in case a certain CSS/JS asset is loaded within Internet Explorer conditional comments (Read more: https://www.sitepoint.com/internet-explorer-conditional-comments/)
+* From now on, "disk" is the default method for storing the cached information of the assets
+* Fix: Make sure the path to /wp-includes/ (or other internal directories) is the right one when the blog URL is like mysite.com/blog/
+* Fix: Sometimes, warning errors were printed in the "Settings" page after an update (within the Dashboard): "Warning: array_search() expects parameter 2 to be array, null given"
+
+= 1.3.5.6 =
+* Added "Debugging" tab to "Tools" page, allowing the option to download the error log file & view other debugging options
+* Improvement: Sometimes, 200 OK (success) is returned, but due to an issue with the page, the assets list is not retrieved; Notify the admin about this
+* Fix: Sometimes, warnings (harmless, but obtrusive) were given when updating plugin's settings and previewing pages: "Warning: array_unique() expects parameter 1 to be array, null given"
+
+= 1.3.5.5 =
+* Updated Minify CSS library for PHP 7.4 support (avoid any PHP errors from "implode" function)
+* Improvement: "display=" is now also applied to Google Fonts loading via WebFontConfig within inline SCRIPT tags
+* FileSystem is always using the "direct" method for altering CSS/JS files, thus avoiding (e.g. by mistake via a different plugin using the same WordPress FileSystem class) any reading/writing error for the cached files
+* When fetching assets, make sure some plugins such as Fast Velocity Minify (that could interfere with the HTML output) are deactivated
+* When updating a post/page/homepage, the caching is now cleared after the page is updated via an AJAX call (asynchronously), thus reducing the memory usage and the time spent until the page reloads
+* Debugging feature: If /?wpacu_clean_load is used, it will show the unoptimized version of the page (great for locating specific files that were perhaps combined and cached by various plugins)
+* Removed Freemius SDK
+
+= 1.3.5.4 =
+* New Feature: Stop triggering Asset CleanUp Pro (early stop) on specific front-end pages
+* New Feature: Easier way to deactivate options for debugging purposes on page load via /?wpacu_debug (printing an options area at the bottom of any front-end page for the logged-in admin)
+* Improvement: Removed plugin's meta boxes when a block is edited in Oxygen (as the meta boxes are not relevant there)
+* Improvement: Compressed images for a lighter plugin
+* Improvement: Do not trigger Asset CleanUp Pro if TranslatePress Multilingual plugin is in edit mode (front-end view)
+* Improvement: Storage info for cache directory shows the total size/number of all files (not just CSS/JS ones)
+* Improvement: On page request (within the Dashboard), /wp-admin/?wpacu_get_cache_dir_size will retrieve information about the caching directory (e.g. all its files and their sizes get listed)
+* Bug Fix: Avoid any PHP errors or very high CPU usage with some hosting packages in case a "circular reference" error is detected (e.g. an @import from a CSS file that is having the URL path to the same CSS file)
+* Bug Fix: CSS/JS URLs starting with // were giving unreachable error when checked if they are valid or not (e.g. from //fonts.googleapis.com/)
+* Bug Fix (plugin compatibility): Remove call_user_func_array() PHP error if SiteGround's "Remove Query String From Static Resources" is enabled
+* Bug Fix: Prevent errors in some BuddyPress pages as $post->post_type is undefined
+
+= 1.3.5.3 =
+* New Feature: Make exception (from any unload rule) and load an asset if the user is logged in
+* Adjust the text below "CSS & JS Manager" & "Bulk Changes" to keep it on the same line
+* Improvement: Added the total number of handles for stylesheets and scripts in "Overview" page
+* Improvement: Sometimes, specific plugins are used to alter the HTML source (e.g. features such as minify HTML); Make sure no META tags are left in the BODY tag as it would give validation errors in https://validator.w3.org/
+* Bug Fix: In rare cases, the version of a CSS/JS could be an array, not just a float/integer number; Prevent notices from showing up when 'ver' is an array and make sure the proper query string is passed to the link/path of the source file
+
 = 1.3.5.2 =
 * Improvement: Added "Overview" page which has the list of all the changes made to a specific CSS/JS file (handle), offering a much easier way to understand the changes made and do any debugging
 * UI Improvement: The height of the CSS/JS asset row (when managing the list) is smaller, depending on the settings, making it easier to do scrolling

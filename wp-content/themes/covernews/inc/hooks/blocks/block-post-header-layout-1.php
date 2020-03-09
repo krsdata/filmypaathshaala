@@ -22,9 +22,9 @@
                                 <?php
                                 if ($show_date == true): ?>
                                     <span class="topbar-date">
-                                        <?php
-                                        echo date_i18n('D. M jS, Y ', strtotime(current_time("Y-m-d")), true);
-                                        ?>
+                                       <?php
+                                       echo wp_kses_post(date_i18n(get_option('date_format')));
+                                       ?>
                                     </span>
 
                                 <?php endif; ?>
@@ -132,13 +132,6 @@
                             <div class="navigation-container">
 
 
-                                <div class="cart-search">
-
-                            <span class="af-search-click icon-search">
-                                    <i class="fa fa-search"></i>
-                            </span>
-                                </div>
-
 
                                 <span class="toggle-menu" aria-controls="primary-menu" aria-expanded="false">
                                 <span class="screen-reader-text"><?php esc_html_e('Primary Menu', 'covernews'); ?></span>
@@ -160,6 +153,20 @@
                                 ));
                                 ?>
 
+                                <div class="cart-search">
+
+                                    <div class="af-search-wrap">
+                                        <div class="search-overlay">
+                                            <a href="#" title="Search" class="search-icon">
+                                                <i class="fa fa-search"></i>
+                                            </a>
+                                            <div class="af-search-form">
+                                                <?php get_search_form(); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                             </div>
                         </div>
@@ -167,18 +174,6 @@
                 </div>
             </nav>
         </header>
-
-        <div id="af-search-wrap">
-            <div class="af-search-box table-block">
-                <div class="table-block-child v-center text-center">
-                    <?php get_search_form(); ?>
-                </div>
-            </div>
-            <div class="af-search-close af-search-click">
-                <span></span>
-                <span></span>
-            </div>
-        </div>
     </div>
 
 <?php do_action('covernews_action_front_page_main_section');

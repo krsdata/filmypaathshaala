@@ -127,6 +127,13 @@ $listAreaStatus = $data['plugin_settings']['assets_list_layout_areas_status'];
 		}
 	}
 }
+
+if ( isset( $data['all']['hardcoded'] ) && ! empty( $data['all']['hardcoded'] ) ) {
+	include_once __DIR__ . '/_assets-hardcoded-list.php';
+} elseif ($data['is_frontend_view']) {
+	// The following string will be replaced within a "wp_loaded" action hook
+	echo '{wpacu_assets_collapsible_wrap_hardcoded_list}';
+}
 /*
 * ------------------------------------
 * [END] BY PRELOAD STATUS (yes or no)

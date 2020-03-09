@@ -95,6 +95,18 @@ HTML;
             <td><?php echo $svgTick; ?></td>
         </tr>
 
+		<tr>
+			<td><?php _e('Unload CSS/JS for URLs with request URI matching certain RegEx(es) &amp; add load exceptions based on Regex(es) <small>e.g. you can unload a CSS file site-wide, but keep it loaded if the page URL matches the <code>#/product/#</code> RegEx</small>', 'wp-asset-clean-up'); ?></td>
+			<td><span class="na">❌</span></td>
+			<td><?php echo $svgTick; ?></td>
+		</tr>
+
+		<tr>
+			<td><?php _e('Unload plugins site-wide and via RegEx(es)', 'wp-asset-clean-up'); ?> (go to the next level and unload whole plugins, not just the CSS/JS files loaded through them)</td>
+			<td><span class="na">❌</span></td>
+			<td><?php echo $svgTick; ?></td>
+		</tr>
+
         <tr>
             <td><?php _e('Defer CSS loaded in the <code>&lt;BODY&gt;</code>', 'wp-asset-clean-up'); ?> to reduce render-blocking resources</td>
             <td><span class="na">❌</span></td>
@@ -103,6 +115,11 @@ HTML;
 
 		<tr>
 			<td><?php _e('Manage CSS &amp; JavaScript files on Categories, Tags, Custom Taxonomy pages, Date &amp; Author Archive Pages, Search Results &amp; 404 Not Found pages', 'wp-asset-clean-up'); ?></td>
+			<td><span class="na">❌</span></td>
+			<td><?php echo $svgTick; ?></td>
+		</tr>
+		<tr>
+			<td><?php _e('Manage hardcoded (non-enqueued) CSS &amp; JavaScript files', 'wp-asset-clean-up'); ?></td>
 			<td><span class="na">❌</span></td>
 			<td><?php echo $svgTick; ?></td>
 		</tr>
@@ -133,11 +150,15 @@ HTML;
 		</tr>
 		<tr>
 			<td colspan="3" style="text-align: center; padding: 10px;">
+				<h3 style="margin: 0;"><?php echo $svgTick; ?>&nbsp; <em>30 Day Money Back Guarantee</em></h3>
+				<p style="margin-top: 8px;">If you’re not satisfied with your purchase for any reason, you can request a refund within 30 days and you will get the payment refunded.</p>
+				<hr />
 				<a class="button button-primary button-hero" href="<?php echo WPACU_PLUGIN_GO_PRO_URL; ?>?utm_source=plugin_getting_started&utm_medium=lite_vs_pro">
-					<span class="dashicons dashicons-star-filled" style="line-height: inherit;"></span> &nbsp;<?php _e('Upgrade to Pro to unlock all benefits', 'wp-asset-clean-up'); ?></a>
+					<span class="dashicons dashicons-star-filled" style="line-height: 50px;"></span> &nbsp;<?php _e('Upgrade to Pro to unlock all benefits', 'wp-asset-clean-up'); ?></a>
 				&nbsp;
-				<a class="button button-default button-hero" href="https://gabelivan.com/contact/">
-					<span class="dashicons dashicons-admin-comments" style="line-height: inherit;"></span> &nbsp;<?php _e('I have some questions', 'wp-asset-clean-up'); ?></a>
+				<a class="button button-default button-hero" href="https://www.gabelivan.com/contact/">
+					<span class="dashicons dashicons-admin-comments" style="line-height: 50px;"></span> &nbsp;<?php _e('I have some questions', 'wp-asset-clean-up'); ?></a>
+
 			</td>
 		</tr>
 		</tbody>

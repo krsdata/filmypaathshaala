@@ -14,8 +14,8 @@ if (! isset($data)) {
             <?php echo sprintf(
                     __('For maximum performance, %s works best when used with either a %scaching plugin%s, the in-built hosting caching (e.g. via %sWPEngine%s, Kinsta, etc.) or something like Varnish.', 'wp-asset-clean-up'),
                      'Asset CleanUp',
-                    '<a style="text-decoration: none; color: #555d66;" href="https://gabelivan.com/visit/wp-rocket">', '</a>',
-                    '<a style="text-decoration: none; color: #555d66;" href="https://gabelivan.com/visit/wp-engine">', '</a>'
+                    '<a style="text-decoration: none; color: #555d66;" href="https://www.gabelivan.com/visit/wp-rocket">', '</a>',
+                    '<a style="text-decoration: none; color: #555d66;" href="https://www.gabelivan.com/visit/wp-engine">', '</a>'
             );
             ?>
             <img src="<?php echo WPACU_PLUGIN_URL; ?>/assets/images/wpacu-logo-transparent-bg-v1.png" alt="" />

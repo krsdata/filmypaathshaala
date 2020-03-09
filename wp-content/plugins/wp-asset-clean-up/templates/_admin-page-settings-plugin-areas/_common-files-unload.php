@@ -84,7 +84,7 @@ $styleTabContent = ($selectedTabArea === $tabIdArea) ? 'style="display: table-ce
 
         <tr valign="top">
             <th scope="row">
-                <label for="wpacu_disable_wp_block_library"><?php echo sprintf(__('Disable %s Site-Wide', 'wp-asset-clean-up'), 'Gutenberg CSS Block Library'); ?> <span style="color: #cc0000;" class="dashicons dashicons-warning wordpress-core-file"><span class="wpacu-tooltip">WordPress Core File<br />Not sure if needed or not? In this case, it's better to leave it loaded to avoid breaking the website.</span></span></label>
+                <label for="wpacu_disable_wp_block_library"><?php echo sprintf(__('Disable %s Site-Wide', 'wp-asset-clean-up'), 'Gutenberg CSS Block Library'); ?> <span style="color: #cc0000;" class="dashicons dashicons-wordpress-alt wordpress-core-file"><span class="wpacu-tooltip">WordPress Core File<br />Not sure if needed or not? In this case, it's better to leave it loaded to avoid breaking the website.</span></span></label>
             </th>
             <td>
                 <label class="wpacu_switch">
@@ -97,7 +97,7 @@ $styleTabContent = ($selectedTabArea === $tabIdArea) ? 'style="display: table-ce
                 <p style="margin-top: 10px;"><?php _e('If you\'re not using Gutenberg blocks in your posts/page (e.g. you prefer the Classic Editor), then you can unload this file site-wide to avoid an extra render-blocking external CSS file load.', 'wp-asset-clean-up'); ?></p>
                 <?php
                 if ($extraTip = \WpAssetCleanUp\Tips::ceGutenbergCssLibraryBlockTip()) {
-                    echo '<p class="wpacu-warning" style="font-size: 100%;"><strong>Extra Tip:</strong> '.$extraTip.'</p>';
+	                echo '<p class="wpacu-warning" style="font-size: 100%;"><strong>Extra Tip:</strong> '.$extraTip.'</p>';
                 }
                 ?>
             </td>
@@ -105,7 +105,7 @@ $styleTabContent = ($selectedTabArea === $tabIdArea) ? 'style="display: table-ce
 
         <tr valign="top">
             <th scope="row">
-                <label for="wpacu_disable_jquery_migrate"><?php echo sprintf(__('Disable %s Site-Wide', 'wp-asset-clean-up'), 'jQuery Migrate'); ?> <span style="color: #cc0000;" class="dashicons dashicons-warning wordpress-core-file"><span class="wpacu-tooltip">WordPress Core File<br />Not sure if needed or not? In this case, it's better to leave it loaded to avoid breaking the website.</span></span></label>
+                <label for="wpacu_disable_jquery_migrate"><?php echo sprintf(__('Disable %s Site-Wide', 'wp-asset-clean-up'), 'jQuery Migrate'); ?> <span style="color: #cc0000;" class="dashicons dashicons-wordpress-alt wordpress-core-file"><span class="wpacu-tooltip">WordPress Core File<br />Not sure if needed or not? In this case, it's better to leave it loaded to avoid breaking the website.</span></span></label>
             </th>
             <td>
                 <label class="wpacu_switch">
@@ -121,7 +121,7 @@ $styleTabContent = ($selectedTabArea === $tabIdArea) ? 'style="display: table-ce
 
         <tr valign="top">
             <th scope="row">
-                <label for="wpacu_disable_comment_reply"><?php echo sprintf(__('Disable %s Site-Wide', 'wp-asset-clean-up'), 'Comment Reply'); ?> <span style="color: #cc0000;" class="dashicons dashicons-warning wordpress-core-file"><span class="wpacu-tooltip">WordPress Core File<br /><?php _e('Not sure if needed or not? In this case, it\'s better to leave it loaded to avoid breaking the website.', 'wp-asset-clean-up'); ?></span></span></label>
+                <label for="wpacu_disable_comment_reply"><?php echo sprintf(__('Disable %s Site-Wide', 'wp-asset-clean-up'), 'Comment Reply'); ?> <span style="color: #cc0000;" class="dashicons dashicons-wordpress-alt wordpress-core-file"><span class="wpacu-tooltip">WordPress Core File<br /><?php _e('Not sure if needed or not? In this case, it\'s better to leave it loaded to avoid breaking the website.', 'wp-asset-clean-up'); ?></span></span></label>
             </th>
             <td>
                 <label class="wpacu_switch">

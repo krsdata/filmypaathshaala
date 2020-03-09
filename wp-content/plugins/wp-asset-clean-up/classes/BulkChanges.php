@@ -28,12 +28,12 @@ class BulkChanges
      */
     public function __construct()
     {
-        $this->wpacuFor      = Misc::getVar('request', 'wpacu_for', $this->wpacuFor);
-        $this->wpacuPostType = Misc::getVar('request', 'wpacu_post_type', $this->wpacuPostType);
+	    $this->wpacuFor      = Misc::getVar('request', 'wpacu_for', $this->wpacuFor);
+	    $this->wpacuPostType = Misc::getVar('request', 'wpacu_post_type', $this->wpacuPostType);
 
-        if (isset($_REQUEST['wpacu_update']) && $_REQUEST['wpacu_update'] == 1) {
-            $this->update();
-        }
+	    if (Misc::getVar('request', 'wpacu_update') == 1) {
+		    $this->update();
+	    }
     }
 
     /**
@@ -46,7 +46,7 @@ class BulkChanges
         if ($this->wpacuFor === 'everywhere') {
             $values = Main::instance()->getGlobalUnload();
         } elseif ($this->wpacuFor === 'post_types') {
-            $values = Main::instance()->getBulkUnload('post_type', $this->wpacuPostType);
+	        $values = Main::instance()->getBulkUnload('post_type', $this->wpacuPostType);
         }
 
         if (isset($values['styles']) && ! empty($values['styles'])) {
@@ -65,9 +65,7 @@ class BulkChanges
      */
     public function pageBulkUnloads()
     {
-	    if ($assetsInfo = get_transient(WPACU_PLUGIN_ID . '_assets_info')) {
-		    $this->data['assets_info'] = json_decode($assetsInfo, ARRAY_A);
-	    }
+	    $this->data['assets_info'] = Main::getHandlesInfo();
 	    $this->data['for'] = $this->wpacuFor;
 
         if ($this->wpacuFor === 'post_types') {
@@ -83,39 +81,39 @@ class BulkChanges
         $this->data['nonce_name'] = Update::NONCE_FIELD_NAME;
         $this->data['nonce_action'] = Update::NONCE_ACTION_NAME;
 
-	    $this->data['plugin_settings'] = Main::instance()->settings;
+        $this->data['plugin_settings'] = Main::instance()->settings;
 
         Main::instance()->parseTemplate('admin-page-settings-bulk-changes', $this->data, true);
     }
 
-	/**
-	 * @param $postTypes
-	 *
-	 * @return mixed
-	 */
-	public function filterPostTypesList($postTypes)
-	{
-		foreach ($postTypes as $postTypeKey => $postTypeValue) {
-			// Exclude irrelevant custom post types
-			if (in_array($postTypeKey, MetaBoxes::$noMetaBoxesForPostTypes)) {
-				unset($postTypes[$postTypeKey]);
-			}
+    /**
+     * @param $postTypes
+     *
+     * @return mixed
+     */
+    public function filterPostTypesList($postTypes)
+    {
+        foreach ($postTypes as $postTypeKey => $postTypeValue) {
+            // Exclude irrelevant custom post types
+            if (in_array($postTypeKey, MetaBoxes::$noMetaBoxesForPostTypes)) {
+                unset($postTypes[$postTypeKey]);
+            }
 
-			// Polish existing values
-			if ($postTypeKey === 'product' && Misc::isPluginActive('woocommerce/woocommerce.php')) {
-				$postTypes[$postTypeKey] = 'product &#10230; WooCommerce';
-			}
-		}
+            // Polish existing values
+            if ($postTypeKey === 'product' && Misc::isPluginActive('woocommerce/woocommerce.php')) {
+                $postTypes[$postTypeKey] = 'product &#10230; WooCommerce';
+            }
+        }
 
-		return $postTypes;
-	}
+        return $postTypes;
+    }
 
     /**
      *
      */
     public function update()
     {
-        if (! Misc::getVar('post', 'wpacu_bulk_unloads_update_nonce')) {
+        if ( ! Misc::getVar('post', 'wpacu_bulk_unloads_update_nonce') ) {
             return;
         }
 
@@ -156,20 +154,20 @@ class BulkChanges
     <?php
     }
 
-    /**
-     *
-     */
-    public function noticePostTypesRemoved()
-    {
-        ?>
+	/**
+	 *
+	 */
+	public function noticePostTypesRemoved()
+	{
+		?>
         <div class="updated notice wpacu-notice is-dismissible">
             <p><span class="dashicons dashicons-yes"></span>
-                <?php
-                echo sprintf(
-                    __('The selected styles/scripts were removed from the unload list for <strong><u>%s</u></strong> post type and they will now load in the pages/posts, unless you have other rules that would prevent them from loading.', 'wp-asset-clean-up'),
-                    $this->wpacuPostType
-                );
-                ?>
+				<?php
+				echo sprintf(
+					__('The selected styles/scripts were removed from the unload list for <strong><u>%s</u></strong> post type and they will now load in the pages/posts, unless you have other rules that would prevent them from loading.', 'wp-asset-clean-up'),
+					$this->wpacuPostType
+				);
+				?>
             </p>
         </div>
         <?php

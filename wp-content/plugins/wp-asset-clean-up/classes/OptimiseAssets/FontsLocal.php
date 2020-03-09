@@ -2,6 +2,7 @@
 namespace WpAssetCleanUp\OptimiseAssets;
 
 use WpAssetCleanUp\Main;
+use WpAssetCleanUp\Plugin;
 
 /**
  * Class LocalFonts
@@ -22,7 +23,8 @@ class FontsLocal
 	 */
 	public function preloadFontFiles()
 	{
-		if (Main::instance()->preventAssetsSettings()) {
+		// AMP page or Test Mode? Do not print anything
+		if (Plugin::preventAnyChanges() || Main::isTestModeActive()) {
 			return;
 		}
 

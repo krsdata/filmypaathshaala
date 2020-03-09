@@ -20,7 +20,7 @@ if (! $data['row']['global_unloaded']) {
 					       class="wpacu_unload_it_regex_checkbox wpacu_unload_rule_input"
 					       type="checkbox"
 					       disabled="disabled"
-					       value="1"/>&nbsp;<span>Unload it for URLs with request URI matching this RegEx:</span>
+					       value="1"/>&nbsp;<span>Unload it for URLs with request URI matching this RegEx(es):</span>
 
 					<a class="go-pro-link-no-style"
 					   href="<?php echo WPACU_PLUGIN_GO_PRO_URL; ?>?utm_source=manage_asset&utm_medium=unload_style_by_regex"><span

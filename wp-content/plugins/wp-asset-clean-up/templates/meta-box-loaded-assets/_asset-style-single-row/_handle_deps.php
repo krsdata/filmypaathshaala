@@ -2,7 +2,6 @@
 /*
  * The file is included from /templates/meta-box-loaded-assets/_asset-style-single-row.php
 */
-
 if (! isset($data)) {
 	exit; // no direct access
 }

@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: The Post Grid\n"
-"POT-Creation-Date: 2019-08-26 12:13+0600\n"
-"PO-Revision-Date: 2019-08-26 12:12+0600\n"
+"POT-Creation-Date: 2020-02-12 16:37+0600\n"
+"PO-Revision-Date: 2020-02-12 16:37+0600\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -20,32 +20,32 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: lib/classes/rtTPGAjaxResponse.php:26
+#: lib/classes/rtTPGAjaxResponse.php:27
 msgid "Settings successfully updated"
 msgstr ""
 
-#: lib/classes/rtTPGAjaxResponse.php:28
+#: lib/classes/rtTPGAjaxResponse.php:29
 msgid "Security Error !!"
 msgstr ""
 
-#: lib/classes/rtTPGAjaxResponse.php:56
-msgid "<div class=\"field-holder\">No Taxonomy found</div>"
+#: lib/classes/rtTPGAjaxResponse.php:57
+msgid "No Taxonomy found"
 msgstr ""
 
-#: lib/classes/rtTPGAjaxResponse.php:60 lib/classes/rtTPGAjaxResponse.php:79
-#: lib/classes/rtTPGAjaxResponse.php:118
+#: lib/classes/rtTPGAjaxResponse.php:61 lib/classes/rtTPGAjaxResponse.php:80
+#: lib/classes/rtTPGAjaxResponse.php:119
 msgid "Security error"
 msgstr ""
 
-#: lib/classes/rtTPGAjaxResponse.php:137
+#: lib/classes/rtTPGAjaxResponse.php:138
 msgid "Select Short code"
 msgstr ""
 
-#: lib/classes/rtTPGAjaxResponse.php:139
+#: lib/classes/rtTPGAjaxResponse.php:140
 msgid "Default"
 msgstr ""
 
-#: lib/classes/rtTPGAjaxResponse.php:148
+#: lib/classes/rtTPGAjaxResponse.php:149
 msgid "No shortCode found."
 msgstr ""
 
@@ -96,35 +96,49 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: lib/classes/rtTPGMeta.php:27
+#: lib/classes/rtTPGMeta.php:28
 msgid "Shortcode"
 msgstr ""
 
-#: lib/classes/rtTPGMeta.php:85
+#: lib/classes/rtTPGMeta.php:83
 msgid "Short Code Generator"
 msgstr ""
 
-#: lib/classes/rtTPGMeta.php:92
-msgid "Pro Features"
-msgstr ""
-
-#: lib/classes/rtTPGMeta.php:99
+#: lib/classes/rtTPGMeta.php:90
 msgid "Layout Preview"
 msgstr ""
 
-#: lib/classes/rtTPGMeta.php:141
+#: lib/classes/rtTPGMeta.php:98 lib/classes/rtTPGMeta.php:123
+msgid "Documentation"
+msgstr ""
+
+#: lib/classes/rtTPGMeta.php:110
+msgid "Update Pro To Get More Features"
+msgstr ""
+
+#: lib/classes/rtTPGMeta.php:124
+msgid ""
+"Get started by spending some time with the documentation we included step by "
+"step process with screenshots with video."
+msgstr ""
+
+#: lib/classes/rtTPGMeta.php:133
+msgid "Get Support"
+msgstr ""
+
+#: lib/classes/rtTPGMeta.php:174
 msgid "Post Source"
 msgstr ""
 
-#: lib/classes/rtTPGMeta.php:142
+#: lib/classes/rtTPGMeta.php:175
 msgid "Layout Settings"
 msgstr ""
 
-#: lib/classes/rtTPGMeta.php:143
+#: lib/classes/rtTPGMeta.php:176
 msgid "Field Selection"
 msgstr ""
 
-#: lib/classes/rtTPGMeta.php:144
+#: lib/classes/rtTPGMeta.php:177
 msgid "Style"
 msgstr ""
 
@@ -157,7 +171,7 @@ msgid "Show all text"
 msgstr ""
 
 #: lib/classes/rtTPGOptions.php:191 lib/classes/rtTPGShortCode.php:71
-#: lib/classes/rtTPGShortCode.php:100
+#: lib/classes/rtTPGShortCode.php:101
 msgid "Show all"
 msgstr ""
 
@@ -214,72 +228,96 @@ msgstr ""
 msgid "Title tag"
 msgstr ""
 
-#: lib/classes/rtTPGOptions.php:380
+#: lib/classes/rtTPGOptions.php:322
+msgid "Link To Detail Page"
+msgstr ""
+
+#: lib/classes/rtTPGOptions.php:333
+msgid "Link Target"
+msgstr ""
+
+#: lib/classes/rtTPGOptions.php:346
+msgid "Character"
+msgstr ""
+
+#: lib/classes/rtTPGOptions.php:347
+msgid "Word"
+msgstr ""
+
+#: lib/classes/rtTPGOptions.php:350
+msgid "Full Content"
+msgstr ""
+
+#: lib/classes/rtTPGOptions.php:405
 msgid "Title color"
 msgstr ""
 
-#: lib/classes/rtTPGOptions.php:387
+#: lib/classes/rtTPGOptions.php:412
 msgid "Title hover color"
 msgstr ""
 
-#: lib/classes/rtTPGOptions.php:396
+#: lib/classes/rtTPGOptions.php:421
 msgid "Read more button border radius"
 msgstr ""
 
-#: lib/classes/rtTPGOptions.php:397
+#: lib/classes/rtTPGOptions.php:422
 msgid "Leave it blank for default"
 msgstr ""
 
-#: lib/classes/rtTPGOptions.php:426
+#: lib/classes/rtTPGOptions.php:451
 msgid "Feature Image"
 msgstr ""
 
-#: lib/classes/rtTPGOptions.php:427
+#: lib/classes/rtTPGOptions.php:452
 msgid "First Image from content"
 msgstr ""
 
-#: lib/classes/rtTPGOptions.php:455
+#: lib/classes/rtTPGOptions.php:480
 msgid "Title"
 msgstr ""
 
-#: lib/classes/rtTPGOptions.php:456
+#: lib/classes/rtTPGOptions.php:481
 msgid "Excerpt"
 msgstr ""
 
-#: lib/classes/rtTPGOptions.php:457 lib/classes/rtTPGShortCode.php:69
-#: lib/classes/rtTPGShortCode.php:98
+#: lib/classes/rtTPGOptions.php:482 lib/classes/rtTPGShortCode.php:69
+#: lib/classes/rtTPGShortCode.php:99
 msgid "Read More"
 msgstr ""
 
-#: lib/classes/rtTPGOptions.php:458
+#: lib/classes/rtTPGOptions.php:483
 msgid "Post Date"
 msgstr ""
 
-#: lib/classes/rtTPGOptions.php:459
+#: lib/classes/rtTPGOptions.php:484
 msgid "Author"
 msgstr ""
 
-#: lib/classes/rtTPGOptions.php:460
+#: lib/classes/rtTPGOptions.php:485
 msgid "Categories"
 msgstr ""
 
-#: lib/classes/rtTPGOptions.php:461
+#: lib/classes/rtTPGOptions.php:486
 msgid "Tags"
 msgstr ""
 
-#: lib/classes/rtTPGOptions.php:462
+#: lib/classes/rtTPGOptions.php:487
 msgid "Comment Count"
 msgstr ""
 
-#: lib/classes/rtTPGShortCode.php:342
+#: lib/classes/rtTPGOptions.php:508
+msgid "Get Pro Version"
+msgstr ""
+
+#: lib/classes/rtTPGShortCode.php:352
 msgid "No post found"
 msgstr ""
 
-#: lib/classes/rtTPGShortCode.php:370
+#: lib/classes/rtTPGShortCode.php:380
 msgid "Session Error !!"
 msgstr ""
 
-#: lib/classes/rtTPGShortCode.php:372
+#: lib/classes/rtTPGShortCode.php:382
 msgid "No shortCode found"
 msgstr ""
 
@@ -287,7 +325,19 @@ msgstr ""
 msgid "Post Grid"
 msgstr ""
 
-#: lib/views/settings/settings.php:5
+#: lib/views/settings/post-source.php:19
+msgid "Advance filter options"
+msgstr ""
+
+#: lib/views/settings/post-source.php:103
+msgid "Terms"
+msgstr ""
+
+#: lib/views/settings/post-source.php:125
+msgid "Order Settings"
+msgstr ""
+
+#: lib/views/settings/settings.php:3
 msgid "The Post Grid Settings"
 msgstr ""
 
@@ -295,8 +345,8 @@ msgstr ""
 msgid "General settings"
 msgstr ""
 
-#: lib/views/settings/settings.php:9
-msgid "Documentation"
+#: lib/views/settings/settings.php:14
+msgid "Save Changes"
 msgstr ""
 
 #: lib/widgets/RT_TPGWidget.php:14

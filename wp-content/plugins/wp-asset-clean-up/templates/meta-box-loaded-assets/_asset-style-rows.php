@@ -13,19 +13,19 @@ foreach ($data['all']['styles'] as $obj) {
 	$data['row']['checked'] = $active ? 'checked="checked"' : '';
 
 	/*
-	 * $data['row']['is_global_rule'] is only used to apply a red background in the style's area to point out that the style is unloaded
+	 * $data['row']['is_group_unloaded'] is only used to apply a red background in the style's area to point out that the style is unloaded
 	 *               is set to `true` if either the asset is unloaded everywhere or it's unloaded on a group of pages (such as all pages belonging to 'page' post type)
 	*/
-	$data['row']['global_unloaded'] = $data['row']['is_post_type_unloaded'] = $data['row']['is_load_exception_per_page'] = $data['row']['is_global_rule'] = false;
+	$data['row']['global_unloaded'] = $data['row']['is_post_type_unloaded'] = $data['row']['is_load_exception_per_page'] = $data['row']['is_group_unloaded'] = $data['row']['is_regex_unload_match'] = false;
 
 	// Mark it as unloaded - Everywhere
 	if (in_array($data['row']['obj']->handle, $data['global_unload']['styles'])) {
-		$data['row']['global_unloaded'] = $data['row']['is_global_rule'] = true;
+		$data['row']['global_unloaded'] = $data['row']['is_group_unloaded'] = true;
 	}
 
 	// Mark it as unloaded - for the Current Post Type
 	if ($data['bulk_unloaded_type'] && in_array($data['row']['obj']->handle, $data['bulk_unloaded'][$data['bulk_unloaded_type']]['styles'])) {
-		$data['row']['is_global_rule'] = true;
+		$data['row']['is_group_unloaded'] = true;
 
 		if ($data['bulk_unloaded_type'] === 'post_type') {
 			$data['row']['is_post_type_unloaded'] = true;
@@ -34,9 +34,9 @@ foreach ($data['all']['styles'] as $obj) {
 
 	$isLoadExceptionPerPage = isset($data['load_exceptions']['styles']) && in_array($data['row']['obj']->handle, $data['load_exceptions']['styles']);
 
-	if ($isLoadExceptionPerPage) {
-		$data['row']['is_load_exception_per_page'] = true;
-	} elseif ($data['row']['is_global_rule']) {
+	$data['row']['is_load_exception_per_page'] = $isLoadExceptionPerPage;
+
+	if ($data['row']['is_group_unloaded']) {
 		$data['row']['class'] .= ' wpacu_not_load';
 	}
 

@@ -43,6 +43,16 @@ class OwnAssets
 		    $wpacu_object_data['source_load_error_msg'] = __('It looks like the source is not reachable', 'wp-asset-clean-up');
 		    $wpacu_object_data['plugin_id'] = WPACU_PLUGIN_ID;
 		    $wpacu_object_data['ajax_url']  = admin_url('admin-ajax.php');
+		    $wpacu_object_data['clear_cache_on_page_load'] = false; // default
+
+		    // After homepage/post/page is saved and the page is reloaded, clear the cache
+            $unloadAssetsSubmit = (isset($_POST['wpacu_unload_assets_area_loaded']) && $_POST['wpacu_unload_assets_area_loaded']);
+		    $frontendViewPageAssetsJustUpdated = (! is_admin() && (isset($_GET['wpacu_updated']) && $_GET['wpacu_updated']));
+
+		    if ($unloadAssetsSubmit || $frontendViewPageAssetsJustUpdated) {
+		        $wpacu_object_data['clear_cache_on_page_load'] = true;
+		    }
+
 		    return $wpacu_object_data;
         });
     }
@@ -54,7 +64,7 @@ class OwnAssets
 	{
 		if (is_admin_bar_showing()) {
 			?>
-            <style type="text/css">
+            <style type="text/css" data-wpacu-own-inline-style="true">
                 #wp-admin-bar-assetcleanup-parent span.dashicons {
                     width: 15px;
                     height: 15px;
@@ -96,9 +106,8 @@ class OwnAssets
 	public function inlineAdminCode()
 	{
 		?>
-        <style type="text/css">
+        <style type="text/css" data-wpacu-own-inline-style="true">
             .menu-top.toplevel_page_wpassetcleanup_getting_started .wp-menu-image > img { width: 26px; position: absolute; left: 8px; top: -4px; }
-            .plugin-title .opt-in-or-opt-out.wp-asset-clean-up { display: none; }
         </style>
         <?php
     }
@@ -180,6 +189,10 @@ class OwnAssets
 	        return;
 	    }
 
+	    if (array_key_exists('wpacu_clean_load', $_GET)) {
+	        return;
+        }
+
         $this->enqueuePublicStyles();
         $this->enqueuePublicScripts();
     }
@@ -216,7 +229,7 @@ class OwnAssets
 			$postId = 0; // for home page
 		}
 
-		$scriptRelPath = '/assets/script.min.js';
+	    $scriptRelPath = '/assets/script.min.js';
 
         wp_register_script(
 	        WPACU_PLUGIN_ID . '-script',
@@ -228,19 +241,30 @@ class OwnAssets
 		// It can also be the front page URL
 		$pageUrl = Misc::getPageUrl($postId);
 
-		$svgReloadIcon = <<<HTML
+	    $svgReloadIcon = <<<HTML
 <svg aria-hidden="true" role="img" focusable="false" class="dashicon dashicons-cloud" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M14.9 9c1.8.2 3.1 1.7 3.1 3.5 0 1.9-1.6 3.5-3.5 3.5h-10C2.6 16 1 14.4 1 12.5 1 10.7 2.3 9.3 4.1 9 4 8.9 4 8.7 4 8.5 4 7.1 5.1 6 6.5 6c.3 0 .7.1.9.2C8.1 4.9 9.4 4 11 4c2.2 0 4 1.8 4 4 0 .4-.1.7-.1 1z"></path></svg>
 HTML;
+
+	    // If the post status is 'private' only direct method can be used to fetch the assets
+	    // as the remote post one will return a 404 error since the page is accessed as a guest visitor
+        $postStatus = $postId > 0 ? get_post_status($postId) : false;
+        $wpacuDomGetType = ($postStatus === 'private') ? 'direct' : Main::$domGetType;
 
 		$wpacuObjectData = array(
 			'plugin_name'       => WPACU_PLUGIN_ID,
 			'plugin_id'         => WPACU_PLUGIN_ID,
+
 			'reload_icon'       => $svgReloadIcon,
 			'reload_msg'        => sprintf(__('Reloading %s CSS &amp; JS list', 'wp-asset-clean-up'), '<strong style="margin: 0 4px;">' . WPACU_PLUGIN_TITLE . '</strong>'),
-			'dom_get_type'      => Main::$domGetType,
+			'dom_get_type'      => $wpacuDomGetType,
 			'list_show_status'  => Main::instance()->settings['assets_list_show_status'],
-            'start_del'         => Main::START_DEL,
-			'end_del'           => Main::END_DEL,
+
+            'start_del_e'       => Main::START_DEL_ENQUEUED,
+			'end_del_e'         => Main::END_DEL_ENQUEUED,
+
+            'start_del_h'       => Main::START_DEL_HARDCODED,
+            'end_del_h'         => Main::END_DEL_HARDCODED,
+
 			'ajax_url'          => admin_url('admin-ajax.php'),
 			'post_id'           => $postId, // if any
 			'page_url'          => $pageUrl // post, page, custom post type, homepage etc.
@@ -258,7 +282,7 @@ HTML;
 		$submitTicketLink = 'https://wordpress.org/support/plugin/wp-asset-clean-up';
 		// [/wpacu_lite]
 
-		$wpacuObjectData['ajax_direct_fetch_error'] = <<<HTML
+        $wpacuObjectData['ajax_direct_fetch_error'] = <<<HTML
 <div class="ajax-direct-call-error-area">
     <p class="note"><strong>Note:</strong> The checked URL returned an error when fetching the assets via AJAX call. This could be because of a firewall that is blocking the AJAX call, a redirect loop or an error in the script that is retrieving the output which could be due to an incompatibility between the plugin and the WordPress setup you are using.</p>
     <p>Here is the response from the call:</p>
@@ -269,12 +293,29 @@ HTML;
             <td><span class="error-code">{wpacu_status_code_error}</span> * for more information about client and server errors, <a target="_blank" href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">check this link</a></td>
         </tr>
         <tr>
+            <td valign="top"><span class="dashicons dashicons-lightbulb" style="color: orange;"></span> <strong>Suggestion:</strong></td>
+            <td>Select "WP Remote Post" as a method of retrieving the assets from the "Settings" page. If that doesn't fix the issue, just use "Manage in Front-end" option which should always work and <a target="_blank" href="{$submitTicketLink}">submit a ticket</a> about your problem.</td>
+        </tr>
+        <tr>
+            <td valign="top"><strong>Output:</strong></td>
+            <td valign="top">{wpacu_output}</td>
+        </tr>
+    </table>
+</div>
+HTML;
+
+        // Sometimes, 200 OK (success) is returned, but due to an issue with the page, the assets list is not retrieved
+	    $wpacuObjectData['ajax_direct_fetch_error_with_success_response'] = <<<HTML
+<div style="overflow-y: scroll; max-height: 290px;" class="ajax-direct-call-error-area">
+    <p class="note"><strong>Note:</strong> The assets could not be fetched via the AJAX call. Here is the response:</p>
+    <table>
+        <tr>
             <td valign="top"><strong>Suggestion:</strong></td>
             <td>Select "WP Remote Post" as a method of retrieving the assets from the "Settings" page. If that doesn't fix the issue, just use "Manage in Front-end" option which should always work and <a target="_blank" href="{$submitTicketLink}">submit a ticket</a> about your problem.</td>
         </tr>
         <tr>
-            <td><strong>Output:</strong></td>
-            <td>{wpacu_output}</td>
+            <td valign="top"><strong>Output:</strong></td>
+            <td valign="top">{wpacu_output}</td>
         </tr>
     </table>
 </div>
@@ -359,6 +400,75 @@ jQuery(document).ready(function($) { $('.wpacu-chosen-select').chosen(); });
 JS;
 			wp_add_inline_script(WPACU_PLUGIN_ID . '-chosen-script', $chosenScriptInline);
 			// [End] Chosen Script
+        }
+
+		if ($page === WPACU_PLUGIN_ID . '_assets_manager' || (Misc::getVar('get', 'post') && Misc::getVar('get', 'action') === 'edit')) {
+			// [Start] SweetAlert
+			wp_enqueue_style(
+				WPACU_PLUGIN_ID . '-sweetalert-css',
+				plugins_url('/assets/sweetalert/sweetalert.css', WPACU_PLUGIN_FILE),
+				array(),
+				1
+			);
+			$sweetAlertStyleInline = <<<CSS
+.swal-overlay { 
+	z-index: 10000000;
+}
+
+.swal-text {
+	line-height: 24px;
+}
+
+.swal-footer {
+	text-align: center;
+	padding: 13px 16px 20px;
+}
+
+.swal-button.swal-button--confirm {
+	background-color: #008f9c;
+}
+
+.swal-button.swal-button--confirm:hover {
+	background-color: #006e78;
+}
+CSS;
+			wp_add_inline_style(WPACU_PLUGIN_ID . '-sweetalert-css', $sweetAlertStyleInline);
+
+			wp_enqueue_script(
+				WPACU_PLUGIN_ID . '-sweetalert-js',
+				plugins_url('/assets/sweetalert/dist/sweetalert.min.js', WPACU_PLUGIN_FILE),
+				array('jquery'),
+				1
+			);
+
+			$upgradeToProLink = WPACU_PLUGIN_GO_PRO_URL.'?utm_source=manage_hardcoded_assets&utm_medium=go_pro_modal';
+
+			$sweetAlertScriptInline = <<<JS
+jQuery(document).ready(function($) { 
+   $(document).on('click', '.wpacu-manage-hardcoded-assets-requires-pro-popup', function(e) {
+       e.preventDefault();
+       wpacuTriggerGoProHardcodedModal();
+   });
+});
+
+function wpacuTriggerGoProHardcodedModal()
+{
+	swal({
+		text: "Managing hardcoded (non-enqueued) LINK/STYLE/SCRIPT tags is a feature available for Pro users.",
+		icon: "info",
+		buttons: {
+		  confirm: "Upgrade to the Pro version",
+		  cancel: "Maybe later",
+		}
+	}).then((value) => {
+		if (value) {
+		  window.location.replace("{$upgradeToProLink}");
+		}
+	});
+}
+JS;
+			wp_add_inline_script(WPACU_PLUGIN_ID . '-sweetalert-js', $sweetAlertScriptInline);
+			// [ENd] SweetAlert
         }
 
 		if (in_array($page, array(WPACU_PLUGIN_ID . '_overview', WPACU_PLUGIN_ID . '_bulk_unloads'))) {
@@ -530,7 +640,6 @@ JS;
                     //wpacuTabOpenSettingsArea(event, hashFromUrl.substring(1));
                     //console.log(hashFromUrl);
                     jQuery('a[href="'+ hashFromUrl +'"]').trigger('click');
-                    //console.log(hashFromUrl);
                     //console.log(hashFromUrl.substring(1));
                 }
             </script>

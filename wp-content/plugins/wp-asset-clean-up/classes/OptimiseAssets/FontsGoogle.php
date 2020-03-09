@@ -24,12 +24,12 @@ class FontsGoogle
 	/**
 	 *
 	 */
-	const NOSCRIPT_WEB_FONT_LOADER = '<meta name="wpacu-generator" content="ASSET CLEANUP NOSCRIPT WEB FONT LOADER">';
+	const NOSCRIPT_WEB_FONT_LOADER = '<span style="display: none;" data-name=wpacu-delimiter content="ASSET CLEANUP NOSCRIPT WEB FONT LOADER"></span>';
 
 	/**
 	 *
 	 */
-	const COMBINED_LINK_DEL = '<meta name="wpacu-generator" content="ASSET CLEANUP COMBINED LINK LOCATION">';
+	const COMBINED_LINK_DEL = '<span style="display: none;" data-name=wpacu-delimiter content="ASSET CLEANUP COMBINED LINK LOCATION"></span>';
 
 	/**
 	 *
@@ -75,7 +75,7 @@ class FontsGoogle
 		// Are the Google Fonts removed? Do not add it and strip any existing ones
 		if (! empty($urls) && Main::instance()->settings['google_fonts_remove']) {
 			foreach ($urls as $urlKey => $urlValue) {
-				if ((stripos($urlValue, 'fonts.googleapis.com') !== false) || (stripos($urlValue, 'fonts.gstatic.com') !== false)) {
+				if (is_string($urlValue) && ((stripos($urlValue, 'fonts.googleapis.com') !== false) || (stripos($urlValue, 'fonts.gstatic.com') !== false))) {
 					unset($urls[$urlKey]);
 				}
 			}
@@ -83,8 +83,10 @@ class FontsGoogle
 			return $urls; // Finally, return the list after any removals
 		}
 
-		// "Remove Google Fonts" has to be turned off
-		if ('preconnect' === $relationType && ! Main::instance()->settings['google_fonts_remove'] && Main::instance()->settings['google_fonts_preconnect']) {
+		// Google Fonts "preconnect"
+		if ('preconnect' === $relationType
+		    && ! Main::instance()->settings['google_fonts_remove']  // "Remove Google Fonts" has to be turned off
+		    && Main::instance()->settings['google_fonts_preconnect']) { // Needs to be enabled within "Plugin Usage Preferences" in "Settings"
 			$urls[] = array(
 				'href' => 'https://fonts.gstatic.com/',
 				'crossorigin'
@@ -379,7 +381,9 @@ class FontsGoogle
 	 */
 	public static function alterGoogleFontUrlFromJsContent($jsContent)
 	{
-		if (stripos($jsContent, 'fonts.googleapis.com') === false) {
+		// Continue only if any of the needles (e.g. fonts.googleapis.com, WebFontConfig) are found in the haystack
+		if (stripos($jsContent, 'fonts.googleapis.com') === false &&
+		    strpos($jsContent, 'WebFontConfig') === false) {
 			return $jsContent;
 		}
 
@@ -402,6 +406,29 @@ class FontsGoogle
 					$newJsMatchOutput = str_replace($googleApisUrl, $newGoogleApisUrl, $matchRule);
 					$newJsOutput      = str_replace($matchRule, $newJsMatchOutput, $newJsOutput);
 				}
+			}
+		}
+
+		// Look for any "WebFontConfig = { google: { families: ['font-one', 'font-two'] } }" patterns
+		if ( stripos( $jsContent, 'WebFontConfig' ) !== false
+		     && preg_match_all( '#WebFontConfig(.*?)google(\s+|):(\s+|){(\s+|)families(\s+|):(?<families>.*?)]#s', $jsContent, $webFontConfigMatches )
+		     && isset( $webFontConfigMatches['families'] ) && ! empty( $webFontConfigMatches['families'] )
+		) {
+			foreach ($webFontConfigMatches['families'] as $webFontConfigKey => $webFontConfigMatch) {
+				$originalWholeMatch  = $webFontConfigMatches[0][$webFontConfigKey];
+				$familiesMatchOutput = trim($webFontConfigMatch);
+
+				// NO match or existing "display" parameter was found? Do not continue
+				if (! $familiesMatchOutput || strpos($familiesMatchOutput, 'display=')) {
+					continue;
+				}
+
+				// Alter the matched string
+				$familiesNewOutput      = preg_replace('/([\'"])$/', '&display='.Main::instance()->settings['google_fonts_display'].'\\1', $familiesMatchOutput);
+				$newWebFontConfigOutput = str_replace($familiesMatchOutput, $familiesNewOutput, $originalWholeMatch);
+
+				// Finally, do the replacement
+				$newJsOutput            = str_replace($originalWholeMatch, $newWebFontConfigOutput, $newJsOutput);
 			}
 		}
 
@@ -631,7 +658,7 @@ HTML;
 	 *
 	 * @param $types
 	 *
-	 * @return array
+	 * @return string
 	 */
 	public static function buildSortTypesList($types)
 	{

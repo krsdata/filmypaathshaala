@@ -142,6 +142,9 @@ class Settings
         // Clear Cached CSS/JS files after (x) days
         'clear_cached_files_after',
 
+		// Do not load Asset CleanUp (Pro) if the URI is matched by the specified patterns
+		'do_not_load_plugin_patterns',
+
 		// [wpacu_pro]
         // Local Fonts: "font-display" CSS property (Pro feature)
         'local_fonts_display',
@@ -168,7 +171,7 @@ class Settings
         'google_fonts_remove',
 
         // [wpacu_lite]
-        // Do not trigger Freemius Popup on Deactivation
+        // Do not trigger Feedback Popup on Deactivation
         'disable_freemius'
 		// [/wpacu_lite]
     );
@@ -248,6 +251,8 @@ class Settings
 
 	        // Starting from v1.2.8.6 (lite), WordPress core files are hidden in the assets list as a default setting
 	        'hide_core_files' => '1',
+
+            'fetch_cached_files_details_from' => 'disk', // Do not add more rows to the database by default (options table can become quite large)
 
             'clear_cached_files_after' => '10'
         );
@@ -548,7 +553,7 @@ class Settings
 	        $settings['google_fonts_preload_files'] = strip_tags($settings['google_fonts_preload_files']);
         }
 
-        Misc::addUpdateOption(WPACU_PLUGIN_ID . '_settings', json_encode($settings));
+	    Misc::addUpdateOption(WPACU_PLUGIN_ID . '_settings', json_encode(Misc::filterList($settings)));
 
         if ($clearCache) {
 	        // After settings are saved, clear all cache to re-built the CSS/JS based on the new settings

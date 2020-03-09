@@ -8,6 +8,7 @@ if (!class_exists('rtTPGMeta')):
             // actions
             add_action('admin_head', array($this, 'admin_head'));
             add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
+            add_action('edit_form_after_title', array($this, 'tpg_sc_after_title'));
             add_action('save_post', array($this, 'save_post'), 10, 2);
             add_filter('manage_edit-rttpg_columns', array($this, 'arrange_rttpg_columns'));
             add_action('manage_rttpg_posts_custom_column', array($this, 'manage_rttpg_columns'), 10, 2);
@@ -50,10 +51,7 @@ if (!class_exists('rtTPGMeta')):
                 'jquery-ui-core',
                 'rt-fontawsome',
                 'rt-actual-height-js',
-                'jquery-ui-tabs',
                 'wp-color-picker',
-                'ace_code_highlighter_js',
-                'ace_mode_js',
                 'rt-select2-js',
                 'rt-tpg',
                 'rt-tpg-admin',
@@ -88,20 +86,55 @@ if (!class_exists('rtTPGMeta')):
                 'normal',
                 'high');
             add_meta_box(
-                'rttpg_meta_marketing',
-                __('Pro Features'),
-                array($this, 'rttpg_meta_marketing_selection'),
-                rtTPG()->post_type,
-                'side',
-                'default');
-            add_meta_box(
                 rtTPG()->post_type . '_sc_preview_meta',
                 __('Layout Preview', 'the-post-grid'),
                 array($this, 'tpg_sc_preview_selection'),
                 rtTPG()->post_type,
                 'normal',
                 'high');
-            add_action('edit_form_after_title', array($this, 'tpg_sc_after_title'));
+
+            add_meta_box(
+                'rt_plugin_sc_pro_information',
+                __('Documentation', 'the-post-grid'),
+                array($this, 'rt_plugin_sc_pro_information'),
+                rtTPG()->post_type,
+                'side',
+                'low'
+            );
+        }
+
+        function rt_plugin_sc_pro_information($post) {
+            $html = '';
+            if ($post === 'settings') {
+                $html .= '<div class="rt-document-box rt-update-pro-btn-wrap">
+                <a href="https://www.radiustheme.com/the-post-grid-pro-for-wordpress/" target="_blank" class="rt-update-pro-btn">' . __("Update Pro To Get More Features", "the-post-grid") . '</a>
+            </div>';
+            } else {
+                $html .= sprintf('<div class="rt-document-box"><div class="rt-box-icon"><i class="dashicons dashicons-megaphone"></i></div><div class="rt-box-content"><h3 class="rt-box-title">Pro Features</h3>%s</div></div>', rtTPG()->get_pro_feature_list());
+            }
+            $html .= sprintf('<div class="rt-document-box">
+							<div class="rt-box-icon"><i class="dashicons dashicons-media-document"></i></div>
+							<div class="rt-box-content">
+                    			<h3 class="rt-box-title">%1$s</h3>
+                    				<p>%2$s</p>
+                        			<a href="https://radiustheme.com/how-to-setup-configure-the-post-grid-free-version-for-wordpress/" target="_blank" class="rt-admin-btn">%1$s</a>
+                			</div>
+						</div>',
+                __("Documentation", 'the-post-grid'),
+                __("Get started by spending some time with the documentation we included step by step process with screenshots with video.", 'the-post-grid')
+            );
+
+            $html .= '<div class="rt-document-box">
+							<div class="rt-box-icon"><i class="dashicons dashicons-sos"></i></div>
+							<div class="rt-box-content">
+                    			<h3 class="rt-box-title">Need Help?</h3>
+                    				<p>Stuck with something? Please create a 
+                        <a href="https://www.radiustheme.com/contact/">ticket here</a> or post on <a href="https://www.facebook.com/groups/234799147426640/">facebook group</a>. For emergency case join our <a href="https://www.radiustheme.com/">live chat</a>.</p>
+                        			<a href="https://www.radiustheme.com/contact/" target="_blank" class="rt-admin-btn">' . __("Get Support", "the-post-grid") . '</a>
+                			</div>
+						</div>';
+
+            echo $html;
         }
 
 
@@ -136,28 +169,28 @@ if (!class_exists('rtTPGMeta')):
             );
             wp_nonce_field(rtTPG()->nonceText(), rtTPG()->nonceId());
             $html = null;
-            $html .= '<div id="sc-tabs" class="rt-setting-holder">';
+            $html .= '<div id="sc-tabs" class="rt-tab-container">';
             $html .= '<ul class="rt-tab-nav">
-                                <li><a href="#sc-post-post-source">' . __('Post Source', 'the-post-grid') . '</a></li>
+                                <li class="active"><a href="#sc-post-post-source">' . __('Post Source', 'the-post-grid') . '</a></li>
                                 <li><a href="#sc-post-layout-settings">' . __('Layout Settings', 'the-post-grid') . '</a></li>
                                 <li><a href="#sc-field-selection">' . __('Field Selection', 'the-post-grid') . '</a></li>
                                 <li><a href="#sc-style">' . __('Style', 'the-post-grid') . '</a></li>
                               </ul>';
 
 
-            $html .= '<div id="sc-post-post-source" class="rt-tab-container">';
+            $html .= '<div id="sc-post-post-source" class="rt-tab-content" style="display: block">';
             $html .= rtTPG()->render('settings.post-source', $post, true);
             $html .= '</div>';
 
-            $html .= '<div id="sc-post-layout-settings" class="rt-tab-container">';
+            $html .= '<div id="sc-post-layout-settings" class="rt-tab-content">';
             $html .= rtTPG()->render('settings.layout-settings', $post, true);
             $html .= '</div>';
 
-            $html .= '<div id="sc-field-selection" class="rt-tab-container">';
+            $html .= '<div id="sc-field-selection" class="rt-tab-content">';
             $html .= rtTPG()->render('settings.item-fields', $post, true);
             $html .= '</div>';
 
-            $html .= '<div id="sc-style" class="rt-tab-container">';
+            $html .= '<div id="sc-style" class="rt-tab-content">';
             $html .= rtTPG()->render('settings.style', $post, true);
             $html .= '</div>';
 

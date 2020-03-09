@@ -129,7 +129,7 @@
                         <span class="sep"> | </span>
                         <?php
                         /* translators: 1: Theme name, 2: Theme author. */
-                        echo 'FILMYPAATHSHAALA';
+                        printf(esc_html__('%1$s by %2$s.', 'covernews'), '<a href="https://afthemes.com/products/covernews/">CoverNews</a>', 'AF themes');
                         ?>
                     <?php endif; ?>
                 </div>

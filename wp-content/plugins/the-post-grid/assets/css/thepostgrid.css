@@ -164,6 +164,15 @@
     padding-right: 0;
 }
 
+.rt-detail .post-content {
+    margin-bottom: 10px;
+}
+
+.rt-detail .read-more a {
+    padding: 8px 15px;
+    display: inline-block;
+}
+
 /**********************************************************************/
 /********************************* Layout 1  *************************/
 /**********************************************************************/
@@ -230,7 +239,7 @@
 
 #poststuff .rt-tpg-container .layout1 .rt-holder .rt-detail h2,
 #poststuff .rt-tpg-container .layout1 .rt-holder .rt-detail h3,
-#poststuff .rt-tpg-container .layout1 .rt-holder .rt-detail h4 ,
+#poststuff .rt-tpg-container .layout1 .rt-holder .rt-detail h4,
 .rt-tpg-container .layout1 .rt-holder .rt-detail h2,
 .rt-tpg-container .layout1 .rt-holder .rt-detail h3,
 .rt-tpg-container .layout1 .rt-holder .rt-detail h4 {
@@ -267,7 +276,6 @@
 }
 
 .rt-tpg-container .layout1 .rt-holder .rt-detail .read-more a {
-    padding: 6px 12px;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -372,7 +380,6 @@
 
 .rt-tpg-container .layout2 .rt-holder .rt-detail .read-more a {
     display: inline-block;
-    padding: 6px 12px;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -400,7 +407,7 @@
 .rt-tpg-container .layout3 .rt-holder .rt-detail h4 {
     font-size: 26px;
     margin: 0 0 14px 0;
-    padding: 0px;
+    padding: 0;
     font-weight: 400;
     line-height: 1.25;
 }
@@ -462,12 +469,12 @@
 }
 
 .rt-tpg-container .layout3 .rt-holder .rt-detail .read-more a {
-    padding: 6px 12px;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     background: #337ab7;
     font-size: 15px;
+    display: inline-block;
 }
 
 .rt-tpg-container .layout3 .rt-holder .rt-img-holder > a img.rounded,
@@ -580,7 +587,6 @@
 }
 
 .rt-tpg-container .isotope1 .rt-holder .rt-detail .read-more a {
-    padding: 6px 12px;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -591,7 +597,7 @@
 /* isotope Buttons */
 .rt-tpg-container .rt-tpg-isotope-buttons {
     text-align: center;
-    margin: 15px 0;
+    margin: 15px 0 30px 0;
 }
 
 .rt-tpg-container .rt-tpg-isotope-buttons .selected {
@@ -601,7 +607,7 @@
 .rt-tpg-container .rt-tpg-isotope-buttons button {
     border: none;
     margin: 4px;
-    padding: 6px 14px;
+    padding: 8px 15px;
     outline: 0;
     text-transform: none;
     font-weight: 400;

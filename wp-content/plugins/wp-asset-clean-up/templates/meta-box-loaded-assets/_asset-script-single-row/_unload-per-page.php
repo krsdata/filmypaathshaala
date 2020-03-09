@@ -3,7 +3,7 @@
  * The file is included from /templates/meta-box-loaded-assets/_asset-script-single-row.php
 */
 
-if (! isset($data, $isBulkUnloaded)) {
+if (! isset($data, $isGroupUnloaded)) {
 	exit; // no direct access
 }
 ?>
@@ -14,13 +14,14 @@ if (! isset($data, $isBulkUnloaded)) {
 	     echo 'display: none;';
      }
      ?> padding: 8px 10px 6px !important;">
-	<ul class="wpacu_asset_options" <?php if ($isBulkUnloaded) { echo 'style="display: none;"'; } ?>>
+	<ul class="wpacu_asset_options" <?php if ($isGroupUnloaded) { echo 'style="display: none;"'; } ?>>
 		<li class="wpacu_unload_this_page">
 			<label class="wpacu_switch">
 				<input data-handle="<?php echo $data['row']['obj']->handle; ?>"
-				       class="input-unload-on-this-page <?php if (! $isBulkUnloaded) { echo 'wpacu-not-locked'; } ?> wpacu_unload_rule_input wpacu_unload_rule_for_script"
+                       data-handle-for="script"
+				       class="input-unload-on-this-page <?php if (! $isGroupUnloaded) { echo 'wpacu-not-locked'; } ?> wpacu_unload_rule_input wpacu_unload_rule_for_script"
 				       id="script_<?php echo $data['row']['obj']->handle; ?>"
-					<?php if ($isBulkUnloaded) { echo 'disabled="disabled"'; }
+					<?php if ($isGroupUnloaded) { echo 'disabled="disabled"'; }
 					echo $data['row']['checked']; ?>
 					   name="<?php echo WPACU_PLUGIN_ID; ?>[scripts][]"
 					   type="checkbox"
@@ -34,8 +35,8 @@ if (! isset($data, $isBulkUnloaded)) {
 	</ul>
 
 	<?php
-	// Bulk Unloaded (e.g. for all 'post' pages), but not site-wide)
-	if (! $data['row']['global_unloaded'] && $isBulkUnloaded) {
+	// Bulk Unloaded Notice (e.g. for all 'post' pages, but not site-wide)
+	if (! $data['row']['global_unloaded'] && $isGroupUnloaded) {
 		?>
 		<p style="margin: 0 !important;">
 			<em>

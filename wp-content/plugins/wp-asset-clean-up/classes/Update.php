@@ -63,6 +63,9 @@ HTML;
         // After post/page is saved - update your styles/scripts lists
         // This triggers ONLY in the Dashboard after "Update" button is clicked (on Edit mode)
         add_action('save_post', array($this, 'savePost'));
+
+        // Clear cache (via AJAX) only if the user is logged-in (with the right privileges)
+	    add_action('wp_ajax_' . WPACU_PLUGIN_ID . '_clear_cache', array($this, 'ajaxClearCache'));
     }
 
 	/**
@@ -145,6 +148,9 @@ HTML;
         // Any handle notes?
 	    self::updateHandleNotes();
 
+	    // Any always load it if user is logged in?
+        self::saveGlobalLoadExceptions();
+
 	    // Any ignore deps
 	    self::updateIgnoreChild();
 
@@ -179,8 +185,9 @@ HTML;
 	    $location = $parseUrl['path'];
 
 	    $paramsToAdd = array(
-		    'wpacu_time' => time(),
-		    'nocache'    => 'true'
+		    'wpacu_time'    => time(),
+		    'nocache'       => 'true',
+            'wpacu_updated' => 'true'
 	    );
 
 	    $extraParamsSign = '?';
@@ -210,9 +217,9 @@ HTML;
 
     /**
      * Save post metadata when a post is saved (not for the "Latest Blog Posts" home page type)
-     * Only for post types
+     * Only for post type
      *
-     * Admin: triggered via hook
+     * Dashboard view: triggered via hook
      * Front-end view: triggered by direct call
      *
      * @param $postId
@@ -275,7 +282,7 @@ HTML;
             }
         }
 
-	    // Was the Assets List Layout changed?
+        // Was the Assets List Layout changed?
 	    self::updateAssetListLayoutSettings();
 
         // If globally disabled, make an exception to load for submitted assets
@@ -286,7 +293,7 @@ HTML;
 
         // Any bulk unloads or removed? (e.g. all pages of a certain post type)
         $this->saveToBulkUnloads();
-        $this->removeBulkUnloads();
+        $this->removeBulkUnloads($post->post_type);
 
 	    // Any positions changed?
         // For Pro Only
@@ -297,13 +304,16 @@ HTML;
 	    // Any handle notes
 	    self::updateHandleNotes();
 
+	    // Any always load it if user is logged in?
+	    self::saveGlobalLoadExceptions();
+
 	    // Any ignore deps
 	    self::updateIgnoreChild();
 
 	    self::clearTransients();
 
-        // Clear all cache
-        OptimizeCommon::clearAllCache();
+	    // Note: Cache is cleared after the post/page is updated via a separate AJAX call
+	    // To avoid the usage of too much memory (good for shared environments) and avoid any memory related errors showing up to the user which could be confusing
     }
 
     /**
@@ -340,6 +350,9 @@ HTML;
 		// Any handle notes
         self::updateHandleNotes();
 
+	    // Any always load it if user is logged in?
+	    self::saveGlobalLoadExceptions();
+
         // Any ignore deps
         self::updateIgnoreChild();
 
@@ -350,7 +363,7 @@ HTML;
 	    self::clearTransients();
 
 	    // Clear all cache
-	    OptimizeCommon::clearAllCache();
+	    // Note: The cache is cleared after the page is saved
     }
 
 	/**
@@ -405,6 +418,7 @@ HTML;
         }
 
         // Load Exception
+        // Case: On this page
         if (isset($_POST['wpacu_styles_load_it']) && ! empty($_POST['wpacu_styles_load_it'])) {
             foreach ($_POST['wpacu_styles_load_it'] as $wpacuHandle) {
                 // Do not append it if the global unload is removed
@@ -452,7 +466,7 @@ HTML;
                 $list['scripts'] = array_unique($list['scripts']);
             }
 
-            $jsonLoadExceptions = json_encode($list);
+            $jsonLoadExceptions = json_encode(Misc::filterList($list));
 
             if ($type === 'post') {
                 if (! add_post_meta($postId, '_' . WPACU_PLUGIN_ID . '_load_exceptions', $jsonLoadExceptions, true)) {
@@ -464,6 +478,56 @@ HTML;
 	            Misc::addUpdateOption( WPACU_PLUGIN_ID . '_front_page_load_exceptions', $jsonLoadExceptions);
             }
         }
+    }
+
+	/**
+	 * e.g. Always load the handle (if unloaded by any rule) if the user is logged-in (applies site-wide)
+	 */
+	public static function saveGlobalLoadExceptions()
+    {
+	    $optionToUpdate  = WPACU_PLUGIN_ID . '_global_data';
+	    $formTargetKey   = 'wpacu_load_it_logged_in';
+	    $targetGlobalKey = 'load_it_logged_in';
+
+	    // This field is always passed when the management list submitted (to know if a handle's data is among the submitted one
+	    // Useful to avoid adding an extra hidden field (and have more submitted fields, not good for hosts with submit limit) before the checkbox
+	    $referenceKey    = 'wpacu_preloads';
+
+	    if (! Misc::isValidRequest('post', $referenceKey)) {
+		    return;
+	    }
+
+	    if (! isset($_POST[$referenceKey]['styles']) && ! isset($_POST[$referenceKey]['scripts'])) {
+		    return;
+	    }
+
+	    $existingListEmpty = array('styles' => array($targetGlobalKey => array()), 'scripts' => array($targetGlobalKey => array()));
+	    $existingListJson = get_option($optionToUpdate);
+
+	    $existingListData = Main::instance()->existingList($existingListJson, $existingListEmpty);
+	    $existingList = $existingListData['list'];
+
+	    foreach (array('styles', 'scripts') as $assetType) {
+		    if ( isset( $_POST[ $referenceKey ][$assetType] ) && ! empty( $_POST[ $referenceKey ][$assetType] ) ) {
+			    foreach ( array_keys( $_POST[ $referenceKey ][$assetType] ) as $styleHandle ) {
+			        // The checkbox was ticked (it's not empty)
+				    $isSelected = isset( $_POST[$formTargetKey][$assetType][ $styleHandle ] ) && $_POST[$formTargetKey][$assetType][ $styleHandle ];
+
+				    if ( $isSelected ) {
+					    $existingList[$assetType][ $targetGlobalKey ][ $styleHandle ] = 1;
+				    } else {
+					    unset( $existingList[$assetType][ $targetGlobalKey ][ $styleHandle ] );
+
+					    // Are there no values left? Remove the empty array (free space)
+					    if (empty($existingList[$assetType][ $targetGlobalKey ])) {
+					    	unset($existingList[$assetType][ $targetGlobalKey ]);
+					    }
+				    }
+			    }
+		    }
+	    }
+
+	    Misc::addUpdateOption($optionToUpdate, json_encode(Misc::filterList($existingList)));
     }
 
 	/*
@@ -549,10 +613,13 @@ HTML;
         }
 
         // Make sure all entries are unique (no handle duplicates)
-        $existingList['styles']  = array_unique($existingList['styles']);
-        $existingList['scripts'] = array_unique($existingList['scripts']);
+        foreach (array('styles', 'scripts') as $assetType) {
+	        if ( isset( $existingList[$assetType] ) && is_array( $existingList[$assetType] ) ) {
+		        $existingList[$assetType] = array_unique( $existingList[$assetType] );
+	        }
+        }
 
-        Misc::addUpdateOption( WPACU_PLUGIN_ID . '_global_unload', json_encode($existingList));
+        Misc::addUpdateOption( WPACU_PLUGIN_ID . '_global_unload', json_encode(Misc::filterList($existingList)));
     }
 
 	/**
@@ -610,7 +677,7 @@ HTML;
                 }
 
                 foreach ($list as $handle) {
-                    $handleKey = array_search($handle, $existingList[$assetType]);
+                    $handleKey = isset($existingList[$assetType]) ? array_search($handle, $existingList[$assetType]) : false;
 
                     if ($handleKey !== false) {
                         unset($existingList[$assetType][$handleKey]);
@@ -620,7 +687,7 @@ HTML;
             }
 
             if ($isUpdated) {
-                Misc::addUpdateOption(WPACU_PLUGIN_ID . '_global_unload', json_encode($existingList));
+                Misc::addUpdateOption(WPACU_PLUGIN_ID . '_global_unload', json_encode(Misc::filterList($existingList)));
             }
         }
 
@@ -692,7 +759,7 @@ HTML;
             }
         }
 
-	    Misc::addUpdateOption( WPACU_PLUGIN_ID . '_bulk_unload', json_encode($existingList));
+	    Misc::addUpdateOption( WPACU_PLUGIN_ID . '_bulk_unload', json_encode(Misc::filterList($existingList)));
     }
 
     /**
@@ -773,7 +840,7 @@ HTML;
 	            }
             }
 
-	        Misc::addUpdateOption( WPACU_PLUGIN_ID . '_bulk_unload', json_encode($existingList));
+	        Misc::addUpdateOption( WPACU_PLUGIN_ID . '_bulk_unload', json_encode(Misc::filterList($existingList)));
         }
 
         return $isUpdated;
@@ -801,27 +868,31 @@ HTML;
 	    $existingListData = Main::instance()->existingList($existingListJson, $existingListEmpty);
 	    $existingList = $existingListData['list'];
 
-        foreach ($_POST['wpacu_handle_notes']['styles'] as $styleHandle => $styleNote) {
-	        $styleNote = stripslashes($styleNote);
+	    if (isset($_POST['wpacu_handle_notes']['styles']) && ! empty($_POST['wpacu_handle_notes']['styles'])) {
+            foreach ($_POST['wpacu_handle_notes']['styles'] as $styleHandle => $styleNote) {
+                $styleNote = stripslashes($styleNote);
 
-	        if ($styleNote === '' && isset($existingList['styles'][$globalKey][$styleHandle])) {
-		        unset($existingList['styles'][$globalKey][$styleHandle]);
-	        } elseif ($styleNote !== '') {
-		        $existingList['styles'][$globalKey][$styleHandle] = $styleNote;
-            }
-        }
-
-	    foreach ($_POST['wpacu_handle_notes']['scripts'] as $scriptHandle => $scriptNote) {
-		    $scriptNote = stripslashes($scriptNote);
-
-		    if ($scriptNote === '' && isset($existingList['scripts'][$globalKey][$scriptHandle])) {
-			    unset($existingList['scripts'][$globalKey][$scriptHandle]);
-		    } elseif ($scriptNote !== '') {
-			    $existingList['scripts'][$globalKey][$scriptHandle] = $scriptNote;
+                if ($styleNote === '' && isset($existingList['styles'][$globalKey][$styleHandle])) {
+                    unset($existingList['styles'][$globalKey][$styleHandle]);
+                } elseif ($styleNote !== '') {
+                    $existingList['styles'][$globalKey][$styleHandle] = $styleNote;
+                }
             }
 	    }
 
-	    Misc::addUpdateOption($optionToUpdate, json_encode($existingList));
+        if (isset($_POST['wpacu_handle_notes']['scripts']) && ! empty($_POST['wpacu_handle_notes']['scripts'])) {
+	        foreach ( $_POST['wpacu_handle_notes']['scripts'] as $scriptHandle => $scriptNote ) {
+		        $scriptNote = stripslashes( $scriptNote );
+
+		        if ( $scriptNote === '' && isset( $existingList['scripts'][ $globalKey ][ $scriptHandle ] ) ) {
+			        unset( $existingList['scripts'][ $globalKey ][ $scriptHandle ] );
+		        } elseif ( $scriptNote !== '' ) {
+			        $existingList['scripts'][ $globalKey ][ $scriptHandle ] = $scriptNote;
+		        }
+	        }
+        }
+
+	    Misc::addUpdateOption($optionToUpdate, json_encode(Misc::filterList($existingList)));
     }
 
 	/**
@@ -870,7 +941,41 @@ HTML;
 			}
 		}
 
-		Misc::addUpdateOption($optionToUpdate, json_encode($existingList));
+		Misc::addUpdateOption($optionToUpdate, json_encode(Misc::filterList($existingList)));
+	}
+
+	/**
+     * This is triggered automatically and sets a transient with the handles info
+     * It doesn't require any manual action from the user
+     *
+	 * @param $assetList
+	 */
+	public static function updateHandlesInfo($assetList)
+	{
+		$optionToUpdate = WPACU_PLUGIN_ID . '_global_data';
+		$globalKey = 'assets_info';
+
+		$existingListEmpty = array('styles' => array($globalKey => array()), 'scripts' => array($globalKey => array()));
+		$existingListJson = get_option($optionToUpdate);
+
+		$existingListData = Main::instance()->existingList($existingListJson, $existingListEmpty);
+		$existingList = $existingListData['list'];
+
+		// $assetType could be 'styles' or 'scripts'
+		foreach ($assetList as $assetKey => $assetDataHandleList) {
+			if (empty($assetDataHandleList) || ! in_array($assetKey, array('styles', 'scripts'))) {
+				continue;
+			}
+
+			foreach ($assetDataHandleList as $assetObj) {
+				$assetArray = (array)$assetObj;
+				$assetHandle = $assetArray['handle'];
+				unset($assetArray['handle']); // no need to have it twice
+				$existingList[$assetKey][$globalKey][$assetHandle] = $assetArray;
+			}
+		}
+
+		update_option($optionToUpdate, json_encode(Misc::filterList($existingList)));
 	}
 
 	/**
@@ -880,5 +985,18 @@ HTML;
 	{
 		delete_transient(WPACU_PLUGIN_ID. '_total_unloaded_assets_all');
 		delete_transient(WPACU_PLUGIN_ID. '_total_unloaded_assets_per_page');
+	}
+
+	/**
+	 * This is triggered when /admin/admin-ajax.php is called (default WordPress AJAX handler)
+	 */
+	public function ajaxClearCache()
+	{
+	    if (! Menu::userCanManageAssets()) {
+	        echo 'Error: Not enough privileges to clear the cache.';
+	        exit();
+        }
+
+		OptimizeCommon::clearAllCache();
 	}
 }

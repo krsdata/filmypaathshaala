@@ -132,7 +132,7 @@ class CombineCss
 					// Any link hrefs removed perhaps if the file wasn't combined?
 					$linkHrefs = $maybeDoCssCombine['link_hrefs'];
 
-					if (file_exists($localFinalCssFile)) {
+					if (is_file($localFinalCssFile)) {
 						$storageJsonContents[$docLocationTag][$mediaValue] = array(
 							'uri_to_final_css_file' => $uriToFinalCssFile,
 							'link_hrefs'            => array_map(static function($href) {
@@ -217,7 +217,7 @@ HTML;
 	 */
 	public static function stripJustCombinedLinkTags($filesSources, $htmlSource)
 	{
-		preg_match_all('#<link[^>]*stylesheet[^>]*(>)#Usmi', $htmlSource, $matchesSourcesFromTags, PREG_SET_ORDER);
+		preg_match_all('#<link[^>]*(stylesheet|preload)[^>]*(>)#Umi', $htmlSource, $matchesSourcesFromTags, PREG_SET_ORDER);
 
 		$linkTagsStripped = 0;
 
@@ -327,7 +327,7 @@ HTML;
 
 		$skipIfFileExists = true;
 
-		if ($skipIfFileExists || ! file_exists($localFinalCssFile)) {
+		if ($skipIfFileExists || ! is_file($localFinalCssFile)) {
 			// Change $finalCombinedCssContent as paths to fonts and images that are relative (e.g. ../, ../../) have to be updated + other optimization changes
 			$finalCombinedCssContent = '';
 

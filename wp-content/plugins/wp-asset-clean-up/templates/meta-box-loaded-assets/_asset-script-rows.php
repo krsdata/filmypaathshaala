@@ -13,18 +13,18 @@ foreach ($data['all']['scripts'] as $obj) {
 	$data['row']['checked'] = $active ? 'checked="checked"' : '';
 
 	/*
-	 * $data['row']['is_global_rule'] is only used to apply a red background in the script's area to point out that the script is unloaded
+	 * $data['row']['is_group_unloaded'] is only used to apply a red background in the script's area to point out that the script is unloaded
 	*/
-	$data['row']['global_unloaded'] = $data['row']['is_post_type_unloaded'] = $data['row']['is_load_exception_per_page'] = $data['row']['is_global_rule'] = false;
+	$data['row']['global_unloaded'] = $data['row']['is_post_type_unloaded'] = $data['row']['is_load_exception_per_page'] = $data['row']['is_group_unloaded'] = false;
 
 	// Mark it as unloaded - Everywhere
 	if (in_array($data['row']['obj']->handle, $data['global_unload']['scripts']) && !$data['row']['class']) {
-		$data['row']['global_unloaded'] = $data['row']['is_global_rule'] = true;
+		$data['row']['global_unloaded'] = $data['row']['is_group_unloaded'] = true;
 	}
 
 	// Mark it as unloaded - for the Current Post Type
 	if ($data['bulk_unloaded_type'] && in_array($data['row']['obj']->handle, $data['bulk_unloaded'][$data['bulk_unloaded_type']]['scripts'])) {
-		$data['row']['is_global_rule'] = true;
+		$data['row']['is_group_unloaded'] = true;
 
 		if ($data['bulk_unloaded_type'] === 'post_type') {
 			$data['row']['is_post_type_unloaded'] = true;
@@ -33,9 +33,12 @@ foreach ($data['all']['scripts'] as $obj) {
 
 	$isLoadExceptionPerPage = isset($data['load_exceptions']['scripts']) && in_array($data['row']['obj']->handle, $data['load_exceptions']['scripts']);
 
-	if ($isLoadExceptionPerPage) {
-		$data['row']['is_load_exception_per_page'] = true;
-	} elseif ($data['row']['is_global_rule']) {
+	$data['row']['is_load_exception_per_page']    = $isLoadExceptionPerPage;
+
+	$isLoadException = $isLoadExceptionPerPage;
+
+	// No load exception of any kind and a bulk unload rule is applied? Append the CSS class for unloading
+	if (! $isLoadException && $data['row']['is_group_unloaded']) {
 		$data['row']['class'] .= ' wpacu_not_load';
 	}
 

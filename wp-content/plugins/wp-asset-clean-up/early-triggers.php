@@ -4,6 +4,72 @@ if (! defined('ABSPATH')) {
 	exit;
 }
 
+if (array_key_exists('wpacu_clean_load', $_GET)) {
+	$_GET['ao_noptimize'] = 1;
+}
+
+if (! function_exists('assetCleanUpHasNoLoadMatches')) {
+	/**
+	 * Any matches from "Settings" -> "Plugin Usage Preferences" -> "Do not load the plugin on certain pages"?
+	 * @param $targetUri
+	 *
+	 * @return bool
+	 */
+	function assetCleanUpHasNoLoadMatches($targetUri = '')
+	{
+		if ($targetUri === '') {
+			// When called from the Dashboard, it should never be empty
+			if (is_admin()) {
+				return false;
+			}
+
+			$targetUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : ''; // Invalid request
+		} else {
+			// Passed from the Dashboard as an URL; Strip the prefix and hostname to keep only the URI
+			$parseUrl = parse_url($targetUri);
+			$targetUri = isset($parseUrl['path']) ? $parseUrl['path'] : '';
+		}
+
+		if ($targetUri === '') {
+			return false; // Invalid request
+		}
+
+		$doNotLoadRegExps = array();
+
+		$wpacuPluginSettingsJson = get_option( WPACU_PLUGIN_ID . '_settings' );
+		$wpacuPluginSettings     = @json_decode( $wpacuPluginSettingsJson, ARRAY_A );
+		$doNotLoadPatterns       = isset( $wpacuPluginSettings['do_not_load_plugin_patterns'] ) ? $wpacuPluginSettings['do_not_load_plugin_patterns'] : '';
+
+		if ( $doNotLoadPatterns !== '' ) {
+			$doNotLoadPatterns = trim( $doNotLoadPatterns );
+
+			if ( strpos( $doNotLoadPatterns, "\n" ) ) {
+				// Multiple values (one per line)
+				foreach ( explode( "\n", $doNotLoadPatterns ) as $doNotLoadPattern ) {
+					$doNotLoadPattern = trim( $doNotLoadPattern );
+					if ( $doNotLoadPattern ) {
+						$doNotLoadRegExps[] = '#' . $doNotLoadPattern . '#';
+					}
+				}
+			} elseif ( $doNotLoadPatterns ) {
+				// Only one value?
+				$doNotLoadRegExps[] = '#' . $doNotLoadPatterns . '#';
+			}
+		}
+
+		if ( ! empty( $doNotLoadRegExps ) ) {
+			foreach ( $doNotLoadRegExps as $doNotLoadRegExp ) {
+				if ( preg_match( $doNotLoadRegExp, $targetUri ) ) {
+					// There's a match
+					return $targetUri;
+				}
+			}
+		}
+
+		return false;
+	}
+}
+
 if (! function_exists('assetCleanUpNoLoad')) {
 	/**
 	 * There are special cases when triggering "Asset CleanUp" is not relevant
@@ -43,13 +109,35 @@ if (! function_exists('assetCleanUpNoLoad')) {
 
 		$wpacuIsAjaxRequest = (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
 
+		// If an AJAX call is made to /wp-admin/admin-ajax.php and the action doesn't start with WPACU_PLUGIN_ID.'_
+		// then do not trigger Asset CleanUp Pro as it's irrelevant
+		$wpacuActionStartsWith = WPACU_PLUGIN_ID.'_';
+
+		if ($wpacuIsAjaxRequest && // Is AJAX request
+		    isset($_POST['action']) && // Has 'action' set as a POST parameter
+		    strpos( $_POST['action'], $wpacuActionStartsWith ) !== 0 && // Doesn't start with $wpacuActionStartsWith
+		    (strpos($_SERVER['REQUEST_URI'], 'admin-ajax.php') !== false) && // The request URI contains 'admin-ajax.php'
+		    is_admin()) { // If /wp-admin/admin-ajax.php is called, then it will return true
+			return true;
+		}
+
+		// Image Edit via Media Library
+		if ($wpacuIsAjaxRequest && isset($_POST['action'], $_POST['postid']) && $_POST['action'] === 'image-editor') {
+			return true;
+		}
+
 		// "Elementor" plugin: Do not trigger the plugin on AJAX calls
-		if (isset($_POST['action']) && (strpos($_POST['action'], 'elementor_') === 0) && $wpacuIsAjaxRequest) {
+		if ($wpacuIsAjaxRequest && isset($_POST['action']) && (strpos($_POST['action'], 'elementor_') === 0)) {
 			return true;
 		}
 
 		// "Oxygen" plugin: Edit Mode
 		if (isset($_GET['ct_builder'], $_GET['ct_inner']) && $_GET['ct_builder'] === 'true' && $_GET['ct_inner'] === 'true') {
+			return true;
+		}
+
+		// "Oxygen" plugin: Block Edit Mode
+		if (isset($_GET['oxy_user_library'], $_GET['ct_builder']) && $_GET['oxy_user_library'] && $_GET['ct_builder']) {
 			return true;
 		}
 
@@ -64,7 +152,7 @@ if (! function_exists('assetCleanUpNoLoad')) {
 		}
 
 		// "Divi" theme builder: Do not trigger the plugin on AJAX calls
-		if (isset($_POST['action']) && (strpos($_POST['action'], 'et_fb_') === 0) && $wpacuIsAjaxRequest) {
+		if ($wpacuIsAjaxRequest && isset($_POST['action']) && (strpos($_POST['action'], 'et_fb_') === 0)) {
 			return true;
 		}
 
@@ -126,10 +214,14 @@ if (! function_exists('assetCleanUpNoLoad')) {
 			return true;
 		}
 
+		// TranslatePress Multilingual: Edit translation mode
+		if (isset($_GET['trp-edit-translation']) && $_GET['trp-edit-translation'] === 'preview') {
+			return true;
+		}
+
 		// WordPress Customise Mode
 		if ((isset($_GET['customize_changeset_uuid'], $_GET['customize_theme']) && $_GET['customize_changeset_uuid'] && $_GET['customize_theme'])
-		    || (strpos($_SERVER['REQUEST_URI'],
-					'/wp-admin/customize.php') !== false && isset($_GET['url']) && $_GET['url'])) {
+		    || (strpos($_SERVER['REQUEST_URI'], '/wp-admin/customize.php') !== false && isset($_GET['url']) && $_GET['url'])) {
 			return true;
 		}
 
@@ -143,23 +235,45 @@ if (! function_exists('assetCleanUpNoLoad')) {
 			return true;
 		}
 
-		// Stripe Requests via EDD Plugin
-		if (isset($_GET['edd-listener']) && $_GET['edd-listener'] === 'stripe') {
+		// EDD Plugin (Listener)
+		if (isset($_GET['edd-listener']) && $_GET['edd-listener']) {
 			return true;
 		}
 
 		// AJAX Requests from various plugins/themes
-		if ($wpacuIsAjaxRequest && isset($_GET['action'])
-		    && (strpos($_GET['action'], 'woocommerce') === 0
-		        || strpos($_GET['action'], 'wc_') === 0
-		        || strpos($_GET['action'], 'jetpack') === 0
-		        || strpos($_GET['action'], 'wpfc_') === 0
-		        || strpos($_GET['action'], 'oxygen_') === 0
-		        || strpos($_GET['action'], 'oxy_') === 0
-		        || strpos($_GET['action'], 'w3tc_') === 0
-		        || strpos($_GET['action'], 'wpforms_') === 0
-		        || strpos($_GET['action'], 'wdi_') === 0
+		if ($wpacuIsAjaxRequest && isset($_POST['action'])
+		       && (strpos($_POST['action'], 'woocommerce') === 0
+		        || strpos($_POST['action'], 'wc_') === 0
+		        || strpos($_POST['action'], 'jetpack') === 0
+		        || strpos($_POST['action'], 'wpfc_') === 0
+		        || strpos($_POST['action'], 'oxygen_') === 0
+		        || strpos($_POST['action'], 'oxy_') === 0
+		        || strpos($_POST['action'], 'w3tc_') === 0
+		        || strpos($_POST['action'], 'wpforms_') === 0
+		        || strpos($_POST['action'], 'wdi_') === 0
 		    )) {
+			return true;
+		}
+
+		// Stop triggering Asset CleanUp (completely) on specific front-end pages
+		// Do the trigger here (as early as possible)
+		if (assetCleanUpHasNoLoadMatches()) {
+			// Only use exit() when "wpassetcleanup_load" is used
+			if (isset($_REQUEST['wpassetcleanup_load']) && $_REQUEST['wpassetcleanup_load']) {
+				include_once(ABSPATH . 'wp-includes/pluggable.php');
+
+				if (current_user_can('manage_options')) {
+					$msg = sprintf(
+						__(
+							'This page\'s URL is matched by one of the RegEx rules you have in <em>"Settings"</em> -&gt; <em>"Plugin Usage Preferences"</em> -&gt; <em>"Do not load the plugin on certain pages"</em>, thus %s is not loaded on that page and no CSS/JS are to be managed. If you wish to view the CSS/JS manager, please remove the matching RegEx rule and the list of CSS/JS will be fetched.',
+							'wp-asset-clean-up'
+						),
+						WPACU_PLUGIN_TITLE
+					);
+					exit( $msg );
+				}
+			}
+
 			return true;
 		}
 

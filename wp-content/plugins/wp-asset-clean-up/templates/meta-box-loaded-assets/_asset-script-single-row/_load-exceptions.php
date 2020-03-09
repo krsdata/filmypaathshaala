@@ -3,19 +3,22 @@
  * The file is included from /templates/meta-box-loaded-assets/_asset-script-single-row.php
 */
 
-if (! isset($data, $isBulkUnloaded)) {
+if (! isset($data)) {
 	exit; // no direct access
 }
+
+$isGroupUnloaded  = $data['row']['is_group_unloaded'];
+$anyUnloadRuleSet = ($isGroupUnloaded || $data['row']['checked']);
 ?>
-<div class="wpacu_asset_options_wrap <?php if (! $isBulkUnloaded) { echo 'wpacu_hide'; } ?>">
+<div class="wpacu_asset_options_wrap <?php if (! $anyUnloadRuleSet) { echo 'wpacu_hide'; } ?>">
 	<div data-script-handle="<?php echo $data['row']['obj']->handle; ?>"
 	     style="margin-bottom: 12px;"
 	     class="wpacu_exception_options_area_wrap">
 		<div class="wpacu_area_one">
-			<?php if ($isBulkUnloaded) { ?>
+			<?php if ($isGroupUnloaded) { ?>
 				<strong>Make an exception</strong> and always:
 			<?php } else { ?>
-				If unloaded by any of the bulk rules (e.g. everywhere), <strong>make an exception</strong> and always:
+                <strong>Make an exception</strong> if unloaded and always:
 			<?php } ?>
 		</div>
 		<ul class="wpacu_area_two wpacu_asset_options wpacu_exception_options_area">
@@ -24,8 +27,8 @@ if (! isset($data, $isBulkUnloaded)) {
 				              id="wpacu_load_it_option_script_<?php echo $data['row']['obj']->handle; ?>"
 				              class="wpacu_load_it_option_one wpacu_script wpacu_load_exception"
 				              type="checkbox"
-				              name="wpacu_scripts_load_it[]"
 						<?php if ($data['row']['is_load_exception_per_page']) { ?> checked="checked" <?php } ?>
+						      name="wpacu_scripts_load_it[]"
 						      value="<?php echo $data['row']['obj']->handle; ?>" />
 					Load it on this page</label>
 			</li>
@@ -37,7 +40,7 @@ if (! isset($data, $isBulkUnloaded)) {
 						type="checkbox"
 						disabled="disabled"
 						value="1"/>
-					Load it for URLs with request URI matching this RegEx: <a class="go-pro-link-no-style"
+					Load it for URLs with request URI matching this RegEx(es): <a class="go-pro-link-no-style"
 					                                                          href="<?php echo WPACU_PLUGIN_GO_PRO_URL; ?>?utm_source=manage_asset&utm_medium=load_via_regex_make_exception"><span
 							class="wpacu-tooltip wpacu-larger"><?php _e( 'This feature is available in the premium version of the plugin.',
 								'wp-asset-clean-up' ); ?><br/> <?php _e( 'Click here to upgrade to Pro',
@@ -48,6 +51,20 @@ if (! isset($data, $isBulkUnloaded)) {
 						href="https://assetcleanup.com/docs/?p=21#wpacu-method-2"><span
 							class="dashicons dashicons-editor-help"></span></a></label>
 			</li>
+            <?php
+            $isLoadItLoggedIn = in_array($data['row']['obj']->handle, $data['handle_load_logged_in']['scripts']);
+            ?>
+            <li id="wpacu_load_it_user_logged_in_option_script_<?php echo $data['row']['obj']->handle; ?>">
+                <label><input data-handle="<?php echo $data['row']['obj']->handle; ?>"
+                              id="wpacu_load_it_user_logged_in_option_script_<?php echo $data['row']['obj']->handle; ?>"
+                              class="wpacu_load_it_option_three wpacu_script wpacu_load_exception"
+                              type="checkbox"
+						<?php if ($isLoadItLoggedIn) { ?> checked="checked" <?php } ?>
+                              name="wpacu_load_it_logged_in[scripts][<?php echo $data['row']['obj']->handle; ?>]"
+                              value="1"/>
+                    Load it if the user is logged-in</label>
+            </li>
 		</ul>
+        <div class="wpacu-clearfix"></div>
 	</div>
 </div>

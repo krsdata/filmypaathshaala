@@ -2192,6 +2192,7 @@
   overflow: hidden;
   border: none;
   opacity: 0;
+  pointer-events: none;
 }
 
 .su-spoiler.su-spoiler-closed > .su-spoiler-content iframe {

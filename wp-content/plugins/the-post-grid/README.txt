@@ -4,7 +4,7 @@ Donate link:
 Tags: post grid, content grid, post display, post format, post view, blog display, news display, post
 Requires at least: 4.5
 Tested up to: 5.3
-Stable tag: 2.3.2
+Stable tag: 2.3.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -41,6 +41,7 @@ By using The Post Grid plugin you can display your post in Grid List & Isotope v
 * Pagination Supported
 * Feature image Enable/Disable option
 * Widget is added
+* Detail page link target control
 * **Layout preview**
 
 
@@ -138,6 +139,9 @@ For any bug or suggestion please mail support@radiustheme.com
 
 
 == Changelog ==
+
+= 2.3.3 =
+* Add Detail page link target
 
 = 2.3.2 =
 * Full Content view

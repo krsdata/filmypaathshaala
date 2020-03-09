@@ -21,27 +21,23 @@ if (! $metaBoxLoadedFine) {
         <p><span class="dashicons dashicons-warning"></span> <?php _e('It looks like "WP Remote Post" method for retrieving assets via the Dashboard is not working in this environment.', 'wp-asset-clean-up'); ?></p>
         <p><?php _e('Since the server (from its IP) is making the call, it will not "behave" in the same way as the "Direct" method, which could bypass for instance any authentication request (you might use a staging website that is protected by login credentials).', 'wp-asset-clean-up'); ?></p>
         <p><?php _e('Consider using "Direct" method. If that doesn\'t work either, use the "Manage in the Front-end" option (which should always work in any instance) and submit a ticket regarding the problem you\'re having. Here\'s the output received by the call:', 'wp-asset-clean-up'); ?></p>
-
         <table class="table-data">
             <tr>
                 <td><strong><?php _e('CODE', 'wp-asset-clean-up'); ?>:</strong></td>
                 <td><?php echo $data['wp_remote_post']['response']['code']; ?></td>
             </tr>
-
             <tr>
                 <td><strong><?php _e('MESSAGE', 'wp-asset-clean-up'); ?>:</strong></td>
                 <td><?php echo $data['wp_remote_post']['response']['message']; ?></td>
             </tr>
-
             <tr>
-                <td><strong><?php _e('OUTPUT', 'wp-asset-clean-up'); ?>:</strong></td>
+                <td valign="top"><strong><?php _e('OUTPUT', 'wp-asset-clean-up'); ?>:</strong></td>
                 <td><?php echo $data['wp_remote_post']['body']; ?></td>
             </tr>
         </table>
     </div>
     <?php
-
-    exit;
+    exit();
 }
 
 $tipsClass = new \WpAssetCleanUp\Tips();
@@ -150,6 +146,7 @@ if ($data['plugin_settings']['assets_list_layout'] === 'by-loaded-unloaded') {
 }
 
 $data['page_unload_text'] = __('Unload on this page', 'wp-asset-clean-up');
+wp_cache_set('wpacu_data_page_unload_text', $data['page_unload_text']);
 
 // Assets List Layout - added here to convenience - to avoid going to "Settings"
 // it could make debugging faster

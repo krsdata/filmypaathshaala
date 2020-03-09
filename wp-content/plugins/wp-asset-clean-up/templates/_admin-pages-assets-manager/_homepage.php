@@ -19,57 +19,89 @@ if ($data['wpacu_settings']['dashboard_show'] != 1) {
 }
 
 if ($data['show_on_front'] === 'page') {
-    $anyMetaBoxHidden = $data['wpacu_settings']['hide_assets_meta_box'] || $data['wpacu_settings']['hide_options_meta_box'];
+	$anyMetaBoxHidden = $data['wpacu_settings']['hide_assets_meta_box'] || $data['wpacu_settings']['hide_options_meta_box'];
 
-    if ($anyMetaBoxHidden) {
-        ?>
+	if ( $anyMetaBoxHidden ) {
+		?>
         <div class="wpacu-warning" style="width: 95%; margin: -10px 0 15px; padding: 10px; font-size: inherit;">
-            <strong><span class="dashicons dashicons-warning" style="color: orange;"></span> Important Reminder:</strong> The following meta boxes were marked to be hidden in plugin's "Settings" &#187; "Plugin Usage Preferences":
+            <strong><span class="dashicons dashicons-warning" style="color: orange;"></span> Important
+                Reminder:</strong> The following meta boxes were marked to be hidden in plugin's "Settings" &#187;
+            "Plugin Usage Preferences":
             <ul style="margin-bottom: 0; list-style: circle; padding-left: 25px;">
-                <?php if ($data['wpacu_settings']['hide_assets_meta_box']) { ?>
-                    <li><strong><?php echo WPACU_PLUGIN_TITLE; ?>: CSS &amp; JavaScript Manager</strong> * <em>to see the CSS/JS list, you need to make the meta box visible again</em></li>
-                <?php } ?>
+				<?php if ( $data['wpacu_settings']['hide_assets_meta_box'] ) { ?>
+                    <li><strong><?php echo WPACU_PLUGIN_TITLE; ?>: CSS &amp; JavaScript Manager</strong> * <em>to see
+                            the CSS/JS list, you need to make the meta box visible again</em></li>
+				<?php } ?>
 
-	            <?php if ($data['wpacu_settings']['hide_options_meta_box']) { ?>
-                    <li><strong><?php echo WPACU_PLUGIN_TITLE; ?>: Options</strong> * <em>to prevent minify/combine/unload settings per page, you need to make the meta box visible again</em></li>
-	            <?php } ?>
+				<?php if ( $data['wpacu_settings']['hide_options_meta_box'] ) { ?>
+                    <li><strong><?php echo WPACU_PLUGIN_TITLE; ?>: Options</strong> * <em>to prevent
+                            minify/combine/unload settings per page, you need to make the meta box visible again</em>
+                    </li>
+				<?php } ?>
             </ul>
         </div>
-        <?php
-    }
+		<?php
+	}
 	?>
     <div class="wpacu-notice-info" style="width: 95%;">
-        <p><?php _e('In "Settings" &#187; "Reading" you have selected a static page for "Front page displays" setting.', 'wp-asset-clean-up'); ?></p>
-        <p><?php _e('To manage the assets (.CSS &amp; .JS), use the button(s) below:', 'wp-asset-clean-up'); ?></p>
+        <p><?php _e( 'In "Settings" &#187; "Reading" you have selected a static page for "Front page displays" setting.',
+				'wp-asset-clean-up' ); ?></p>
+        <p><?php _e( 'To manage the assets (.CSS &amp; .JS), use the button(s) below:', 'wp-asset-clean-up' ); ?></p>
 
         <table class="wp-list-table widefat fixed striped pages" style="margin-bottom: 4px;">
-		    <?php
-		    if ($data['page_on_front']) {
-            ?>
+			<?php
+			if ( $data['page_on_front'] ) {
+				?>
                 <tr>
-				    <td style="width: 80px; vertical-align: middle;"><?php _e('Front page:', 'wp-asset-clean-up'); ?></td>
-                    <td><a class="button button-secondary button-large" href="<?php echo admin_url('post.php?post='.$data['page_on_front'].'&action=edit#'.WPACU_PLUGIN_ID.'_asset_list'); ?>"><span class="dashicons dashicons-admin-page" style="vertical-align: middle;"></span> <strong><?php echo $data['page_on_front_title']; ?></strong></a></td>
+                    <td style="width: 80px; vertical-align: middle;"><?php _e( 'Front page:',
+							'wp-asset-clean-up' ); ?></td>
+                    <td><a class="button button-secondary button-large"
+                           href="<?php echo admin_url( 'post.php?post=' . $data['page_on_front'] . '&action=edit#' . WPACU_PLUGIN_ID . '_asset_list' ); ?>"><span
+                                    class="dashicons dashicons-admin-page" style="vertical-align: middle;"></span>
+                            <strong><?php echo $data['page_on_front_title']; ?></strong></a></td>
                 </tr>
-            <?php
-		    }
-            ?>
-            <?php
-		    if ($data['page_for_posts']) {
-            ?>
+				<?php
+			}
+			?>
+			<?php
+			if ( $data['page_for_posts'] ) {
+				?>
                 <tr>
-                    <td style="width: 80px; vertical-align: middle;"><?php _e('Posts page:', 'wp-asset-clean-up'); ?></td>
-                    <td><a class="button button-secondary button-large" href="<?php echo admin_url('post.php?post='.$data['page_for_posts'].'&action=edit#'.WPACU_PLUGIN_ID.'_asset_list'); ?>"><span class="dashicons dashicons-admin-page" style="vertical-align: middle;"></span> <strong><?php echo $data['page_for_posts_title']; ?></strong></a></td>
+                    <td style="width: 80px; vertical-align: middle;"><?php _e( 'Posts page:',
+							'wp-asset-clean-up' ); ?></td>
+                    <td><a class="button button-secondary button-large"
+                           href="<?php echo admin_url( 'post.php?post=' . $data['page_for_posts'] . '&action=edit#' . WPACU_PLUGIN_ID . '_asset_list' ); ?>"><span
+                                    class="dashicons dashicons-admin-page" style="vertical-align: middle;"></span>
+                            <strong><?php echo $data['page_for_posts_title']; ?></strong></a></td>
                 </tr>
-            <?php
-		    }
-		    ?>
+				<?php
+			}
+			?>
         </table>
     </div>
-    <p><?php echo sprintf(__('To read more about creating a static front page in WordPress, %scheck the Codex%s.', 'wp-asset-clean-up'), '<a target="_blank" href="https://codex.wordpress.org/Creating_a_Static_Front_Page">', '</a>'); ?></p>
+    <p><?php echo sprintf( __( 'To read more about creating a static front page in WordPress, %scheck the Codex%s.',
+			'wp-asset-clean-up' ),
+			'<a target="_blank" href="https://codex.wordpress.org/Creating_a_Static_Front_Page">', '</a>' ); ?></p>
 	<?php
+} elseif (assetCleanUpHasNoLoadMatches($data['site_url'])) { // Asset CleanUp Pro is set not to load for the front-page
+    ?>
+    <p class="wpacu_verified">
+        <strong>Target URL:</strong> <a target="_blank" href="<?php echo $data['site_url']; ?>"><span><?php echo $data['site_url']; ?></span></a>
+    </p>
+	<?php
+	$msg =__('This homepage\'s URI is matched by one of the RegEx rules you have in <strong>"Settings"</strong> -&gt; <strong>"Plugin Usage Preferences"</strong> -&gt; <strong>"Do not load the plugin on certain pages"</strong>, thus Asset CleanUp Pro is not loaded on that page and no CSS/JS are to be managed. If you wish to view the CSS/JS manager, please remove the matching RegEx rule and reload this page.', 'wp-asset-clean-up');
+	?>
+    <p class="wpacu-warning"
+       style="margin: 15px 0 0; padding: 10px; font-size: inherit; width: 99%;">
+            <span style="color: red;"
+                  class="dashicons dashicons-info"></span> <?php echo $msg; ?>
+    </p>
+    <?php
 } else {
 	?>
-    <form id="wpacu_home_page_form" method="post" action="">
+    <form id="wpacu_home_page_form"
+          method="post"
+          action="<?php echo admin_url('admin.php?page='.WPACU_PLUGIN_ID.'_assets_manager&wpacu_rand='.uniqid(time(), true)); ?>">
         <input type="hidden" name="wpacu_manage_home_page_assets" value="1" />
 
         <input type="hidden"

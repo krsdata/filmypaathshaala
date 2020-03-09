@@ -3,7 +3,7 @@
  * No direct access to this file
  */
 if (! isset($data)) {
-	exit;
+    exit;
 }
 ?>
 <div id="wpacu_meta_box_page_options_content">

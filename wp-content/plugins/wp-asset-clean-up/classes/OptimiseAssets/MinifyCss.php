@@ -5,7 +5,6 @@ use WpAssetCleanUp\CleanUp;
 use WpAssetCleanUp\Main;
 use WpAssetCleanUp\Menu;
 use WpAssetCleanUp\MetaBoxes;
-use MatthiasMullie\Minify;
 
 /**
  * Class MinifyCss
@@ -15,13 +14,26 @@ class MinifyCss
 {
 	/**
 	 * @param $cssContent
+	 * @param bool $forInlineStyle
 	 *
-	 * @return string|string[]|null
+	 * @return string
 	 */
-	public static function applyMinification($cssContent)
+	public static function applyMinification($cssContent, $forInlineStyle = false)
 	{
-		$minifier = new Minify\CSS($cssContent);
-			return trim($minifier->minify());
+		if (class_exists('\MatthiasMullie\Minify\CSS')) {
+				$minifier = new \MatthiasMullie\Minify\CSS( $cssContent );
+
+				if ( $forInlineStyle ) {
+					// If the minification is applied for inlined CSS (within STYLE)
+					// Leave the background URLs unchanged as it sometimes lead to issues
+					$minifier->setImportExtensions( array() );
+				}
+
+				return trim( $minifier->minify() );
+			}
+
+			return $cssContent;
+
 		}
 
 	/**
@@ -128,10 +140,23 @@ class MinifyCss
 			$originalTagContents = (isset($styleTagObj->nodeValue) && trim($styleTagObj->nodeValue) !== '') ? $styleTagObj->nodeValue : false;
 
 			if ($originalTagContents) {
-				$newTagContents = self::applyMinification($originalTagContents);
+				$newTagContents = OptimizeCss::maybeAlterCssContent($originalTagContents, true, true, array('just_minify'));
 
-				$htmlSource = str_ireplace('>'.$originalTagContents.'</style', '>'.$newTagContents.'</style', $htmlSource);
+				// Only comments or no content added to the inline STYLE tag? Strip it completely to reduce the number of DOM elements
+				if ($newTagContents === '/**/' || ! $newTagContents) {
+					$htmlSource = str_ireplace('>'.$originalTagContents.'</style', '></style', $htmlSource);
 
+					preg_match_all('#<style.*?>#si', $originalTag, $matchesFromStyle);
+
+					if (isset($matchesFromStyle[0][0]) && $styleTagWithoutContent = $matchesFromStyle[0][0]) {
+						$styleTagWithoutContentAlt = str_replace('"', '\'', $styleTagWithoutContent);
+						$htmlSource = str_ireplace(array($styleTagWithoutContent.'</style>', $styleTagWithoutContentAlt.'</style>'), '', $htmlSource);
+					}
+				} else {
+					// It has content; do the replacement
+					$htmlSource = str_ireplace( '>' . $originalTagContents . '</style',
+						'>' . $newTagContents . '</style', $htmlSource );
+				}
 				libxml_clear_errors();
 			}
 		}

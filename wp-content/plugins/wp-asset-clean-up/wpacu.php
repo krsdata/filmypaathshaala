@@ -2,7 +2,7 @@
 /*
  * Plugin Name: Asset CleanUp: Page Speed Booster
  * Plugin URI: https://wordpress.org/plugins/wp-asset-clean-up/
- * Version: 1.3.5.2
+ * Version: 1.3.5.8
  * Description: Unload Chosen Scripts & Styles from Posts/Pages to reduce HTTP Requests, Combine/Minify CSS/JS files
  * Author: Gabriel Livan
  * Author URI: http://gabelivan.com/
@@ -12,12 +12,20 @@
 
 // Is the Pro version triggered before the Lite one and are both plugins active?
 if (! defined('WPACU_PLUGIN_VERSION')) {
-	define('WPACU_PLUGIN_VERSION', '1.3.5.2');
+	define('WPACU_PLUGIN_VERSION', '1.3.5.8');
 }
 
 // Exit if accessed directly
 if (! defined('ABSPATH')) {
     exit;
+}
+
+if (! defined('WPACU_PLUGIN_ID')) {
+	define( 'WPACU_PLUGIN_ID', 'wpassetcleanup' ); // unique prefix (same plugin ID name for 'lite' and 'pro')
+}
+
+if ( ! defined('WPACU_PLUGIN_TITLE') ) {
+	define( 'WPACU_PLUGIN_TITLE', 'Asset CleanUp' ); // a short version of the plugin name
 }
 
 require_once __DIR__.'/early-triggers.php';
@@ -38,10 +46,8 @@ if (   defined('WPACU_PRO_NO_LITE_NEEDED') && WPACU_PRO_NO_LITE_NEEDED !== false
 	return;
 }
 
-define('WPACU_PLUGIN_ID', 'wpassetcleanup'); // unique prefix
-define('WPACU_PLUGIN_TITLE', 'Asset CleanUp'); // a short version of the plugin name
-define('WPACU_PLUGIN_FILE', __FILE__);
-define('WPACU_PLUGIN_BASE', plugin_basename(WPACU_PLUGIN_FILE));
+define('WPACU_PLUGIN_FILE',  __FILE__);
+define('WPACU_PLUGIN_BASE',  plugin_basename(WPACU_PLUGIN_FILE));
 
 define('WPACU_ADMIN_PAGE_ID_START', WPACU_PLUGIN_ID . '_getting_started');
 
@@ -96,28 +102,32 @@ define('WPACU_PLUGIN_CLASSES_PATH', WPACU_PLUGIN_DIR.'/classes/');
 define('WPACU_PLUGIN_URL',          plugins_url('', WPACU_PLUGIN_FILE));
 
 // Upgrade to Pro Sales Page
-define('WPACU_PLUGIN_GO_PRO_URL',   'https://gabelivan.com/items/wp-asset-cleanup-pro/');
+define('WPACU_PLUGIN_GO_PRO_URL',   'https://www.gabelivan.com/items/wp-asset-cleanup-pro/');
 
 // Global Values
 define('WPACU_LOAD_ASSETS_REQ_KEY', WPACU_PLUGIN_ID . '_load');
 
 require_once WPACU_PLUGIN_DIR.'/wpacu-load.php';
 
-if (! is_admin()) {
-	add_action('init', static function() { // very early triggering to set WPACU_ALL_ACTIVE_PLUGINS_LOADED
-		if (defined('WPACU_ALL_ACTIVE_PLUGINS_LOADED')) { return; }
+$wpacuGetLoadedAssetsAction = ((isset($_REQUEST[WPACU_LOAD_ASSETS_REQ_KEY]) && $_REQUEST[WPACU_LOAD_ASSETS_REQ_KEY])
+                               || (isset($_REQUEST['action']) && $_REQUEST['action'] === WPACU_PLUGIN_ID.'_get_loaded_assets'));
+
+define('WPACU_GET_LOADED_ASSETS_ACTION', $wpacuGetLoadedAssetsAction);
+
+if (WPACU_GET_LOADED_ASSETS_ACTION === true || ! is_admin()) {
+	add_action('init', static function() {
+		// "Smart Slider 3" & "WP Rocket" compatibility fix | triggered ONLY when the assets are fetched
+		if ( ! function_exists('get_rocket_option') && class_exists( 'NextendSmartSliderWPRocket' ) ) {
+			function get_rocket_option($option) { return ''; }
+		}
+	});
+
+	add_action('parse_query', static function() { // very early triggering to set WPACU_ALL_ACTIVE_PLUGINS_LOADED
+		if (defined('WPACU_ALL_ACTIVE_PLUGINS_LOADED')) { return; } // only trigger it once in this action
 		define('WPACU_ALL_ACTIVE_PLUGINS_LOADED', true);
 		\WpAssetCleanUp\Plugin::preventAnyChanges();
 	}, 1);
 
 	require_once WPACU_PLUGIN_DIR . '/vendor/autoload.php';
 }
-
-// [wpacu_lite]
-$wpacuSettingsList = $wpacuSettingsClass->getAll();
-
-if (! $wpacuSettingsList['disable_freemius']) {
-	require_once WPACU_PLUGIN_DIR . '/freemius-load.php';
-}
-// [/wpacu_lite]
 

@@ -10,12 +10,12 @@ use WpAssetCleanUp\OptimiseAssets\OptimizeCss;
 class Preloads
 {
 	/**
-	 *
+	 * Printed in HEAD
 	 */
 	const DEL_STYLES_PRELOADS = '<meta name="wpacu-generator" content="ASSET CLEANUP STYLES PRELOADS">';
 
 	/**
-	 *
+	 * Printed in HEAD
 	 */
 	const DEL_SCRIPTS_PRELOADS = '<meta name="wpacu-generator" content="ASSET CLEANUP SCRIPTS PRELOADS">';
 
@@ -210,6 +210,10 @@ class Preloads
 	 */
 	public function preloadCss($htmlTag, $handle)
 	{
+	    if (Plugin::preventAnyChanges()) {
+	        return $htmlTag;
+        }
+
 		if ($wpacuAsyncPreloadHandle = Misc::getVar('get', 'wpacu_preload_css')) {
 			// For testing purposes: Check how the page loads with the requested CSS preloaded
 			$this->preloads['styles'][$wpacuAsyncPreloadHandle] = 'basic';
@@ -238,6 +242,10 @@ class Preloads
 	 */
 	public function preloadJs($htmlTag, $handle)
 	{
+		if (Plugin::preventAnyChanges()) {
+			return $htmlTag;
+		}
+
 		// For testing purposes: Check how the page loads with the requested JS preloaded
 		if ($wpacuJsPreloadHandle = Misc::getVar('get', 'wpacu_preload_js')) {
 			$this->preloads['scripts'][$wpacuJsPreloadHandle] = 1;
@@ -269,7 +277,7 @@ class Preloads
 		// Highest accuracy via DOMDocument
 		if (function_exists('libxml_use_internal_errors') && function_exists('libxml_clear_errors') && class_exists('DOMDocument')) {
 			$documentForCSS = new \DOMDocument();
-			libxml_use_internal_errors( true );
+			libxml_use_internal_errors(true);
 
 			$documentForCSS->loadHTML($htmlSource);
             $linkTags = $documentForCSS->getElementsByTagName( 'link' );
@@ -293,7 +301,7 @@ class Preloads
 			}
 
 			libxml_clear_errors();
-        } else { // RegExp Fallback
+        } else { // RegEx Fallback
             $strContainsFormat = preg_quote('data-wpacu-to-be-preloaded-basic=\'1\'', '/');
             preg_match_all('#<link[^>]'.$strContainsFormat.'[^>]*' . 'href=([\'"])(.*)([\'"])' . '.*(>)#Usmi', $htmlSource, $matchesSourcesFromLinkTags, PREG_SET_ORDER);
 		}
@@ -401,7 +409,7 @@ class Preloads
 			}
 		}
 
-		Misc::addUpdateOption($optionToUpdate, json_encode($existingList));
+		Misc::addUpdateOption($optionToUpdate, json_encode(Misc::filterList($existingList)));
 	}
 
 	/**
@@ -446,7 +454,7 @@ class Preloads
 			}
 		}
 
-		Misc::addUpdateOption($optionToUpdate, json_encode($existingList));
+		Misc::addUpdateOption($optionToUpdate, json_encode(Misc::filterList($existingList)));
 
 		set_transient('wpacu_preloads_just_removed', 1, 30);
 

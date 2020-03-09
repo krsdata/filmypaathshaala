@@ -94,7 +94,7 @@ $styleTabContent = ($selectedTabArea === $tabIdArea) ? 'style="display: table-ce
                            name="<?php echo WPACU_PLUGIN_ID . '_settings'; ?>[remove_posts_rel_links]"
                            value="1" /> <span class="wpacu_slider wpacu_round"></span> </label>
                 &nbsp;
-                <code>&lt;link rel=&#39;prev&#39; title=&#39;Title of adjacent post&#39; href=&#39;https://yourdomain.com/adjacent-post-slug-here/&#39; /&gt;</code>
+                <code>&lt;link rel=&#39;prev&#39; title=&#39;Post title&#39; href=&#39;https://yourdomain.com/prev-post-slug-here/&#39; /&gt;</code> <strong>&amp;</strong> <code>&lt;link rel=&#39;next&#39; title=&#39;Post title&#39; href=&#39;https://yourdomain.com/next-post-slug-here/&#39; /&gt;</code>
                 <p style="margin-top: 10px;">This removes relational links for the posts adjacent to the current post for single post pages.</p>
             </td>
         </tr>

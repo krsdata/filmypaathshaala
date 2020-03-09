@@ -105,12 +105,14 @@ class Plugin
 		 *
 		 * /wp-content/cache/asset-cleanup/css/
          * /wp-content/cache/asset-cleanup/css/item/
+		 * /wp-content/cache/asset-cleanup/css/item/inline/
 		 * /wp-content/cache/asset-cleanup/css/index.php
 		 * /wp-content/cache/asset-cleanup/css/logged-in/
 		 * /wp-content/cache/asset-cleanup/css/logged-in/index.php
          *
          * /wp-content/cache/asset-cleanup/js/
          * /wp-content/cache/asset-cleanup/js/item/
+		 * /wp-content/cache/asset-cleanup/js/item/inline/ (Pro)
          * /wp-content/cache/asset-cleanup/js/index.php
          * /wp-content/cache/asset-cleanup/js/logged-in/
          * /wp-content/cache/asset-cleanup/js/logged-in/index.php
@@ -175,6 +177,10 @@ HTACCESS;
 			if ( ! is_dir( $cacheDir . OptimizeCommon::$optimizedSingleFilesDir ) ) {
 				@mkdir( $cacheDir . OptimizeCommon::$optimizedSingleFilesDir, 0755 );
 			}
+
+		    if ( ! is_dir( $cacheDir . OptimizeCommon::$optimizedSingleFilesDir.'/inline' ) ) {
+			    @mkdir( $cacheDir . OptimizeCommon::$optimizedSingleFilesDir.'/inline', 0755 );
+		    }
 
 		    if ( ! is_file( $cacheDir . 'logged-in/index.php' ) ) {
 			    // /wp-content/cache/asset-cleanup/cache/{$assetType}/logged-in/index.html
@@ -284,17 +290,21 @@ HTACCESS;
 	        return WPACU_PREVENT_ANY_CHANGES;
         }
 
-        // e.g. /amp/ - /amp? - /amp/? - /?amp or ending in /amp
-        $isAmpInRequestUri = ((isset($_SERVER['REQUEST_URI']) && (preg_match('/(\/amp$|\/amp\?)|(\/amp\/|\/amp\/\?)/', $_SERVER['REQUEST_URI']))) || (array_key_exists('amp', $_GET)));
+	    // e.g. /amp/ - /amp? - /amp/? - /?amp or ending in /amp
+	    $isAmpInRequestUri = ((isset($_SERVER['REQUEST_URI']) && (preg_match('/(\/amp$|\/amp\?)|(\/amp\/|\/amp\/\?)/', $_SERVER['REQUEST_URI']))) || (array_key_exists('amp', $_GET)));
 
 	    // Is it an AMP endpoint?
-	    if ( ($isAmpInRequestUri && Misc::isPluginActive('accelerated-mobile-pages/accelerated-moblie-pages.php')) // "AMP for WP – Accelerated Mobile Pages"
-             || ($isAmpInRequestUri && Misc::isPluginActive('amp/amp.php')) // "AMP – WordPress plugin"
-             || (function_exists('is_wp_amp') && Misc::isPluginActive('wp-amp/wp-amp.php') && is_wp_amp()) // "WP AMP — Accelerated Mobile Pages for WordPress and WooCommerce" (Premium plugin)
-        ) {
-	        define('WPACU_PREVENT_ANY_CHANGES', true);
+	    if ( ($isAmpInRequestUri && Misc::isPluginActive('accelerated-mobile-pages/accelerated-mobile-pages.php')) // "AMP for WP – Accelerated Mobile Pages"
+	         || ($isAmpInRequestUri && Misc::isPluginActive('amp/amp.php')) // "AMP – WordPress plugin"
+	         || (function_exists('is_wp_amp') && Misc::isPluginActive('wp-amp/wp-amp.php') && is_wp_amp()) // "WP AMP — Accelerated Mobile Pages for WordPress and WooCommerce" (Premium plugin)
+	    ) {
+		    define('WPACU_PREVENT_ANY_CHANGES', true);
 		    return true; // do not print anything on an AMP page
 	    }
+
+	    if (array_key_exists('wpacu_clean_load', $_GET)) {
+	        return true;
+        }
 
 	    define('WPACU_PREVENT_ANY_CHANGES', false);
 	    return false;

@@ -26,6 +26,7 @@ function su_filter_disable_wptexturize( $shortcodes ) {
 		$prefix . 'list',
 		$prefix . 'note',
 		$prefix . 'box',
+		$prefix . 'quote',
 	);
 
 	return array_merge( $shortcodes, $exclude );

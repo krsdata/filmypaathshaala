@@ -13,9 +13,9 @@ $listAreaStatus = $data['plugin_settings']['assets_list_layout_areas_status'];
 */
 ?>
     <div>
-        <?php
-        if (! empty($data['all']['styles']) || ! empty($data['all']['scripts'])) {
-        ?>
+    <?php
+    if (! empty($data['all']['styles']) || ! empty($data['all']['scripts'])) {
+    ?>
         <p><?php echo sprintf(__('The following styles &amp; scripts are loading on this page. Please select the ones that are %sNOT NEEDED%s. If you are not sure which ones to unload, it is better to enable "Test Mode" (to make the changes apply only to you), while you are going through the trial &amp; error process.', 'wp-asset-clean-up'), '<span style="color: #CC0000;"><strong>', '</strong></span>'); ?></p>
         <p><?php echo __('"Load in on this page (make an exception)" will take effect when a bulk unload rule is used. Otherwise, the asset will load anyway unless you select it for unload.', 'wp-asset-clean-up'); ?></p>
         <?php
@@ -127,6 +127,14 @@ $listAreaStatus = $data['plugin_settings']['assets_list_layout_areas_status'];
 		}
 	}
 }
+
+if ( isset( $data['all']['hardcoded'] ) && ! empty( $data['all']['hardcoded'] ) ) {
+	include_once __DIR__ . '/_assets-hardcoded-list.php';
+} elseif ($data['is_frontend_view']) {
+	// The following string will be replaced within a "wp_loaded" action hook
+	echo '{wpacu_assets_collapsible_wrap_hardcoded_list}';
+}
+
 /*
 * --------------------------------------------
 * [END] BY EACH HANDLE STATUS (Parent or Not)

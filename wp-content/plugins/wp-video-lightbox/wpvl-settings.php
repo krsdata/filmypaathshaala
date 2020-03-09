@@ -135,8 +135,10 @@ class Video_Lightbox_Settings_Page
             $wpvl_prettyPhoto->autoplay = (isset($_POST["autoplay"]))?'true':'false';
             $wpvl_prettyPhoto->modal = (isset($_POST["modal"]))?'true':'false';
             $wpvl_prettyPhoto->deeplinking = (isset($_POST["deeplinking"]))?'true':'false';
+            /*
             $wpvl_prettyPhoto->overlay_gallery = (isset($_POST["overlay_gallery"]))?'true':'false';
             $wpvl_prettyPhoto->overlay_gallery_max = trim($_POST["overlay_gallery_max"]);
+            */
             $wpvl_prettyPhoto->keyboard_shortcuts = (isset($_POST["keyboard_shortcuts"]))?'true':'false';
             $wpvl_prettyPhoto->ie6_fallback = (isset($_POST["ie6_fallback"]))?'true':'false';
             
@@ -307,7 +309,7 @@ class Video_Lightbox_Settings_Page
         <?php _e('Allow prettyPhoto to update the url to enable deeplinking. [default: true]', 'wp-video-lightbox')?></label>
         </fieldset></td>
         </tr>
-        
+        <!--
         <tr valign="top">
         <th scope="row"><?php _e('Overlay gallery', 'wp-video-lightbox')?></th>
         <td> <fieldset><legend class="screen-reader-text"><span><?php _e('Overlay gallery', 'wp-video-lightbox')?></span></legend><label for="overlay_gallery">
@@ -321,7 +323,7 @@ class Video_Lightbox_Settings_Page
         <td><input name="overlay_gallery_max" type="text" id="overlay_gallery_max" value="<?php echo $wpvl_prettyPhoto->overlay_gallery_max; ?>" class="regular-text">
         <p class="description"><?php echo sprintf(__('Maximum number of pictures in the overlay gallery [default: %s]', 'wp-video-lightbox'), '30')?></p></td>
         </tr>
-        
+        -->
         <tr valign="top">
         <th scope="row"><?php _e('Keyboard shortcuts', 'wp-video-lightbox')?></th>
         <td> <fieldset><legend class="screen-reader-text"><span><?php _e('Keyboard shortcuts', 'wp-video-lightbox')?></span></legend><label for="keyboard_shortcuts">

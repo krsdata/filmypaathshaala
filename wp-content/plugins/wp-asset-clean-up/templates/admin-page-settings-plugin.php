@@ -149,7 +149,7 @@ if ($showSettingsType === 'tabs') {
 			submit_button(__('Update All Settings', 'wp-asset-clean-up'));
 			?>
             <div id="wpacu-updating-settings">
-                <img src="<?php echo admin_url(); ?>/images/spinner.gif" align="top" width="20" height="20" alt="" />
+                <img src="<?php echo admin_url('images/spinner.gif'); ?>" align="top" width="20" height="20" alt="" />
             </div>
         </div>
         <input type="hidden"
